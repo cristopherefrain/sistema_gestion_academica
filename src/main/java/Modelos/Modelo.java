@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package Modelos;
 
 /**
  *
- * @author wizard
+ * @author Moviles
  */
-public class Controller {
+public class Modelo {
     
 }
