@@ -5,7 +5,6 @@
  */
 package Models;
 
-import Entities.Carrera;
 import Entities.Profesor;
 import Exceptions.GlobalException;
 import Exceptions.NoDataException;
@@ -43,7 +42,7 @@ public class ProfesorModel {
         return domainModel.buscar_profesor(id);
     }
 
-    public List<Carrera> listar_profesor() throws GlobalException, NoDataException {
+    public List<Profesor> listar_profesor() throws GlobalException, NoDataException {
         return new ArrayList(domainModel.listar_profesor());
     }
 

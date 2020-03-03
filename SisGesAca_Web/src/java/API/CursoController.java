@@ -5,13 +5,13 @@
  */
 package API;
 
-import Entities.Carrera;
 import Entities.Curso;
 import Exceptions.GlobalException;
 import Exceptions.NoDataException;
 import Models.CursoModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -76,9 +76,9 @@ public class CursoController {
 
     @GET
     @Path("/listar")
-    public List<Curso> listar_curso() {
+    public List<Curso> listar_curso(@QueryParam("id") String id) {
         try {
-            return model.listar_curso();
+            return id.isBlank() ? model.listar_curso() : model.listar_curso().stream().filter(curso -> curso.getCodigo_carrera().startsWith(id)).collect(Collectors.toList());
         } catch (GlobalException | NoDataException ex) {
         }
         return new ArrayList();
@@ -86,7 +86,7 @@ public class CursoController {
 
     @DELETE
     @Path("/eliminar")
-    public void listar_curso(@QueryParam("id") String id) {
+    public void eliminar_curso(@QueryParam("id") String id) {
         try {
             model.eliminar_curso(id);
         } catch (GlobalException | NoDataException ex) {

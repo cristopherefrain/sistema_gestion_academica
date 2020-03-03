@@ -66,17 +66,6 @@ public class MainController extends HttpServlet {
             }
             break;
             default:
-                try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>PAC-MAN</title>");
-                out.println("</head>");
-                out.println("<body> <center>");
-                out.println("<h1>Program and Control C<  o o o " + "</h1>");
-                out.println("</body> </center>");
-                out.println("</html>");
-            }
             break;
         }
     }

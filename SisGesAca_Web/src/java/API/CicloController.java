@@ -5,9 +5,15 @@
  */
 package API;
 
+import Entities.Ciclo;
+import Exceptions.GlobalException;
+import Exceptions.NoDataException;
 import Models.CicloModel;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
@@ -35,5 +41,13 @@ public class CicloController {
      *
      * @return an instance of java.lang.String
      */
-
+    @GET
+    @Path("/listar")
+    public List<Ciclo> listar_ciclo() {
+        try {
+            return model.listar_ciclo();
+        } catch (GlobalException | NoDataException ex) {
+        }
+        return new ArrayList();
+    }
 }

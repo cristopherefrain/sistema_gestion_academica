@@ -11,6 +11,7 @@ import Exceptions.NoDataException;
 import Models.CarreraModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -70,14 +71,14 @@ public class CarreraController {
             return model.buscar_carrera(id);
         } catch (GlobalException | NoDataException ex) {
         }
-        return null;
+        return new Carrera();
     }
 
     @GET
     @Path("/listar")
-    public List<Carrera> listar_carrera() {
+    public List<Carrera> listar_carrera(@QueryParam("id") String id) {
         try {
-            return model.listar_carrera();
+            return id.isBlank() ? model.listar_carrera() : model.listar_carrera().stream().filter(carrera -> carrera.getCodigo_carrera().startsWith(id)).collect(Collectors.toList());
         } catch (GlobalException | NoDataException ex) {
         }
         return new ArrayList();
