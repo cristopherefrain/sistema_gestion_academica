@@ -29,6 +29,7 @@ import Views.CarreraView;
 import Views.CarrerasView;
 import Views.CursoView;
 import Views.CursosView;
+import Views.LoginView;
 import Views.ProfesorView;
 import Views.ProfesoresView;
 import java.awt.Color;
@@ -47,7 +48,8 @@ public class ApplicationDesktop {
     public static void main(String[] args) {
         Model domainModel = Model.instance();
 
-        AppView appView = new AppView();
+        APP_VIEW = new AppView();
+        LoginView loginView = new LoginView();
 
         CarreraModel carreramodel = new CarreraModel();
         CarrerasModel carrerasmodel = new CarrerasModel();
@@ -55,12 +57,12 @@ public class ApplicationDesktop {
         CarreraView carreraview = new CarreraView();
         CARRERA_VIEW = carreraview;
         CarreraController carreracontroller = new CarreraController(carreraview, carreramodel, domainModel);
-        appView.addInternalFrame(carreraview);
+        APP_VIEW.addInternalFrame(carreraview);
 
         CarrerasView carrerasview = new CarrerasView();
         CARRERAS_VIEW = carrerasview;
         CarrerasController carrerascontroller = new CarrerasController(carrerasview, carrerasmodel, domainModel);
-        appView.addInternalFrame(carrerasview);
+        APP_VIEW.addInternalFrame(carrerasview);
 
         /**
          * ***************************************
@@ -71,12 +73,12 @@ public class ApplicationDesktop {
         CursoView cursoview = new CursoView();
         CURSO_VIEW = cursoview;
         CursoController cursocontroller = new CursoController(cursoview, cursomodel, domainModel);
-        appView.addInternalFrame(cursoview);
+        APP_VIEW.addInternalFrame(cursoview);
 
         CursosView cursosview = new CursosView();
         CURSOS_VIEW = cursosview;
         CursosController cursoscontroller = new CursosController(cursosview, cursosmodel, domainModel);
-        appView.addInternalFrame(cursosview);
+        APP_VIEW.addInternalFrame(cursosview);
 
         /**
          * ***************************************
@@ -87,12 +89,12 @@ public class ApplicationDesktop {
         ProfesorView profesorview = new ProfesorView();
         PROFESOR_VIEW = profesorview;
         ProfesorController profesorcontroller = new ProfesorController(profesorview, profesormodel, domainModel);
-        appView.addInternalFrame(profesorview);
+        APP_VIEW.addInternalFrame(profesorview);
 
         ProfesoresView profesoresview = new ProfesoresView();
         PROFESORES_VIEW = profesoresview;
         ProfesoresController profesorescontroller = new ProfesoresController(profesoresview, profesoresmodel, domainModel);
-        appView.addInternalFrame(profesoresview);
+        APP_VIEW.addInternalFrame(profesoresview);
 
         /**
          * ***************************************
@@ -103,15 +105,17 @@ public class ApplicationDesktop {
         AlumnoView alumnoview = new AlumnoView();
         ALUMNO_VIEW = alumnoview;
         AlumnoController alumnocontroller = new AlumnoController(alumnoview, alumnomodel, domainModel);
-        appView.addInternalFrame(alumnoview);
+        APP_VIEW.addInternalFrame(alumnoview);
 
         AlumnosView alumnosview = new AlumnosView();
         ALUMNOS_VIEW = alumnosview;
         AlumnosController alumnoscontroller = new AlumnosController(alumnosview, alumnosmodel, domainModel);
-        appView.addInternalFrame(alumnosview);
+        APP_VIEW.addInternalFrame(alumnosview);
 
-        appView.setVisible(true);
+        loginView.setVisible(true);
     }
+    
+    public static AppView APP_VIEW;
 
     public static CarreraView CARRERA_VIEW;
     public static CarrerasView CARRERAS_VIEW;
