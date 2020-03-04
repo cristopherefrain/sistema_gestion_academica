@@ -1,0 +1,2 @@
+rootProject.name='SisGesAca_Movil'
+include ':app'

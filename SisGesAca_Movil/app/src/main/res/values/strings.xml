@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">App Movil :v</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Usuario</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar  sesion o registrarse</string>
+    <string name="action_sign_in_short">Iniciar sesion</string>
+    <string name="welcome">"Hola que hace "</string>
+    <string name="invalid_username">Nombre de usuario invalido</string>
+    <string name="invalid_password">La contraseña debe tener mas de 5 caracteres</string>
+    <string name="login_failed">"Fallo al iniciar sesion"</string>
+    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+    <string name="navigation_drawer_open">Abrir navigation drawer</string>
+    <string name="navigation_drawer_close">Cerrar navigation drawer</string>
+    <string name="nav_header_title">Sistema de Gestion Academica</string>
+    <string name="nav_header_subtitle">Bienvenido (:</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Configuracion</string>
+
+    <string name="menu_carreras">Carreras</string>
+    <string name="menu_cursos">Cursos</string>
+    <string name="menu_logout">Cerrar Sesion :(</string>
+
+    <string name="home_second">Home Second</string>
+</resources>
