@@ -25,7 +25,6 @@ public class AppView extends javax.swing.JFrame {
         cursos = new javax.swing.JMenu();
         profesores = new javax.swing.JMenu();
         alumnos = new javax.swing.JMenu();
-        logOut = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gestión Académica");
@@ -76,14 +75,6 @@ public class AppView extends javax.swing.JFrame {
         });
         jMenuBar1.add(alumnos);
 
-        logOut.setText("Cerrar sesión");
-        logOut.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logOutMouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(logOut);
-
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -109,11 +100,6 @@ public class AppView extends javax.swing.JFrame {
         ApplicationDesktop.CURSOS_VIEW.setVisible(true);
         ApplicationDesktop.CURSOS_VIEW.toFront();
     }//GEN-LAST:event_cursosMouseClicked
-
-    private void logOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logOutMouseClicked
-        dispose();
-        new LoginView().setVisible(true);
-    }//GEN-LAST:event_logOutMouseClicked
 
     /**
      * @param args the command line arguments
@@ -163,7 +149,6 @@ public class AppView extends javax.swing.JFrame {
     private javax.swing.JMenu cursos;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenu logOut;
     private javax.swing.JMenu profesores;
     // End of variables declaration//GEN-END:variables
 
