@@ -1,9 +1,3 @@
-<%-- 
-    Document   : AlumnosView
-    Created on : Feb 29, 2020, 5:51:29 PM
-    Author     : wizard
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Alumnos</title>
         <%@ include file="/Head.jspf" %>
-        <script src="Javascript/AlumnoBrain.js" type="text/javascript"></script>
+        <script src="Javascript/AlumnoBrain.js"></script>
     </head>
     <body>
         <%@ include file="/Header.jspf" %>
@@ -88,9 +82,6 @@
                                 <div class="form-group">
                                     <label for="titulo_carrera">Carrera:</label>
                                     <select class="form-control" id="carrera">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
                                     </select>
                                 </div>
                             </form>

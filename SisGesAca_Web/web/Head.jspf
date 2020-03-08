@@ -1,4 +1,3 @@
-<%-- any content can be specified here e.g.: --%>
 <base href="http://localhost:8080/SisGesAca_Web/">
 <link href="Utils/Style.css" rel="stylesheet" type="text/css"/>
 <link href="Utils/bootstrap-3.4.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>

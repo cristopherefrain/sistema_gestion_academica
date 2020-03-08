@@ -1,9 +1,3 @@
-<%-- 
-    Document   : CursosView
-    Created on : Feb 29, 2020, 5:53:04 PM
-    Author     : wizard
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Cursos</title>
         <%@ include file="/Head.jspf" %>
-        <script src="Javascript/CursoBrain.js" type="text/javascript"></script>
+        <script src="Javascript/CursoBrain.js" type="module"></script>
     </head>
     <body>
         <%@ include file="/Header.jspf" %>
@@ -72,17 +66,11 @@
                                 <div class="form-group">
                                     <label for="titulo_codigo_carrera">Codigo Carrera:</label>
                                     <select class="form-control" id="codigo_carrera">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="titulo_numero_ciclo">Numero Ciclo:</label>
-                                    <select class="form-control" id="numero_ciclo">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
+                                    <select class="form-control" id="numero_ciclo" name="numero_ciclo">
                                     </select>
                                 </div>
                                 <div class="form-group">

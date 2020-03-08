@@ -1,9 +1,3 @@
-<%-- 
-    Document   : CarrerasView
-    Created on : Feb 29, 2020, 5:52:01 PM
-    Author     : wizard
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Carreras</title>
         <%@ include file="/Head.jspf" %>
-        <script src="Javascript/CarreraBrain.js" type="text/javascript"></script>
+        <script src="Javascript/CarreraBrain.js"></script>
     </head>
     <body>
         <%@ include file="/Header.jspf" %>

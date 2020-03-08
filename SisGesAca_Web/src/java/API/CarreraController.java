@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package API;
 
 import Entities.Carrera;
@@ -78,7 +73,7 @@ public class CarreraController {
     @Path("/listar")
     public List<Carrera> listar_carrera(@QueryParam("id") String id) {
         try {
-            return id.isBlank() ? model.listar_carrera() : model.listar_carrera().stream().filter(carrera -> carrera.getCodigo_carrera().startsWith(id)).collect(Collectors.toList());
+            return id.isBlank()? model.listar_carrera() : model.listar_carrera().stream().filter(carrera -> carrera.getCodigo_carrera().startsWith(id)).collect(Collectors.toList());
         } catch (GlobalException | NoDataException ex) {
         }
         return new ArrayList();
