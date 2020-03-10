@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Moviles
  */
-@WebServlet(name = "MainController", urlPatterns = {"/Alumno", "/Alumnos", "/Carrera", "/Carreras", "/Curso", "/Cursos", "/Profesor", "/Profesores"})
+@WebServlet(name = "MainController", urlPatterns = {"/InicioSesion","/Alumno", "/Alumnos", "/Carrera", "/Carreras", "/Curso", "/Cursos", "/Profesor", "/Profesores"})
 public class MainController extends HttpServlet {
 
     /**
@@ -27,6 +27,9 @@ public class MainController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         switch (request.getServletPath()) {
+            case "/InicioSesion": {
+                request.getRequestDispatcher("/Views/InicioSesionView.jsp").forward(request, response);
+            }
             case "/Alumno": {
                 request.getRequestDispatcher("/Views/AlumnoView.jsp").forward(request, response);
             }

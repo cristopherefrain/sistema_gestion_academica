@@ -4,6 +4,23 @@ function pageLoad(event) {
     $("#agregar").on("click", set_modo_agregar)
     $("#borrar").on("click", eliminar_objeto)
 }
+//================================================VALIDAR CAMPOS
+function validate() {
+    let codigo_carrera = $("#codigo_carrera").val().trim(), nombre = $("#nombre").val().trim(), titulo = $("#titulo").val().trim()
+
+    if (codigo_carrera.length === 0)
+        $("#validate_codigo").addClass("has-error")
+    if (nombre.length === 0)
+        $("#validate_nombre").addClass("has-error")
+    if (titulo.length === 0)
+        $("#validate_titulo").addClass("has-error")
+    return (codigo_carrera.length === 0) || (nombre.length === 0) || (titulo.length === 0)
+}
+function reset_validate() {
+    $("#validate_codigo").removeClass("has-error")
+    $("#validate_nombre").removeClass("has-error")
+    $("#validate_titulo").removeClass("has-error")
+}
 //================================================VARIABLES GLOBALES
 let current_carrera = {
     codigo_carrera: "",
@@ -50,6 +67,7 @@ function reset_formulario_objeto() {
 function reset_modal() {
     reset_objeto()
     reset_formulario_objeto()
+    reset_validate()
     $('#modal_objeto').modal('hide')
 }
 function reset_page() {
@@ -58,22 +76,28 @@ function reset_page() {
 }
 //================================================METODOS GENERALES
 function insertar_objeto() {
-    current_carrera = crear_objeto()
-    $.ajax({type: "POST",
-        data: JSON.stringify(current_carrera),
-        contentType: "application/json",
-        url: "api/carrera/insertar",
-        success: reset_page
-    })
+    reset_validate()
+    if (!validate()) {
+        current_carrera = crear_objeto()
+        $.ajax({type: "POST",
+            data: JSON.stringify(current_carrera),
+            contentType: "application/json",
+            url: "api/carrera/insertar",
+            success: reset_page
+        })
+    }
 }
 function modificar_objeto() {
-    current_carrera = crear_objeto()
-    $.ajax({type: "PUT",
-        data: JSON.stringify(current_carrera),
-        contentType: "application/json",
-        url: "api/carrera/modificar",
-        success: reset_page
-    })
+    reset_validate()
+    if (!validate()) {
+        current_carrera = crear_objeto()
+        $.ajax({type: "PUT",
+            data: JSON.stringify(current_carrera),
+            contentType: "application/json",
+            url: "api/carrera/modificar",
+            success: reset_page
+        })
+    }
 }
 function eliminar_objeto() {
     let id = id_seleccionada()

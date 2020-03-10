@@ -1,4 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% Usuario predeterminado = (Usuario) session.getAttribute("USER");%>
+<%if (predeterminado == null) {
+        request.getRequestDispatcher("/Views/InicioSesionView.jsp").forward(request, response);
+    }%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,7 +12,7 @@
         <script src="Javascript/CursoBrain.js" type="module"></script>
     </head>
     <body>
-        <%@ include file="/Header.jspf" %>
+        <%@ include file="/NavBar.jspf" %>
         <div class="container">
             <center>    
                 <h3>Informacion Cursos</h3>
@@ -59,7 +63,7 @@
                         <div class="modal-body">
                             <!-- Form to add/update an Object-->
                             <form action="erase_all_data" id="formulario_objeto">
-                                <div class="form-group">
+                                <div class="form-group" id="validate_codigo">
                                     <label for="titulo_codigo">Codigo Curso:</label>
                                     <input type="text" class="form-control" id="codigo_curso" placeholder="" name="codigo_curso">
                                 </div>
@@ -73,15 +77,15 @@
                                     <select class="form-control" id="numero_ciclo" name="numero_ciclo">
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="validate_nombre">
                                     <label for="titulo_nombre">Nombre:</label>
                                     <input type="text" class="form-control" id="nombre" placeholder="" name="nombre">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="validate_creditos">
                                     <label for="titulo_creditos">Creditos:</label>
                                     <input type="text" class="form-control" id="creditos" placeholder="" name="creditos">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="validate_horas_semanales">
                                     <label for="titulo_horas_semanales">Horas Semanales:</label>
                                     <input type="text" class="form-control" id="horas_semanales" placeholder="" name="horas_semanales">
                                 </div>

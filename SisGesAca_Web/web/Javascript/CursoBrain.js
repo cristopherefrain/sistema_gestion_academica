@@ -8,6 +8,26 @@ function pageLoad(event) {
     combobox_carrera()
     combobox_ciclo()
 }
+//================================================VALIDAR CAMPOS
+function validate() {
+    let codigo_curso = $("#codigo_curso").val().trim(), nombre = $("#nombre").val().trim(), creditos = $("#creditos").val().trim(), horas_semanales = $("#horas_semanales").val().trim()
+
+    if (codigo_curso.length === 0)
+        $("#validate_codigo").addClass("has-error")
+    if (nombre.length === 0)
+        $("#validate_nombre").addClass("has-error")
+    if (creditos.length === 0)
+        $("#validate_creditos").addClass("has-error")
+    if (horas_semanales.length === 0)
+        $("#validate_horas_semanales").addClass("has-error")
+    return (codigo_curso.length === 0) || (nombre.length === 0) || (creditos.length === 0) || (horas_semanales.length === 0)
+}
+function reset_validate() {
+    $("#validate_codigo").removeClass("has-error")
+    $("#validate_nombre").removeClass("has-error")
+    $("#validate_creditos").removeClass("has-error")
+    $("#validate_horas_semanales").removeClass("has-error")
+}
 //================================================VARIABLES GLOBALES
 let current_curso = {
     codigo_curso: "",
@@ -66,6 +86,7 @@ function reset_formulario_objeto() {
 function reset_modal() {
     reset_objeto()
     reset_formulario_objeto()
+    reset_validate()
     $('#modal_objeto').modal('hide')
 }
 function reset_page() {
@@ -74,22 +95,28 @@ function reset_page() {
 }
 //================================================METODOS GENERALES
 function insertar_objeto() {
-    current_curso = crear_objeto()
-    $.ajax({type: "POST",
-        data: JSON.stringify(current_curso),
-        contentType: "application/json",
-        url: "api/curso/insertar",
-        success: reset_page
-    })
+    reset_validate()
+    if (!validate()) {
+        current_curso = crear_objeto()
+        $.ajax({type: "POST",
+            data: JSON.stringify(current_curso),
+            contentType: "application/json",
+            url: "api/curso/insertar",
+            success: reset_page
+        })
+    }
 }
 function modificar_objeto() {
-    current_curso = crear_objeto()
-    $.ajax({type: "PUT",
-        data: JSON.stringify(current_curso),
-        contentType: "application/json",
-        url: "api/curso/modificar",
-        success: reset_page
-    })
+    reset_validate()
+    if (!validate()) {
+        current_curso = crear_objeto()
+        $.ajax({type: "PUT",
+            data: JSON.stringify(current_curso),
+            contentType: "application/json",
+            url: "api/curso/modificar",
+            success: reset_page
+        })
+    }
 }
 function eliminar_objeto() {
     let id = id_seleccionada()

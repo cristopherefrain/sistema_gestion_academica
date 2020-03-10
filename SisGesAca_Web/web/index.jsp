@@ -13,7 +13,7 @@
         <%@ include file="/Head.jspf" %>
     </head>
     <body>
-        <%@ include file="/Header.jspf" %>
+        <%@ include file="/NavBar.jspf" %>
         <div class="container">
             <div class="row">
                 <br> <br>
@@ -29,7 +29,7 @@
                     <div class="row">
                         <div class="col-xs-1"></div>
                         <div class="col-xs-10">
-                            <p> El Sistema de Gestion Academica (SisGeAca) brinda los servicios de
+                            <p> El Sistema de Gestion Academica (SisGesAca) brinda los servicios de
                                 informacion permite procesar la información de las carreras que ofrece,
                                 los cursos que las forman, los profesores que los imparten y los alumnos
                                 inscritos. Tambien ofrece la siguiente funcionalidad:

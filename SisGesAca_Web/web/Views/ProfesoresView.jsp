@@ -1,4 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<% Usuario predeterminado = (Usuario) session.getAttribute("USER");%>
+<%if (predeterminado == null) {
+        request.getRequestDispatcher("/Views/InicioSesionView.jsp").forward(request, response);
+    }%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,7 +12,7 @@
         <script src="Javascript/ProfesorBrain.js"></script>
     </head>
     <body>
-        <%@ include file="/Header.jspf" %>
+        <%@ include file="/NavBar.jspf" %>
         <div class="container">
             <center>    
                 <h3>Informacion Profesores</h3>
@@ -57,19 +61,19 @@
                         <div class="modal-body">
                             <!-- Form to add/update an Object-->
                             <form action="erase_all_data" id="formulario_objeto">
-                                <div class="form-group">
+                                <div class="form-group" id="validate_cedula">
                                     <label for="titulo_cedula_profesor">Cedula Profesor:</label>
                                     <input type="text" class="form-control" id="cedula_profesor" placeholder="" name="cedula_profesor">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="validate_nombre">
                                     <label for="titulo_nombre">Nombre:</label>
                                     <input type="text" class="form-control" id="nombre" placeholder="" name="nombre">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="validate_telefono">
                                     <label for="titulo_telefono">Telefono:</label>
                                     <input type="text" class="form-control" id="telefono" placeholder="" name="telefono">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="validate_email">
                                     <label for="titulo_telefono">Email:</label>
                                     <input type="email" class="form-control" id="email" placeholder="" name="email">
                                 </div>

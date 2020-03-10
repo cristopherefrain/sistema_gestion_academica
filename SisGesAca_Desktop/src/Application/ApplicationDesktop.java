@@ -6,6 +6,7 @@ import Controllers.CarreraController;
 import Controllers.CarrerasController;
 import Controllers.CursoController;
 import Controllers.CursosController;
+import Controllers.InicioSesionController;
 import Controllers.ProfesorController;
 import Controllers.ProfesoresController;
 import Models.AlumnoModel;
@@ -14,6 +15,7 @@ import Models.CarreraModel;
 import Models.CarrerasModel;
 import Models.CursoModel;
 import Models.CursosModel;
+import Models.InicioSesionModel;
 import Models.Model;
 import Models.ProfesorModel;
 import Models.ProfesoresModel;
@@ -24,6 +26,7 @@ import Views.CarreraView;
 import Views.CarrerasView;
 import Views.CursoView;
 import Views.CursosView;
+import Views.InicioSesionView;
 import Views.ProfesorView;
 import Views.ProfesoresView;
 import java.awt.Color;
@@ -43,7 +46,19 @@ public class ApplicationDesktop {
         Model domainModel = Model.instance();
 
         AppView appView = new AppView();
-
+        APP_VIEW = appView;
+        /**
+         * ***************************************
+         */
+        InicioSesionModel inicioSesionmodel = new InicioSesionModel();
+        InicioSesionView inicioSesionview = new InicioSesionView();
+        INICIO_SESION_VIEW = inicioSesionview;
+        InicioSesionController inicioSesioncontroller = new InicioSesionController(inicioSesionview, inicioSesionmodel, domainModel);
+        LOGIN_CONTROLLER = inicioSesioncontroller;
+        inicioSesionview.setVisible(true);
+        /**
+         * ***************************************
+         */
         CarreraModel carreramodel = new CarreraModel();
         CarrerasModel carrerasmodel = new CarrerasModel();
 
@@ -105,8 +120,13 @@ public class ApplicationDesktop {
         AlumnosController alumnoscontroller = new AlumnosController(alumnosview, alumnosmodel, domainModel);
         appView.addInternalFrame(alumnosview);
 
-        appView.setVisible(true);
+//        appView.setVisible(true);
     }
+
+    public static AppView APP_VIEW;
+
+    public static InicioSesionView INICIO_SESION_VIEW;
+    public static InicioSesionController LOGIN_CONTROLLER;
 
     public static CarreraView CARRERA_VIEW;
     public static CarrerasView CARRERAS_VIEW;
@@ -125,5 +145,5 @@ public class ApplicationDesktop {
 
     public static Border BORDER_ERROR = BorderFactory.createLineBorder(Color.blue);
     public static Border BORDER_NOBORDER = BorderFactory.createLineBorder(Color.blue);
-    
+
 }
