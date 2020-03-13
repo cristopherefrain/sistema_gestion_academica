@@ -4,17 +4,29 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+        <item android:title="Secciones">
+            <menu>
+                <item
+                    android:id="@+id/nav_carrera"
+                    android:icon="@drawable/ic_menu_carreras"
+                    android:title="@string/menu_carrera" />
+                <item
+                    android:id="@+id/nav_curso"
+                    android:icon="@drawable/ic_menu_cursos"
+                    android:title="@string/menu_curso" />
+                <item
+                    android:id="@+id/nav_profesor"
+                    android:icon="@drawable/ic_menu_cerrar_sesion"
+                    android:title="@string/menu_profesor" />
+                <item
+                    android:id="@+id/nav_alumno"
+                    android:icon="@drawable/ic_menu_cerrar_sesion"
+                    android:title="@string/menu_alumno" />
+            </menu>
+        </item>
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_carreras"
-            android:title="@string/menu_carreras" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_cursos"
-            android:title="@string/menu_cursos" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_logout"
-            android:title="@string/menu_logout" />
+            android:id="@+id/nav_cerrar_sesion"
+            android:icon="@drawable/ic_menu_cerrar_sesion"
+            android:title="@string/menu_cerrar_sesion" />
     </group>
 </menu>

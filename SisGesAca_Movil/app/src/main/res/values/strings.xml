@@ -1,25 +1,38 @@
 <resources>
     <string name="app_name">App Movil :v</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Usuario</string>
-    <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Iniciar  sesion o registrarse</string>
-    <string name="action_sign_in_short">Iniciar sesion</string>
-    <string name="welcome">"Hola que hace "</string>
-    <string name="invalid_username">Nombre de usuario invalido</string>
-    <string name="invalid_password">La contraseña debe tener mas de 5 caracteres</string>
-    <string name="login_failed">"Fallo al iniciar sesion"</string>
-    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
-    <string name="navigation_drawer_open">Abrir navigation drawer</string>
-    <string name="navigation_drawer_close">Cerrar navigation drawer</string>
+    <string name="app_name_label">SisGesAca</string>
+
+    <string name="prompt_usuario">Usuario</string>
+    <string name="prompt_clave">Contraseña</string>
+    <string name="action_iniciar_sesion">Iniciar Sesion</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_usuario">Usuario incorrecto</string>
+    <string name="error_invalid_clave">La contraseña es muy corta</string>
+    <string name="error_incorrect_clave">La contraseña es incorrecta</string>
+    <string name="error_field_required">Este campo es obligatorio</string>
+
+
+    <string name="title_activity_nav_drawer">SisGesAca</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Sistema de Gestion Academica</string>
-    <string name="nav_header_subtitle">Bienvenido (:</string>
+    <string name="nav_header_subtitle">Bienvenido!</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configuracion</string>
 
-    <string name="menu_carreras">Carreras</string>
-    <string name="menu_cursos">Cursos</string>
-    <string name="menu_logout">Cerrar Sesion :(</string>
+    <string name="menu_carrera">Carreras</string>
+    <string name="menu_curso">Cursos</string>
+    <string name="menu_profesor">Profesor</string>
+    <string name="menu_alumno">Alumno</string>
+    <string name="menu_cerrar_sesion">Cerrar Sesion :(</string>
+
+
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
     <string name="home_second">Home Second</string>
+
+
 </resources>
