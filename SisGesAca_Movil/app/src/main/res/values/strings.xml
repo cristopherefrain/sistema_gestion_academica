@@ -11,7 +11,6 @@
     <string name="error_incorrect_clave">La contraseña es incorrecta</string>
     <string name="error_field_required">Este campo es obligatorio</string>
 
-
     <string name="title_activity_nav_drawer">SisGesAca</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -25,14 +24,5 @@
     <string name="menu_profesor">Profesor</string>
     <string name="menu_alumno">Alumno</string>
     <string name="menu_cerrar_sesion">Cerrar Sesion :(</string>
-
-
-
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-
-    <string name="home_second">Home Second</string>
-
 
 </resources>
