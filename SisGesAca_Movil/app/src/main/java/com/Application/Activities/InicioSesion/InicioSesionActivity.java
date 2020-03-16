@@ -1,10 +1,18 @@
 package com.Application.Activities.InicioSesion;
 
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.Application.Activities.MainActivity;
 import com.Application.Entities.Usuario;
@@ -17,29 +25,52 @@ public class InicioSesionActivity extends MainActivity {
     private InicioSesionModel model;
     private EditText usuario_txtFld, clave_txtFld;
     private Button iniciar_sesion_btn;
+    private ProgressBar loadingProgressBar;
 
     private void inicializarActividad() {
         model = new InicioSesionModel();
-        usuario_txtFld = (EditText) findViewById(R.id.usuario_txtFld);
-        clave_txtFld = (EditText) findViewById(R.id.clave_pwdFld);
-        iniciar_sesion_btn = (Button) findViewById(R.id.iniciar_sesion_btn);
+        usuario_txtFld =  findViewById(R.id.usuario_txtFld);
+        clave_txtFld =  findViewById(R.id.clave_pwdFld);
+        iniciar_sesion_btn =  findViewById(R.id.iniciar_sesion_btn);
+        loadingProgressBar = findViewById(R.id.loading);
 
-        iniciar_sesion_btn.setOnClickListener(new View.OnClickListener() {
+
+        TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                attemptLogin();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkErrors();
             }
+        };
+
+        usuario_txtFld.addTextChangedListener(afterTextChangedListener);
+        clave_txtFld.addTextChangedListener(afterTextChangedListener);
+        clave_txtFld.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                checkErrors();
+            }
+            return false;
+        });
+
+        iniciar_sesion_btn.setOnClickListener(view -> {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+            attemptLogin();
         });
     }
 
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio_sesion);
+        setContentView(R.layout.activity_login);
+
         inicializarActividad();
     }
 
-    public void attemptLogin() {
+    public Boolean checkErrors() {
         String usuario = usuario_txtFld.getText().toString();
         String clave = clave_txtFld.getText().toString();
 
@@ -48,44 +79,42 @@ public class InicioSesionActivity extends MainActivity {
         usuario_txtFld.setError(null);
 
         boolean errorCheck = false;
-        View focusView = null;
 
         if (TextUtils.isEmpty(usuario)) {
             usuario_txtFld.setError(getString(R.string.error_field_required));
-            focusView = usuario_txtFld;
             errorCheck = true;
         } else if (!isUserValid(usuario)) {
             usuario_txtFld.setError(getString(R.string.error_invalid_usuario));
-            focusView = usuario_txtFld;
             errorCheck = true;
         }
 
         if (TextUtils.isEmpty(clave)) {
             clave_txtFld.setError(getString(R.string.error_field_required));
-            focusView = clave_txtFld;
             errorCheck = true;
         } else if (!isPasswordValid(clave)) {
             clave_txtFld.setError(getString(R.string.error_invalid_clave));
-            focusView = clave_txtFld;
             errorCheck = true;
         }
-
-        if (errorCheck) {
-            focusView.requestFocus();
-        } else {
-            iniciarSesion(usuario, clave);
+        if (!errorCheck) {
+            iniciar_sesion_btn.setEnabled(true);
         }
-
+        return errorCheck;
     }
 
     private boolean isUserValid(String usuario) {
-        //TODO: Replace this with your own logic
         return usuario.length() >= 4;
     }
 
     private boolean isPasswordValid(String clave) {
-        //TODO: Replace this with your own logic
         return clave.length() >= 4;
+    }
+
+    public void attemptLogin() {
+        String usuario = usuario_txtFld.getText().toString();
+        String clave = clave_txtFld.getText().toString();
+        if (!checkErrors()) {
+            iniciarSesion(usuario, clave);
+        }
     }
 
     public void iniciarSesion(String usuario, String clave) {
@@ -93,6 +122,12 @@ public class InicioSesionActivity extends MainActivity {
             finish();
             intent = redirectActivityTo(NavDrawerActivity.class);
             startActivity(intent);
+        }else{
+            loadingProgressBar.setVisibility(View.INVISIBLE);
+            usuario_txtFld.setError(null);
+            usuario_txtFld.setError(null);
+            usuario_txtFld.setError(getString(R.string.error_incorrect_usuario));
+            clave_txtFld.setError(getString(R.string.error_incorrect_clave));
         }
     }
 }

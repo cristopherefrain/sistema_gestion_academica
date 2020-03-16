@@ -1,25 +1,32 @@
 package com.Application;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Menu;
+
+import com.Application.Activities.Carrera.PrincipalCarreraActivity;
+import com.Application.Activities.Curso.PrincipalCursoActivity;
+import com.Application.Activities.InicioSesion.InicioSesionActivity;
+import com.Application.Activities.MainActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-
-import com.Application.Activities.InicioSesion.InicioSesionActivity;
-import com.Application.Activities.MainActivity;
-import com.google.android.material.navigation.NavigationView;
+import androidx.navigation.ui.NavigationUI;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
 
 public class NavDrawerActivity extends MainActivity implements NavigationView.OnNavigationItemSelectedListener {
-
-    private AppBarConfiguration mAppBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +88,12 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
         Class<?> destinationClass = NavDrawerActivity.class;
         switch (item_id) {
             case R.id.nav_carrera:
+                msj = "Carreras";
+                destinationClass = PrincipalCarreraActivity.class;
                 break;
             case R.id.nav_curso:
+                msj = "Cursos";
+                destinationClass = PrincipalCursoActivity.class;
                 break;
             case R.id.nav_profesor:
                 break;
