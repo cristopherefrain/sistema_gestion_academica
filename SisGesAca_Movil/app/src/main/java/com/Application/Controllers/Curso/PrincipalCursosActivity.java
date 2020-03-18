@@ -1,24 +1,23 @@
-package com.Application.Activities.Curso;
+package com.Application.Controllers.Curso;
 
 import android.os.Bundle;
 
-import com.Application.Activities.MainActivity;
+import com.Application.Controllers.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
 import com.Application.R;
 
-public class CursoActivity extends MainActivity {
+public class PrincipalCursosActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_curso);
+        setContentView(R.layout.activity_principal_curso);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

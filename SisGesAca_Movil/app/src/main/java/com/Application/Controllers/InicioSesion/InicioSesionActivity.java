@@ -1,4 +1,4 @@
-package com.Application.Activities.InicioSesion;
+package com.Application.Controllers.InicioSesion;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.Application.Activities.MainActivity;
+import com.Application.Controllers.MainActivity;
 import com.Application.Entities.Usuario;
 import com.Application.Models.InicioSesionModel;
 import com.Application.NavDrawerActivity;

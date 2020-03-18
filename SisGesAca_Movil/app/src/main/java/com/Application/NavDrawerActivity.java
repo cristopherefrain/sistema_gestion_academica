@@ -10,10 +10,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.Application.Activities.Carrera.PrincipalCarrerasActivity;
-import com.Application.Activities.Curso.PrincipalCursosActivity;
-import com.Application.Activities.InicioSesion.InicioSesionActivity;
-import com.Application.Activities.MainActivity;
+import com.Application.Controllers.Carrera.PrincipalCarrerasActivity;
+import com.Application.Controllers.Curso.PrincipalCursosActivity;
+import com.Application.Controllers.InicioSesion.InicioSesionActivity;
+import com.Application.Controllers.MainActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;

@@ -1,4 +1,4 @@
-package API;
+package Controllers;
 
 import Entities.Alumno;
 import Exceptions.GlobalException;

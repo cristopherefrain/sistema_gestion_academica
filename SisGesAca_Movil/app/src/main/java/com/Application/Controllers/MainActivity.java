@@ -1,4 +1,4 @@
-package com.Application.Activities;
+package com.Application.Controllers;
 
 import android.content.Intent;
 import android.widget.Toast;

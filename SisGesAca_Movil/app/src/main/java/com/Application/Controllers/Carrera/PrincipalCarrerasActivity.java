@@ -1,4 +1,4 @@
-package com.Application.Activities.Carrera;
+package com.Application.Controllers.Carrera;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -20,7 +19,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Application.Activities.MainActivity;
+import com.Application.Controllers.MainActivity;
 import com.Application.Adapters.CarrerasAdapter;
 import com.Application.Entities.Carrera;
 import com.Application.Helper.RecyclerItemTouchHelper;
@@ -33,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
 
 public class PrincipalCarrerasActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CarrerasAdapter.CarreraAdapterListener {
@@ -235,7 +235,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
 
     @Override
     public void onContactSelected(Carrera carrera) { //TODO get the select item of recycleView
-        showToast("Seleccionada: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), LARGA_DURACION);
+        showToast("Seleccionada: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), CORTA_DURACION);
     }
 
 }

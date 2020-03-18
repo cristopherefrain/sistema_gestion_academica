@@ -1,4 +1,4 @@
-package com.Application.Activities.Carrera;
+package com.Application.Controllers.Carrera;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -6,7 +6,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.Application.Activities.MainActivity;
+import com.Application.Controllers.MainActivity;
 import com.Application.Entities.Carrera;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

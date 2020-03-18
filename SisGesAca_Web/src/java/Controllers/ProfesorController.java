@@ -1,4 +1,4 @@
-package API;
+package Controllers;
 
 import Entities.Profesor;
 import Exceptions.GlobalException;
