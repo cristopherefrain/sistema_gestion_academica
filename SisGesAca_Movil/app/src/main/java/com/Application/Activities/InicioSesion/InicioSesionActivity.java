@@ -4,15 +4,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.Application.Activities.MainActivity;
 import com.Application.Entities.Usuario;
@@ -29,17 +25,22 @@ public class InicioSesionActivity extends MainActivity {
 
     private void inicializarActividad() {
         model = new InicioSesionModel();
-        usuario_txtFld =  findViewById(R.id.usuario_txtFld);
-        clave_txtFld =  findViewById(R.id.clave_pwdFld);
-        iniciar_sesion_btn =  findViewById(R.id.iniciar_sesion_btn);
+        usuario_txtFld = findViewById(R.id.usuario_txtFld);
+        clave_txtFld = findViewById(R.id.clave_pwdFld);
+        iniciar_sesion_btn = findViewById(R.id.iniciar_sesion_btn);
         loadingProgressBar = findViewById(R.id.loading);
 
+        getSupportActionBar().setTitle(getString(R.string.title_activity_inicio_sesion));
 
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
             @Override
             public void afterTextChanged(Editable s) {
                 checkErrors();
@@ -95,9 +96,9 @@ public class InicioSesionActivity extends MainActivity {
             clave_txtFld.setError(getString(R.string.error_invalid_clave));
             errorCheck = true;
         }
-        if (!errorCheck) {
-            iniciar_sesion_btn.setEnabled(true);
-        }
+
+        iniciar_sesion_btn.setEnabled(!errorCheck);
+
         return errorCheck;
     }
 
@@ -122,7 +123,7 @@ public class InicioSesionActivity extends MainActivity {
             finish();
             intent = redirectActivityTo(NavDrawerActivity.class);
             startActivity(intent);
-        }else{
+        } else {
             loadingProgressBar.setVisibility(View.INVISIBLE);
             usuario_txtFld.setError(null);
             usuario_txtFld.setError(null);

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">App Movil :v</string>
     <string name="app_name_label">SisGesAca</string>
+
     <!-- Strings related to login -->
     <string name="title_activity_inicio_sesion">Inicio de Sesion</string>
     <string name="prompt_usuario">Usuario</string>
@@ -13,6 +14,7 @@
     <string name="error_incorrect_clave">La contraseña es incorrecta</string>
     <string name="error_field_required">Este campo es obligatorio</string>
     <string name="login_failed">"Login failed"</string>
+
     <!-- Strings related to NavDrawer -->
     <string name="title_activity_nav_drawer">SisGesAca</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -21,15 +23,44 @@
     <string name="nav_header_subtitle">Bienvenido!</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Configuracion</string>
+
     <!-- Strings related to NavDrawer Menu -->
     <string name="menu_carrera">Carreras</string>
     <string name="menu_curso">Cursos</string>
     <string name="menu_profesor">Profesores</string>
     <string name="menu_alumno">Alumnos</string>
     <string name="menu_cerrar_sesion">Cerrar Sesion :(</string>
+
     <!-- Strings related to Carrera -->
     <string name="title_activity_principal_carrera">Carreras</string>
+    <string name="title_activity_carrera">Carrera</string>
+
+    <string name="props_carrera_codigo_carrera">Codigo</string>
+    <string name="props_carrera_nombre">Nombre</string>
+    <string name="props_carrera_titulo">Titulo</string>
+
+    <string name="empty_codigo_carrera">Codigo Requerido!</string>
+    <string name="empty_carrera_nombre">Nombre Requerido!</string>
+    <string name="empty_carrera_titulo">Titulo Requerido!</string>
     <!-- Strings related to Curso -->
     <string name="title_activity_principal_curso">Cursos</string>
+    <string name="title_activity_curso">Curso</string>
 
+    <string name="props_curso_codigo_curso">Codigo</string>
+    <string name="props_curso_codigo_carrera">Codigo Carrera</string>
+    <string name="props_curso_no_ciclo">Ciclo</string>
+    <string name="props_curso_nombre">Nombre</string>
+    <string name="props_curso_creditos">Creditos</string>
+    <string name="props_curso_horas_semanales">Horas Semanales</string>
+
+    <string name="empty_curso_codigo_curso">Codigo Requerido!</string>
+    <string name="empty_curso_codigo_carrera">Codigo Carrera Requerido!</string>
+    <string name="empty_curso_no_ciclo">Ciclo Requerido!</string>
+    <string name="empty_curso_nombre">Nombre Requerido!</string>
+    <string name="empty_curso_creditos">Creditos Requerido!</string>
+    <string name="empty_curso_horas_semanales">Horas Semanales Requerido!</string>
+    <!-- Strings related to Actions -->
+    <string name="eliminar">Eliminar</string>
+    <string name="editar">Editar</string>
+    <string name="buscar">Buscar</string>
 </resources>

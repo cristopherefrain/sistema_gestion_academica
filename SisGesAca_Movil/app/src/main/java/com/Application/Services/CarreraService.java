@@ -162,7 +162,7 @@ public class CarreraService extends Service {
 
     /*Listar profesores*/
     public Collection listar_carrera() throws GlobalException, NoDataException {
-        try {
+        /*try {
             Connect();
         } catch (ClassNotFoundException ex) {
             throw new GlobalException("No se ha localizado el Driver");
@@ -204,7 +204,8 @@ public class CarreraService extends Service {
 //        if (coleccion == null || coleccion.size() == 0) {
 //            throw new NoDataException("No hay datos");
 //        }
-        return coleccion;
+        return coleccion;*/
+        return carrerasList;
     }
 
     /*Eliminar profesores*/

@@ -132,7 +132,7 @@ public class Model {
     }
 
     public void eliminar_profesor(String id) throws GlobalException, NoDataException {
-        daoProfesor.listar_profesor();
+        daoProfesor.eliminar_profesor(id);
     }
 
     //    Service Inicio Sesion

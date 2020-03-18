@@ -44,6 +44,6 @@ public class ProfesorModel {
     }
 
     public void eliminar_profesor(String id) throws GlobalException, NoDataException {
-        domainModel.listar_profesor();
+        domainModel.eliminar_profesor(id);
     }
 }

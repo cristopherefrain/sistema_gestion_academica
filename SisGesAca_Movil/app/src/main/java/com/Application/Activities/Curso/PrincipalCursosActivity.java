@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.Application.R;
 
-public class PrincipalCursoActivity extends MainActivity {
+public class PrincipalCursosActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

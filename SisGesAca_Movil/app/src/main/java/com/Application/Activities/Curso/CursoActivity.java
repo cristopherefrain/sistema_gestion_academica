@@ -1,4 +1,4 @@
-package com.Application.Activities.Carrera;
+package com.Application.Activities.Curso;
 
 import android.os.Bundle;
 
@@ -13,12 +13,12 @@ import android.view.View;
 
 import com.Application.R;
 
-public class PrincipalCarreraActivity extends MainActivity {
+public class CursoActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal_carrera);
+        setContentView(R.layout.activity_curso);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

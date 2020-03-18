@@ -173,7 +173,7 @@ public class AlumnoService extends Service {
 
     /*Listar Alumnos*/
     public Collection listar_alumno() throws GlobalException, NoDataException {
-        try {
+/*        try {
             Connect();
         } catch (ClassNotFoundException ex) {
             throw new GlobalException("No se ha localizado el Driver");
@@ -219,7 +219,8 @@ public class AlumnoService extends Service {
 //        if (coleccion == null || coleccion.size() == 0) {
 //            throw new NoDataException("No hay datos");
 //        }
-        return coleccion;
+        return coleccion;*/
+return alumnosList;
     }
 
     /*Eliminar Alumnos*/

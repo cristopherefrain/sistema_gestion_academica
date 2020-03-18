@@ -16,11 +16,11 @@
                     android:title="@string/menu_curso" />
                 <item
                     android:id="@+id/nav_profesor"
-                    android:icon="@drawable/ic_menu_cerrar_sesion"
+                    android:icon="@drawable/ic_menu_usuario"
                     android:title="@string/menu_profesor" />
                 <item
                     android:id="@+id/nav_alumno"
-                    android:icon="@drawable/ic_menu_cerrar_sesion"
+                    android:icon="@drawable/ic_menu_usuario"
                     android:title="@string/menu_alumno" />
             </menu>
         </item>
