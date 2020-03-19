@@ -20,7 +20,6 @@ public class CarreraActivity extends MainActivity {
     private boolean editable;
     private EditText codigo_carrera_txtFld, nombre_txtFld, titulo_txtFld;
 
-
     private void inicializarActividad() {
         fab = findViewById(R.id.fab);
         editable = false;

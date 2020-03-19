@@ -1,18 +1,35 @@
 package com.Application.Controllers.Curso;
 
 import android.os.Bundle;
-
-import com.Application.Controllers.MainActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import android.text.TextUtils;
+import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
-
+import com.Application.Controllers.MainActivity;
+import com.Application.Entities.Curso;
 import com.Application.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import static com.Application.Models.ConstantesGlobales.MODO_AGREGAR;
+import static com.Application.Models.ConstantesGlobales.MODO_EDITAR;
 
 public class CursoActivity extends MainActivity {
+
+    private FloatingActionButton fab;
+    private boolean editable;
+    private EditText codigo_curso_txtFld, codigo_carrera_txtFld, no_ciclo_txtFld, nombre_txtFld, creditos_txtFld, horas_semanales_txtFld;
+
+    private void inicializarActividad() {
+        fab = findViewById(R.id.fab);
+        editable = false;
+        codigo_curso_txtFld = findViewById(R.id.codigo_curso_txtFld);
+        codigo_carrera_txtFld = findViewById(R.id.codigo_carrera_txtFld);
+        no_ciclo_txtFld = findViewById(R.id.no_ciclo_txtFld);
+        nombre_txtFld = findViewById(R.id.nombre_txtFld);
+        creditos_txtFld = findViewById(R.id.creditos_txtFld);
+        horas_semanales_txtFld = findViewById(R.id.horas_semanales_txtFld);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +38,94 @@ public class CursoActivity extends MainActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        inicializarActividad();
+        resetTextFields();
+        checkDataFromPrincipal();
+    }
+
+    private void resetTextFields() {
+        codigo_curso_txtFld.setText("");
+        codigo_carrera_txtFld.setText("");
+        no_ciclo_txtFld.setText("");
+        nombre_txtFld.setText("");
+        creditos_txtFld.setText("");
+        horas_semanales_txtFld.setText("");
+    }
+
+    public void checkDataFromPrincipal() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            editable = extras.getBoolean("editable");
+            if (editable) {
+                setTextFields((Curso) getIntent().getSerializableExtra("curso"));
             }
-        });
+            fab.setOnClickListener(view -> actionMode(editable ? MODO_EDITAR : MODO_AGREGAR));
+        }
+    }
+
+    private void setTextFields(Curso obj) {
+        codigo_curso_txtFld.setText(obj.getCodigo_curso());
+        codigo_curso_txtFld.setEnabled(!editable);
+        codigo_carrera_txtFld.setText(obj.getCodigo_carrera());
+        no_ciclo_txtFld.setText(obj.getNo_ciclo());
+        nombre_txtFld.setText(obj.getNombre());
+        creditos_txtFld.setText(obj.getCreditos());
+        horas_semanales_txtFld.setText(obj.getHoras_semanales());
+    }
+
+    public void actionMode(int mode) {
+        if (!checkErrors()) {
+            Curso obj = new Curso(codigo_curso_txtFld.getText().toString(), codigo_carrera_txtFld.getText().toString(), no_ciclo_txtFld.getText().toString(), nombre_txtFld.getText().toString(), creditos_txtFld.getText().toString(), horas_semanales_txtFld.getText().toString());
+            intent = redirectActivityTo(PrincipalCursosActivity.class);
+            intent.putExtra((mode == MODO_AGREGAR) ? "addCurso" : (mode == MODO_EDITAR) ? "editCurso" : "default", obj);
+            finish();
+            startActivity(intent);
+        }
+    }
+
+    public Boolean checkErrors() {
+        String codigo_curso = codigo_curso_txtFld.getText().toString();
+        String codigo_carrera = codigo_carrera_txtFld.getText().toString();
+        String no_ciclo = no_ciclo_txtFld.getText().toString();
+        String nombre = nombre_txtFld.getText().toString();
+        String creditos = creditos_txtFld.getText().toString();
+        String horas_semanales = horas_semanales_txtFld.getText().toString();
+//        Resetar los errores
+        codigo_curso_txtFld.setError(null);
+        codigo_carrera_txtFld.setError(null);
+        no_ciclo_txtFld.setError(null);
+        nombre_txtFld.setError(null);
+        creditos_txtFld.setError(null);
+        horas_semanales_txtFld.setError(null);
+
+        boolean errorCheck = false;
+
+        if (TextUtils.isEmpty(codigo_curso)) {
+            codigo_curso_txtFld.setError(getString(R.string.empty_curso_codigo_curso));
+            errorCheck = true;
+        }
+        if (TextUtils.isEmpty(codigo_carrera)) {
+            codigo_carrera_txtFld.setError(getString(R.string.empty_curso_codigo_carrera));
+            errorCheck = true;
+        }
+        if (TextUtils.isEmpty(no_ciclo)) {
+            no_ciclo_txtFld.setError(getString(R.string.empty_curso_no_ciclo));
+            errorCheck = true;
+        }
+        if (TextUtils.isEmpty(nombre)) {
+            nombre_txtFld.setError(getString(R.string.empty_curso_nombre));
+            errorCheck = true;
+        }
+        if (TextUtils.isEmpty(creditos)) {
+            creditos_txtFld.setError(getString(R.string.empty_carrera_titulo));
+            errorCheck = true;
+        }
+        if (TextUtils.isEmpty(horas_semanales)) {
+            horas_semanales_txtFld.setError(getString(R.string.empty_carrera_titulo));
+            errorCheck = true;
+        }
+
+        return errorCheck;
     }
 
 }

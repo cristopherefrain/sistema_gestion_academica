@@ -18,18 +18,16 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class CarrerasAdapter  extends RecyclerView.Adapter<CarrerasAdapter.MyViewHolder> implements Filterable {
+public class CarreraAdapter extends RecyclerView.Adapter<CarreraAdapter.MyViewHolder> implements Filterable {
     private List<Carrera> carreraList;
     private List<Carrera> carreraListFiltered;
     private CarreraAdapterListener listener;
     private Carrera deletedItem;
 
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView title1, title2, description;
         //two layers
         public RelativeLayout viewForeground, viewBackgroundDelete, viewBackgroundEdit;
-
         public MyViewHolder(View view) {
             super(view);
             title1 = view.findViewById(R.id.titleFirstLbl);
@@ -48,7 +46,7 @@ public class CarrerasAdapter  extends RecyclerView.Adapter<CarrerasAdapter.MyVie
         }
     }
 
-    public CarrerasAdapter(List<Carrera> carreraList, CarreraAdapterListener listener) {
+    public CarreraAdapter(List<Carrera> carreraList, CarreraAdapterListener listener) {
         this.carreraList = carreraList;
         this.listener = listener;
         //init filter
@@ -59,7 +57,6 @@ public class CarrerasAdapter  extends RecyclerView.Adapter<CarrerasAdapter.MyVie
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_list_row, parent, false);
-
         return new MyViewHolder(itemView);
     }
 
@@ -90,7 +87,6 @@ public class CarrerasAdapter  extends RecyclerView.Adapter<CarrerasAdapter.MyVie
     }
 
     public void restoreItem(int position) {
-
         if (carreraListFiltered.size() == carreraList.size()) {
             carreraListFiltered.add(position, deletedItem);
         } else {
@@ -151,10 +147,8 @@ public class CarrerasAdapter  extends RecyclerView.Adapter<CarrerasAdapter.MyVie
                             filteredList.add(row);
                         }
                     }
-
                     carreraListFiltered = filteredList;
                 }
-
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = carreraListFiltered;
                 return filterResults;

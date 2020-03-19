@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Application.Controllers.MainActivity;
-import com.Application.Adapters.CarrerasAdapter;
+import com.Application.Adapters.CarreraAdapter;
 import com.Application.Entities.Carrera;
 import com.Application.Helper.RecyclerItemTouchHelper;
 import com.Application.Models.CarreraModel;
@@ -35,10 +35,10 @@ import java.util.List;
 import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
 
-public class PrincipalCarrerasActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CarrerasAdapter.CarreraAdapterListener {
+public class PrincipalCarrerasActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CarreraAdapter.CarreraAdapterListener {
 
     private RecyclerView mRecyclerView;
-    private CarrerasAdapter mAdapter;
+    private CarreraAdapter mAdapter;
     private List<Carrera> carreraList;
     private CoordinatorLayout coordinatorLayout;
     private SearchView searchView;
@@ -53,7 +53,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
             carreraList = model.listar_carrera();
         } catch (Exception e) {
         }
-        mAdapter = new CarrerasAdapter(carreraList, this);
+        mAdapter = new CarreraAdapter(carreraList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
         fab = findViewById(R.id.fab);
 
@@ -136,7 +136,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (direction == ItemTouchHelper.START) {
-            if (viewHolder instanceof CarrerasAdapter.MyViewHolder) {
+            if (viewHolder instanceof CarreraAdapter.MyViewHolder) {
                 // get the removed item name to display it in snack bar
                 String name = carreraList.get(viewHolder.getAdapterPosition()).getNombre();
 
@@ -147,12 +147,9 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
 
                 // showing snack bar with Undo option
                 Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " removido!", Snackbar.LENGTH_LONG);
-                snackbar.setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // undo is selected, restore the deleted item from adapter
-                        mAdapter.restoreItem(deletedIndex);
-                    }
+                snackbar.setAction("UNDO", view -> {
+                    // undo is selected, restore the deleted item from adapter
+                    mAdapter.restoreItem(deletedIndex);
                 });
                 snackbar.setActionTextColor(Color.YELLOW);
                 snackbar.show();
@@ -235,7 +232,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
 
     @Override
     public void onContactSelected(Carrera carrera) { //TODO get the select item of recycleView
-        showToast("Seleccionada: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), CORTA_DURACION);
+        showToast("Seleccion: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), CORTA_DURACION);
     }
 
 }

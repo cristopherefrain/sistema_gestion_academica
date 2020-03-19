@@ -11,9 +11,10 @@ import android.view.View;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Application.Adapters.CarrerasAdapter;
+import com.Application.Adapters.CarreraAdapter;
+import com.Application.Adapters.CursoAdapter;
 
-public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback{
+public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private RecyclerItemTouchHelperListener listener;
     private View foregroundView;
@@ -54,38 +55,18 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback{
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
         if (viewHolder != null) {
             //check adapter
-            /*if (this.listener.getClass().getSimpleName().equals("AdmCursoActivity")) {
-                backgroundViewEdit = ((CursoAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
-                backgroundViewDelete = ((CursoAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((CursoAdapter.MyViewHolder) viewHolder).viewForeground;
-            } else if (this.listener.getClass().getSimpleName().equals("AdmCarreraActivity")) {
-                backgroundViewEdit = ((CarrerasAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
-                backgroundViewDelete = ((CarrerasAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((CarrerasAdapter.MyViewHolder) viewHolder).viewForeground;
-            } else if (this.listener.getClass().getSimpleName().equals("AdmProfesorActivity")) {
-                backgroundViewEdit = ((ProfesorAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
-                backgroundViewDelete = ((ProfesorAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((ProfesorAdapter.MyViewHolder) viewHolder).viewForeground;
-            } else if (this.listener.getClass().getSimpleName().equals("AdmAlumnoActivity")) {
-                backgroundViewEdit = ((AlumnoAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
-                backgroundViewDelete = ((AlumnoAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((AlumnoAdapter.MyViewHolder) viewHolder).viewForeground;
-            } else if (this.listener.getClass().getSimpleName().equals("AdmCicloActivity")) {
-                backgroundViewEdit = ((CicloAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
-                backgroundViewDelete = ((CicloAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((CicloAdapter.MyViewHolder) viewHolder).viewForeground;
-            } else if (this.listener.getClass().getSimpleName().equals("AdmGrupoActivity")) {
-                backgroundViewEdit = ((GrupoAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
-                backgroundViewDelete = ((GrupoAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((GrupoAdapter.MyViewHolder) viewHolder).viewForeground;
-            } else if (this.listener.getClass().getSimpleName().equals("AdmSeguridadActivity")) {
-                backgroundViewEdit = ((SeguridadAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
-                backgroundViewDelete = ((SeguridadAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((SeguridadAdapter.MyViewHolder) viewHolder).viewForeground;
-            }else if (this.listener.getClass().getSimpleName().equals("MatriculaActivity")) {
-                backgroundViewDelete = ((MatriculaAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
-                foregroundView = ((MatriculaAdapter.MyViewHolder) viewHolder).viewForeground;
-            }*/
+            switch (this.listener.getClass().getSimpleName()) {
+                case "PrincipalCarrerasActivity":
+                    backgroundViewEdit = ((CarreraAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
+                    backgroundViewDelete = ((CarreraAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
+                    foregroundView = ((CarreraAdapter.MyViewHolder) viewHolder).viewForeground;
+                case "PrincipalCursosActivity":
+                    backgroundViewEdit = ((CursoAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
+                    backgroundViewDelete = ((CursoAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
+                    foregroundView = ((CursoAdapter.MyViewHolder) viewHolder).viewForeground;
+                default:
+                    break;
+            }
             //Selected item
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                 //fancy color picked
