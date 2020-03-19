@@ -2,11 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.Application.Controllers.Carrera.PrincipalCarrerasActivity">
+    tools:context="com.Application.Controllers.PrincipalCarrerasActivity">
 
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_buscar_black"
+        android:iconTint="@android:color/background_light"
         android:orderInCategory="100"
         android:title="@string/buscar"
         app:showAsAction="always|collapseActionView"

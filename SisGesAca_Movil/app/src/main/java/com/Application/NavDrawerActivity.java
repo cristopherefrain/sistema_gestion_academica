@@ -10,9 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.Application.Controllers.Carrera.PrincipalCarrerasActivity;
-import com.Application.Controllers.Curso.PrincipalCursosActivity;
-import com.Application.Controllers.InicioSesion.InicioSesionActivity;
+import com.Application.Controllers.PrincipalCarrerasActivity;
+import com.Application.Controllers.PrincipalCursosActivity;
+import com.Application.Controllers.InicioSesionActivity;
 import com.Application.Controllers.MainActivity;
 import com.google.android.material.navigation.NavigationView;
 

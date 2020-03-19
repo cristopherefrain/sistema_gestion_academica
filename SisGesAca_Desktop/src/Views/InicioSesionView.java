@@ -7,8 +7,6 @@ import Models.InicioSesionModel;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 /**
  *
@@ -48,7 +46,9 @@ public class InicioSesionView extends javax.swing.JFrame implements Observer {
             }
         });
 
-        AccederBtn.setText("Acceder");
+        AccederBtn.setBackground(new java.awt.Color(92, 184, 92));
+        AccederBtn.setForeground(new java.awt.Color(255, 255, 255));
+        AccederBtn.setText("Ingresar");
         AccederBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AccederBtnActionPerformed(evt);
@@ -65,6 +65,8 @@ public class InicioSesionView extends javax.swing.JFrame implements Observer {
             }
         });
 
+        cerrarBtn.setBackground(new java.awt.Color(217, 83, 79));
+        cerrarBtn.setForeground(new java.awt.Color(255, 255, 255));
         cerrarBtn.setText("Cerrar");
         cerrarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,7 +120,9 @@ public class InicioSesionView extends javax.swing.JFrame implements Observer {
 
     private void AccederBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AccederBtnActionPerformed
         if (controller.iniciarSesion()) {
-            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
+            if (!model.getMensaje().equals("")) {
+                JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_AccederBtnActionPerformed
 

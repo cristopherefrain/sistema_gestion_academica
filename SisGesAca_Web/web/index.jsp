@@ -30,7 +30,7 @@
                         <div class="col-xs-1"></div>
                         <div class="col-xs-10">
                             <p> El Sistema de Gestion Academica (SisGesAca) brinda los servicios de
-                                informacion permite procesar la información de las carreras que ofrece,
+                                informacion que permiten procesar la información de las carreras que ofrece,
                                 los cursos que las forman, los profesores que los imparten y los alumnos
                                 inscritos. Tambien ofrece la siguiente funcionalidad:
                             </p>
@@ -39,11 +39,11 @@
                                     registrar la oferta académica, es decir los cursos y grupos que se van a abrir 
                                     y los profesores que los van a impartir.
                                 </li>
-                                <li>Ejecutar el proceso de matrícula, en el cual se registra los cursos y grupos
-                                    específicos, que matricula cada estudiante.
+                                <li>Ejecutar el proceso de matrícula, en el cual se registran los cursos y grupos
+                                    específicos que matricula cada estudiante.
                                 </li>
-                                <li>Realizar proceso final del ciclo, en el cual el profesor registra las notas que obtuvieron 
-                                    los estudiantes en sus grupos.
+                                <li>Realizar el proceso final del ciclo, en el cual el profesor registra las notas que obtuvieron 
+                                    los estudiantes de sus grupos.
                                 </li>
                             </ul>
                         </div>

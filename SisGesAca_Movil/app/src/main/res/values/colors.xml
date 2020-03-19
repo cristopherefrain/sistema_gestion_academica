@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#323e45</color>
+    <color name="colorPrimaryDark">#a3a3a3</color>
+    <color name="colorAccent">#396692</color>
 
-    <color name="bg_row_background">#fa315b</color>
-    <color name="bg_row_background_delete">#fa315b</color>
-    <color name="bg_row_background_edit">#388E3C</color>
-    <color name="item_name">#535353</color>
-    <color name="description">#a9a9a9</color>
+    <color name="bg_row_background_delete">#f44336</color>
+    <color name="bg_row_background_edit">#5aad74</color>
+
+    <color name="item_name">#396692</color>
+    <color name="description">#8b8b8b</color>
 </resources>

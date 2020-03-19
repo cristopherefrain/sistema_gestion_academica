@@ -42,7 +42,8 @@ public class InicioSesionController {
 
         if (model.getErrores().isEmpty()) {
             if (domainModel.iniciarSesion(usuario_ingreso)) {
-                model.setMensaje("Bienvenido a SisGesAca (:");
+                model.setMensaje("");
+//                model.setMensaje("Bienvenido a SisGesAca (:");
                 ApplicationDesktop.APP_VIEW.setVisible(true);
                 view.setVisible(false);
                 return true;
@@ -61,7 +62,8 @@ public class InicioSesionController {
     }
 
     public void cerrarSesion() {
-        model.setMensaje("Hasta luego (:");
+        model.setMensaje("");
+//        model.setMensaje("Hasta Luego :(");
         model.setCurrent(new Usuario());
         view.setVisible(true);
     }

@@ -19,29 +19,46 @@ public class AppView extends javax.swing.JFrame {
     private void initComponents() {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
         carreras = new javax.swing.JMenu();
         cursos = new javax.swing.JMenu();
         profesores = new javax.swing.JMenu();
         alumnos = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         cerrarSesion = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gestión Académica");
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jTextArea1.setRows(5);
+        jTextArea1.setText("                           \n\n\n\n\n\n\t\t\t                      Bienvenido al Sistema de Gestion Academica.\n\n\n                                                    El Sistema de Gestion Academica (SisGesAca) brinda los servicios de informacion que permiten procesar la\n\t                       información de las carreras que ofrece, los cursos que las forman, los profesores que los imparten y los alumnos\n\t                       inscritos. Tambien ofrece la siguiente funcionalidad:\n\n\t                         * Gestionar cada ciclo lectivo, para lo cual debe abrir el ciclo como tal, registrar la oferta académica, es decir\n\t                       los cursos y grupos que se van a abrir y los profesores que los van a impartir.\n\n\t                         * Ejecutar el proceso de matrícula, en el cual se registran los cursos y grupos específicos que matricula cada\n\t                       estudiante.\n\n\t                         * Realizar el proceso final del ciclo, en el cual el profesor registra las notas que obtuvieron los estudiantes de sus\n\t                       grupos.");
+        jTextArea1.setDisabledTextColor(new java.awt.Color(13, 0, 0));
+        jTextArea1.setEnabled(false);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1507, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1507, Short.MAX_VALUE)
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 709, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
         );
 
         getContentPane().add(jDesktopPane1);
+
+        jMenu1.setText("SisGesAca  ");
+        jMenuBar1.add(jMenu1);
 
         carreras.setText("Carreras");
         carreras.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -74,6 +91,9 @@ public class AppView extends javax.swing.JFrame {
             }
         });
         jMenuBar1.add(alumnos);
+
+        jMenu2.setText(".                                                                                                                                                                                                                                                           .");
+        jMenuBar1.add(jMenu2);
 
         cerrarSesion.setText("Cerrar Sesion");
         cerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -162,7 +182,11 @@ public class AppView extends javax.swing.JFrame {
     private javax.swing.JMenu cerrarSesion;
     private javax.swing.JMenu cursos;
     private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JMenu profesores;
     // End of variables declaration//GEN-END:variables
 

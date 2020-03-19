@@ -5,8 +5,12 @@ function pageLoad(event) {
     $("#buscar").on("click", listar_objetos)
     $("#agregar").on("click", set_modo_agregar)
     $("#borrar").on("click", eliminar_objeto)
-    combobox_carrera()
-    combobox_ciclo()
+    setTimeout(() => {
+        combobox_carrera()
+    }, 1000)
+    setTimeout(() => {
+        combobox_ciclo()
+    }, 500)
 }
 //================================================VALIDAR CAMPOS
 function validate() {
@@ -182,3 +186,5 @@ function id_seleccionada() {
 }
 //================================================PAGELOAD
 $(pageLoad)
+
+window.onload = function () { }

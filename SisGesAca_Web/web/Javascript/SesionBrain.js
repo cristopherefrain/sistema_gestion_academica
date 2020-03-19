@@ -6,4 +6,5 @@ function logout_system() {
 }
 function redirectLogin(objeto) {
     window.location.replace("http://localhost:8080/SisGesAca_Web/InicioSesion");
+//    alert("Hasta luego (:");
 }

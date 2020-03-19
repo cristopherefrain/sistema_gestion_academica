@@ -69,7 +69,7 @@ public class AlumnosView extends JInternalFrame implements java.util.Observer {
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setResizable(true);
-        setTitle("Alumnos");
+        setTitle("Informacion Alumnos");
 
         codigo_carreraLbl.setText("Cédula Alumno:");
 
@@ -79,6 +79,8 @@ public class AlumnosView extends JInternalFrame implements java.util.Observer {
             }
         });
 
+        buscarFld.setBackground(new java.awt.Color(2, 117, 216));
+        buscarFld.setForeground(new java.awt.Color(255, 255, 255));
         buscarFld.setText("Buscar");
         buscarFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,6 +108,8 @@ public class AlumnosView extends JInternalFrame implements java.util.Observer {
         });
         jScrollPane1.setViewportView(instrumentoTbl);
 
+        agregarFld.setBackground(new java.awt.Color(92, 184, 92));
+        agregarFld.setForeground(new java.awt.Color(255, 255, 255));
         agregarFld.setText("Agregar");
         agregarFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +117,8 @@ public class AlumnosView extends JInternalFrame implements java.util.Observer {
             }
         });
 
+        borrarFld.setBackground(new java.awt.Color(217, 83, 79));
+        borrarFld.setForeground(new java.awt.Color(255, 255, 255));
         borrarFld.setText("Borrar");
         borrarFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,12 +136,6 @@ public class AlumnosView extends JInternalFrame implements java.util.Observer {
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 731, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(agregarFld)
-                        .addGap(18, 18, 18)
-                        .addComponent(borrarFld, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(codigo_carreraLbl)
                         .addGap(18, 18, 18)
@@ -143,6 +143,12 @@ public class AlumnosView extends JInternalFrame implements java.util.Observer {
                         .addGap(18, 18, 18)
                         .addComponent(buscarFld, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(agregarFld)
+                .addGap(18, 18, 18)
+                .addComponent(borrarFld, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(267, 267, 267))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

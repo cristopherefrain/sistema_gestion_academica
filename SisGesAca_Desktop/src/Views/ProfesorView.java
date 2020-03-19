@@ -47,6 +47,8 @@ public class ProfesorView extends JInternalFrame implements Observer {
 
         tituloLbl.setText("Teléfono:");
 
+        guardarBtn.setBackground(new java.awt.Color(92, 184, 92));
+        guardarBtn.setForeground(new java.awt.Color(255, 255, 255));
         guardarBtn.setText("Guardar");
         guardarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,6 +56,8 @@ public class ProfesorView extends JInternalFrame implements Observer {
             }
         });
 
+        atrasBtn.setBackground(new java.awt.Color(217, 83, 79));
+        atrasBtn.setForeground(new java.awt.Color(255, 255, 255));
         atrasBtn.setText("Atras");
         atrasBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

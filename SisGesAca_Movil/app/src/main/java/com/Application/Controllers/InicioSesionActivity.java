@@ -1,4 +1,4 @@
-package com.Application.Controllers.InicioSesion;
+package com.Application.Controllers;
 
 import android.os.Bundle;
 import android.text.Editable;

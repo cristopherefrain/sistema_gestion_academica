@@ -23,7 +23,7 @@ function crear_opciones_ciclo(lista_objetos) {
     lista_objetos.forEach(objeto => opcion_ciclo(select, objeto))
 }
 function opcion_carrera(select_input, objeto) {
-    $('<option>').val(objeto.codigo_carrera).text(objeto.nombre).appendTo(select_input);
+    $('<option>').val(objeto.codigo_carrera).text(objeto.codigo_carrera).appendTo(select_input);
 }
 function opcion_ciclo(select_input, objeto) {
     $('<option>').val(objeto.no_ciclo).text(objeto.numero).appendTo(select_input);

@@ -2,6 +2,9 @@
 function pageLoad(event) {
     reset_page()
     $("#acceder").on("click", login_system)
+    $("#regresar").on("click", () => {
+        window.location.replace("http://localhost:8080/SisGesAca_Web/")
+    })
 }
 //================================================VALIDAR CAMPOS
 function validate() {
@@ -53,6 +56,7 @@ function login_system() {
 function redirectPage(objeto) {
     if (objeto) {
         window.location.replace("http://localhost:8080/SisGesAca_Web/");
+//        alert("Bienvenido a SisGesAca (:");
     } else {
         $("#validate_cedula").addClass("has-error")
         $("#validate_clave").addClass("has-error")

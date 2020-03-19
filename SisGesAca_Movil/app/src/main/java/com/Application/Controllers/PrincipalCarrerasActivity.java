@@ -1,4 +1,4 @@
-package com.Application.Controllers.Curso;
+package com.Application.Controllers;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -20,12 +19,10 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Application.Adapters.CursoAdapter;
-import com.Application.Controllers.MainActivity;
+import com.Application.Adapters.CarreraAdapter;
 import com.Application.Entities.Carrera;
-import com.Application.Entities.Curso;
 import com.Application.Helper.RecyclerItemTouchHelper;
-import com.Application.Models.CursoModel;
+import com.Application.Models.CarreraModel;
 import com.Application.NavDrawerActivity;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -37,25 +34,25 @@ import java.util.List;
 import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
 
-public class PrincipalCursosActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CursoAdapter.CursoAdapterListener {
+public class PrincipalCarrerasActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CarreraAdapter.CarreraAdapterListener {
 
     private RecyclerView mRecyclerView;
-    private CursoAdapter mAdapter;
-    private List<Curso> cursoList;
+    private CarreraAdapter mAdapter;
+    private List<Carrera> carreraList;
     private CoordinatorLayout coordinatorLayout;
     private SearchView searchView;
     private FloatingActionButton fab;
-    private CursoModel model;
+    private CarreraModel model;
 
     private void inicializarActividad() {
-        mRecyclerView = findViewById(R.id.recycler_cursosFld);
-        cursoList = new ArrayList<>();
-        model = new CursoModel();
+        mRecyclerView = findViewById(R.id.recycler_carrerasFld);
+        carreraList = new ArrayList<>();
+        model = new CarreraModel();
         try {
-            cursoList = model.listar_curso();
+            carreraList = model.listar_carrera();
         } catch (Exception e) {
         }
-        mAdapter = new CursoAdapter(cursoList, this);
+        mAdapter = new CarreraAdapter(carreraList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
         fab = findViewById(R.id.fab);
 
@@ -67,7 +64,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
-        fab.setOnClickListener(view -> goToCursoActivity());
+        fab.setOnClickListener(view -> goToCarreraActivity());
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);
@@ -80,7 +77,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_principal_curso);
+        setContentView(R.layout.activity_principal_carrera);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -96,8 +93,8 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
         }
     }
 
-    private void goToCursoActivity() {
-        intent = redirectActivityTo(CursoActivity.class);
+    private void goToCarreraActivity() {
+        intent = redirectActivityTo(CarreraActivity.class);
         intent.putExtra("editable", false);
         startActivity(intent);
     }
@@ -105,20 +102,17 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     private void checkIntentInformation() {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            Curso aux;
-            aux = (Curso) getIntent().getSerializableExtra("addCurso");
+            Carrera aux;
+            aux = (Carrera) getIntent().getSerializableExtra("addCarrera");
             if (aux == null) {
-                aux = (Curso) getIntent().getSerializableExtra("editCurso");
+                aux = (Carrera) getIntent().getSerializableExtra("editCarrera");
                 if (aux != null) {
                     //found an item that can be updated
                     boolean founded = false;
-                    for (Curso curso : cursoList) {
-                        if (curso.getCodigo_curso().equals(aux.getCodigo_curso())) {
-                            curso.setCodigo_carrera(aux.getCodigo_carrera());
-                            curso.setNo_ciclo(aux.getNo_ciclo());
-                            curso.setNombre(aux.getNombre());
-                            curso.setCreditos(aux.getCreditos());
-                            curso.setHoras_semanales(aux.getHoras_semanales());
+                    for (Carrera carrera : carreraList) {
+                        if (carrera.getCodigo_carrera().equals(aux.getCodigo_carrera())) {
+                            carrera.setNombre(aux.getNombre());
+                            carrera.setTitulo(aux.getTitulo());
                             founded = true;
                             break;
                         }
@@ -131,8 +125,8 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                     }
                 }
             } else {
-                //found a new Curso Object
-                cursoList.add(aux);
+                //found a new Carrera Object
+                carreraList.add(aux);
                 showToast(aux.getNombre() + " agregado correctamente!", LARGA_DURACION);
             }
         }
@@ -141,9 +135,9 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if (direction == ItemTouchHelper.START) {
-            if (viewHolder instanceof CursoAdapter.MyViewHolder) {
+            if (viewHolder instanceof CarreraAdapter.MyViewHolder) {
                 // get the removed item name to display it in snack bar
-                String name = cursoList.get(viewHolder.getAdapterPosition()).getNombre();
+                String name = carreraList.get(viewHolder.getAdapterPosition()).getNombre();
 
                 // save the index deleted
                 final int deletedIndex = viewHolder.getAdapterPosition();
@@ -161,11 +155,11 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
             }
         } else {
             //If is editing a row object
-            Curso aux = mAdapter.getSwipedItem(viewHolder.getAdapterPosition());
+            Carrera aux = mAdapter.getSwipedItem(viewHolder.getAdapterPosition());
             //send data to Edit Activity
-            intent = redirectActivityTo(CursoActivity.class);
+            intent = redirectActivityTo(CarreraActivity.class);
             intent.putExtra("editable", true);
-            intent.putExtra("curso", aux);
+            intent.putExtra("carrera", aux);
             mAdapter.notifyDataSetChanged(); //restart left swipe view
             startActivity(intent);
         }
@@ -236,7 +230,8 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     }
 
     @Override
-    public void onContactSelected(Curso curso) { //TODO get the select item of recycleView
-        Toast.makeText(getApplicationContext(), "Seleccion: " + curso.getCodigo_curso() + ", " + curso.getNombre(), Toast.LENGTH_LONG).show();
+    public void onContactSelected(Carrera carrera) { //TODO get the select item of recycleView
+        showToast("Seleccion: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), CORTA_DURACION);
     }
+
 }

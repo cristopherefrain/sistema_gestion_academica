@@ -60,6 +60,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                     backgroundViewEdit = ((CarreraAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
                     backgroundViewDelete = ((CarreraAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
                     foregroundView = ((CarreraAdapter.MyViewHolder) viewHolder).viewForeground;
+                    break;
                 case "PrincipalCursosActivity":
                     backgroundViewEdit = ((CursoAdapter.MyViewHolder) viewHolder).viewBackgroundEdit;
                     backgroundViewDelete = ((CursoAdapter.MyViewHolder) viewHolder).viewBackgroundDelete;
