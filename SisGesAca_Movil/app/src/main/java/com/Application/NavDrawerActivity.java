@@ -10,13 +10,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.Application.Controllers.PrincipalCarrerasActivity;
-import com.Application.Controllers.PrincipalCursosActivity;
 import com.Application.Controllers.InicioSesionActivity;
 import com.Application.Controllers.MainActivity;
+import com.Application.Controllers.PrincipalCarrerasActivity;
+import com.Application.Controllers.PrincipalCursosActivity;
 import com.google.android.material.navigation.NavigationView;
 
-import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
+import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
 
 public class NavDrawerActivity extends MainActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -37,6 +37,7 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 //        Mostrar Navigation
 //        drawer.openDrawer(GravityCompat.START);
+//        showToast("Bienvenido a SisGesAca (:", CORTA_DURACION);
     }
 
     @Override
@@ -92,7 +93,8 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
             case R.id.nav_alumno:
                 break;
             case R.id.nav_cerrar_sesion:
-                msj = "Cerrando Sesion";
+//                msj = "Hasta Luego (:";
+                msj = "";
                 destinationClass = InicioSesionActivity.class;
                 break;
             default:
@@ -110,7 +112,9 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
                 finish();
                 intent = redirectActivityTo(destinationClass);
             }
-            showToast(msj, LARGA_DURACION);
+            if(!msj.isEmpty()){
+                showToast(msj, CORTA_DURACION);
+            }
             intent = redirectActivityTo(destinationClass);
             startActivity(intent);
         }

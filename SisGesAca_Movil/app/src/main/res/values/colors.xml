@@ -5,8 +5,11 @@
     <color name="colorAccent">#396692</color>
 
     <color name="bg_row_background_delete">#f44336</color>
-    <color name="bg_row_background_edit">#5aad74</color>
+    <color name="bg_row_background_edit">#396692</color>
 
-    <color name="item_name">#396692</color>
-    <color name="description">#8b8b8b</color>
+    <color name="item_name">#e5a235</color>
+    <color name="description">#5a5a5a</color>
+
+    <color name="bg_btn_add">#5aad74</color>
+    <color name="bg_btn_check">#5aad74</color>
 </resources>

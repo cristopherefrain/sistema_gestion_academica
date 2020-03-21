@@ -32,6 +32,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
 
 public class PrincipalCursosActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CursoAdapter.CursoAdapterListener {
@@ -89,7 +90,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
             int flags = view.getSystemUiVisibility();
             flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
+            getWindow().setStatusBarColor(Color.LTGRAY);
         }
     }
 
@@ -153,7 +154,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                     // undo is selected, restore the deleted item from adapter
                     mAdapter.restoreItem(deletedIndex);
                 });
-                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.setActionTextColor(Color.WHITE);
                 snackbar.show();
             }
         } else {
@@ -234,6 +235,6 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
 
     @Override
     public void onContactSelected(Curso curso) { //TODO get the select item of recycleView
-        Toast.makeText(getApplicationContext(), "Seleccion: " + curso.getCodigo_curso() + ", " + curso.getNombre(), Toast.LENGTH_LONG).show();
+        showToast("Seleccion: " + curso.getCodigo_curso() + ", " + curso.getNombre(),CORTA_DURACION);
     }
 }

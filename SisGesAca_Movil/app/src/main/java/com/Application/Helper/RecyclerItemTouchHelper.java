@@ -20,7 +20,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     private View foregroundView;
     private View backgroundViewEdit;
     private View backgroundViewDelete;
-    private int dragColor = Color.rgb(102, 102, 255);
+    private int dragColor = Color.rgb(224, 224, 224);
 
     public RecyclerItemTouchHelper(int dragDirs, int swipeDirs, RecyclerItemTouchHelperListener listener) {
         super(dragDirs, swipeDirs);
@@ -73,12 +73,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
                 //fancy color picked
                 ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), Color.WHITE, dragColor);
                 colorAnimation.setDuration(250); // milliseconds
-                colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    @Override
-                    public void onAnimationUpdate(ValueAnimator animator) {
-                        foregroundView.setBackgroundColor((int) animator.getAnimatedValue());
-                    }
-                });
+                colorAnimation.addUpdateListener(animator -> foregroundView.setBackgroundColor((int) animator.getAnimatedValue()));
                 colorAnimation.start();
             }
             getDefaultUIUtil().onSelected(foregroundView);
@@ -105,12 +100,7 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
         if (color == dragColor) {
             ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), dragColor, Color.WHITE);
             colorAnimation.setDuration(250); // milliseconds
-            colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animator) {
-                    foregroundView.setBackgroundColor((int) animator.getAnimatedValue());
-                }
-            });
+            colorAnimation.addUpdateListener(animator -> foregroundView.setBackgroundColor((int) animator.getAnimatedValue()));
             colorAnimation.start();
         }
         super.clearView(recyclerView, viewHolder);
@@ -129,16 +119,12 @@ public class RecyclerItemTouchHelper extends ItemTouchHelper.SimpleCallback {
     }
 
     private void drawBackground(float dX) {
-        if (this.listener.getClass().getSimpleName().equals("MatriculaActivity")) {
-            backgroundViewDelete.setVisibility(View.VISIBLE);
+        if (dX > 0) {
+            backgroundViewEdit.setVisibility(View.VISIBLE);
+            backgroundViewDelete.setVisibility(View.GONE);
         } else {
-            if (dX > 0) {
-                backgroundViewEdit.setVisibility(View.VISIBLE);
-                backgroundViewDelete.setVisibility(View.GONE);
-            } else {
-                backgroundViewDelete.setVisibility(View.VISIBLE);
-                backgroundViewEdit.setVisibility(View.GONE);
-            }
+            backgroundViewDelete.setVisibility(View.VISIBLE);
+            backgroundViewEdit.setVisibility(View.GONE);
         }
     }
 

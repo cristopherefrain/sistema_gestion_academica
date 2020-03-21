@@ -8,25 +8,25 @@
             <menu>
                 <item
                     android:id="@+id/nav_carrera"
-                    android:icon="@drawable/ic_menu_carreras"
+                    android:icon="@drawable/ic_menu_carrera"
                     android:title="@string/menu_carrera" />
                 <item
                     android:id="@+id/nav_curso"
-                    android:icon="@drawable/ic_menu_cursos"
+                    android:icon="@drawable/ic_menu_curso"
                     android:title="@string/menu_curso" />
                 <item
                     android:id="@+id/nav_profesor"
-                    android:icon="@drawable/ic_menu_usuario"
+                    android:icon="@drawable/ic_menu_avatar"
                     android:title="@string/menu_profesor" />
                 <item
                     android:id="@+id/nav_alumno"
-                    android:icon="@drawable/ic_menu_usuario"
+                    android:icon="@drawable/ic_menu_avatar"
                     android:title="@string/menu_alumno" />
             </menu>
         </item>
         <item
             android:id="@+id/nav_cerrar_sesion"
-            android:icon="@drawable/ic_menu_cerrar_sesion"
+            android:icon="@drawable/ic_menu_logout"
             android:title="@string/menu_cerrar_sesion" />
     </group>
 </menu>

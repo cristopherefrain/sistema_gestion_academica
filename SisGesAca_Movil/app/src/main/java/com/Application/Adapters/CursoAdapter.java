@@ -37,12 +37,9 @@ public class CursoAdapter extends RecyclerView.Adapter<CursoAdapter.MyViewHolder
             viewBackgroundDelete = view.findViewById(R.id.view_background_delete);
             viewBackgroundEdit = view.findViewById(R.id.view_background_edit);
             viewForeground = view.findViewById(R.id.view_foreground);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    // send selected contact in callback
-                    listener.onContactSelected(cursoListFiltered.get(getAdapterPosition()));
-                }
+            view.setOnClickListener(view1 -> {
+                // send selected contact in callback
+                listener.onContactSelected(cursoListFiltered.get(getAdapterPosition()));
             });
         }
     }

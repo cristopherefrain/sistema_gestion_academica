@@ -45,10 +45,10 @@
     <string name="menu_curso">Cursos</string>
     <string name="menu_profesor">Profesores</string>
     <string name="menu_alumno">Alumnos</string>
-    <string name="menu_cerrar_sesion">Cerrar Sesion :(</string>
+    <string name="menu_cerrar_sesion">Cerrar Sesion</string>
 
     <!-- Strings related to Carrera -->
-    <string name="title_activity_principal_carrera">Carreras</string>
+    <string name="title_activity_principal_carrera">Informacion Carreras</string>
     <string name="title_activity_carrera">Carrera</string>
 
     <string name="props_carrera_codigo_carrera">Codigo Carrera</string>
@@ -59,7 +59,7 @@
     <string name="empty_carrera_nombre">Nombre Requerido!</string>
     <string name="empty_carrera_titulo">Titulo Requerido!</string>
     <!-- Strings related to Curso -->
-    <string name="title_activity_principal_curso">Cursos</string>
+    <string name="title_activity_principal_curso">Informacion Cursos</string>
     <string name="title_activity_curso">Curso</string>
 
     <string name="props_curso_codigo_curso">Codigo</string>

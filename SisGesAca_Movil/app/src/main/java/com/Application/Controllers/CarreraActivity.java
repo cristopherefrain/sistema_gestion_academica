@@ -1,10 +1,14 @@
 package com.Application.Controllers;
 
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.Application.Entities.Carrera;
 import com.Application.R;
@@ -18,6 +22,7 @@ public class CarreraActivity extends MainActivity {
     private FloatingActionButton fab;
     private boolean editable;
     private EditText codigo_carrera_txtFld, nombre_txtFld, titulo_txtFld;
+    private CoordinatorLayout coordinatorLayout;
 
     private void inicializarActividad() {
         fab = findViewById(R.id.fab);
@@ -25,6 +30,8 @@ public class CarreraActivity extends MainActivity {
         codigo_carrera_txtFld = findViewById(R.id.codigo_carrera_txtFld);
         nombre_txtFld = findViewById(R.id.nombre_txtFld);
         titulo_txtFld = findViewById(R.id.titulo_txtFld);
+        coordinatorLayout= findViewById(R.id.coordinator_layout);
+        whiteNotificationBar(coordinatorLayout);
     }
 
     @Override
@@ -37,6 +44,15 @@ public class CarreraActivity extends MainActivity {
         inicializarActividad();
         resetTextFields();
         checkDataFromPrincipal();
+    }
+
+    private void whiteNotificationBar(View view) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int flags = view.getSystemUiVisibility();
+            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            view.setSystemUiVisibility(flags);
+            getWindow().setStatusBarColor(Color.LTGRAY);
+        }
     }
 
     private void resetTextFields() {

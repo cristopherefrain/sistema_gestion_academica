@@ -6,8 +6,7 @@
 
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/ic_buscar_black"
-        android:iconTint="@android:color/background_light"
+        android:icon="@drawable/ic_buscar_white"
         android:orderInCategory="100"
         android:title="@string/buscar"
         app:showAsAction="always|collapseActionView"

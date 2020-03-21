@@ -89,7 +89,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
             int flags = view.getSystemUiVisibility();
             flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
             view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
+            getWindow().setStatusBarColor(Color.LTGRAY);
         }
     }
 
@@ -150,7 +150,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
                     // undo is selected, restore the deleted item from adapter
                     mAdapter.restoreItem(deletedIndex);
                 });
-                snackbar.setActionTextColor(Color.YELLOW);
+                snackbar.setActionTextColor(Color.WHITE);
                 snackbar.show();
             }
         } else {
@@ -231,6 +231,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
 
     @Override
     public void onContactSelected(Carrera carrera) { //TODO get the select item of recycleView
+
         showToast("Seleccion: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), CORTA_DURACION);
     }
 
