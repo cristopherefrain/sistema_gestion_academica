@@ -2,17 +2,17 @@ package Controllers;
 
 import Entities.Profesor;
 import Models.Model;
-import Models.ProfesorModel;
 import Views.ProfesorView;
 import Application.ApplicationDesktop;
+import Models.ProfesoresModels.ProfesorModelMain;
 
 public class ProfesorController {
 
     Model domainModel;
     ProfesorView view;
-    ProfesorModel model;
+    ProfesorModelMain model;
 
-    public ProfesorController(ProfesorView view, ProfesorModel model, Model domainModel) {
+    public ProfesorController(ProfesorView view, ProfesorModelMain model, Model domainModel) {
         this.domainModel = domainModel;
         this.view = view;
         this.model = model;

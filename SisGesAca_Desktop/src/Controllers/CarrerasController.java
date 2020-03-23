@@ -1,11 +1,11 @@
 package Controllers;
 
 import Entities.Carrera;
-import Models.CarreraModel;
 import Models.CarrerasModel;
 import Models.Model;
 import Views.CarrerasView;
 import Application.ApplicationDesktop;
+import Models.CarrerasModels.CarreraModelMain;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,19 +43,19 @@ public class CarrerasController {
     }
 
     public void agregar() {
-        CarreraModel carreramodel = ApplicationDesktop.CARRERA_VIEW.getModel();
-        carreramodel.clearErrors();
-        carreramodel.setModo(ApplicationDesktop.MODO_AGREGAR);
-        carreramodel.setCurrent(new Carrera());
+        CarreraModelMain carreramodelMain = ApplicationDesktop.CARRERA_VIEW.getModel();
+        carreramodelMain.clearErrors();
+        carreramodelMain.setModo(ApplicationDesktop.MODO_AGREGAR);
+        carreramodelMain.setCurrent(new Carrera());
         ApplicationDesktop.CARRERA_VIEW.setVisible(true);
     }
 
     public void editar(int row) {
-        CarreraModel carreramodel = ApplicationDesktop.CARRERA_VIEW.getModel();
-        carreramodel.clearErrors();
+        CarreraModelMain carreramodelMain = ApplicationDesktop.CARRERA_VIEW.getModel();
+        carreramodelMain.clearErrors();
         Carrera seleccionado = model.getCarreras().getRowAt(row);
-        carreramodel.setModo(ApplicationDesktop.MODO_EDITAR);
-        carreramodel.setCurrent(seleccionado);
+        carreramodelMain.setModo(ApplicationDesktop.MODO_EDITAR);
+        carreramodelMain.setCurrent(seleccionado);
         ApplicationDesktop.CARRERA_VIEW.setVisible(true);
     }
 

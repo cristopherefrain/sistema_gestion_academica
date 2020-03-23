@@ -1,34 +1,13 @@
 package Application;
 
-import Controllers.AlumnoController;
-import Controllers.AlumnosController;
-import Controllers.CarreraController;
-import Controllers.CarrerasController;
-import Controllers.CursoController;
-import Controllers.CursosController;
-import Controllers.InicioSesionController;
-import Controllers.ProfesorController;
-import Controllers.ProfesoresController;
-import Models.AlumnoModel;
-import Models.AlumnosModel;
-import Models.CarreraModel;
-import Models.CarrerasModel;
-import Models.CursoModel;
-import Models.CursosModel;
-import Models.InicioSesionModel;
-import Models.Model;
-import Models.ProfesorModel;
-import Models.ProfesoresModel;
-import Views.AlumnoView;
-import Views.AlumnosView;
-import Views.AppView;
-import Views.CarreraView;
-import Views.CarrerasView;
-import Views.CursoView;
-import Views.CursosView;
-import Views.InicioSesionView;
-import Views.ProfesorView;
-import Views.ProfesoresView;
+import Controllers.*;
+import Models.*;
+import Models.AlumnosModels.AlumnoModelMain;
+import Models.CarrerasModels.CarreraModelMain;
+import Models.CursosModels.CursoModelMain;
+import Models.InicioSesionModels.InicioSesionModelMain;
+import Models.ProfesoresModels.ProfesorModelMain;
+import Views.*;
 import java.awt.Color;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
@@ -42,7 +21,7 @@ public class ApplicationDesktop {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String... args) {
         Model domainModel = Model.instance();
 
         AppView appView = new AppView();
@@ -50,7 +29,8 @@ public class ApplicationDesktop {
         /**
          * ***************************************
          */
-        InicioSesionModel inicioSesionmodel = new InicioSesionModel();
+        InicioSesionModels mainInicioSesionModels = new InicioSesionModels();
+        InicioSesionModelMain inicioSesionmodel = mainInicioSesionModels.new InicioSesionModelMain();
         InicioSesionView inicioSesionview = new InicioSesionView();
         INICIO_SESION_VIEW = inicioSesionview;
         InicioSesionController inicioSesioncontroller = new InicioSesionController(inicioSesionview, inicioSesionmodel, domainModel);
@@ -59,7 +39,8 @@ public class ApplicationDesktop {
         /**
          * ***************************************
          */
-        CarreraModel carreramodel = new CarreraModel();
+        CarrerasModels mainCarrerasModels = new CarrerasModels();
+        CarreraModelMain carreramodel = mainCarrerasModels.new CarreraModelMain();
         CarrerasModel carrerasmodel = new CarrerasModel();
 
         CarreraView carreraview = new CarreraView();
@@ -75,7 +56,8 @@ public class ApplicationDesktop {
         /**
          * ***************************************
          */
-        CursoModel cursomodel = new CursoModel();
+        CursosModels mainCursosModels = new CursosModels();
+        CursoModelMain cursomodel = mainCursosModels.new CursoModelMain();
         CursosModel cursosmodel = new CursosModel();
 
         CursoView cursoview = new CursoView();
@@ -91,7 +73,8 @@ public class ApplicationDesktop {
         /**
          * ***************************************
          */
-        ProfesorModel profesormodel = new ProfesorModel();
+        ProfesoresModels mainProfesoresModels = new ProfesoresModels();
+        ProfesorModelMain profesormodel = mainProfesoresModels.new ProfesorModelMain();
         ProfesoresModel profesoresmodel = new ProfesoresModel();
 
         ProfesorView profesorview = new ProfesorView();
@@ -107,7 +90,8 @@ public class ApplicationDesktop {
         /**
          * ***************************************
          */
-        AlumnoModel alumnomodel = new AlumnoModel();
+        AlumnosModels mainAlumnosModels = new AlumnosModels();
+        AlumnoModelMain alumnomodel = mainAlumnosModels.new AlumnoModelMain();
         AlumnosModel alumnosmodel = new AlumnosModel();
 
         AlumnoView alumnoview = new AlumnoView();

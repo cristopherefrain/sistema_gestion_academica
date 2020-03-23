@@ -1,10 +1,9 @@
 package Views;
 
-
 import Controllers.ProfesorController;
 import Entities.Profesor;
-import Models.ProfesorModel;
 import Application.ApplicationDesktop;
+import Models.ProfesoresModels.ProfesorModelMain;
 import javax.swing.*;
 import java.util.Observer;
 
@@ -134,68 +133,6 @@ public class ProfesorView extends JInternalFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_cedulaFldActionPerformed
 
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(ProfesorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(ProfesorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(ProfesorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(ProfesorView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
@@ -211,18 +148,18 @@ public class ProfesorView extends JInternalFrame implements Observer {
     // End of variables declaration//GEN-END:variables
 
     ProfesorController controller;
-    ProfesorModel model;
+    ProfesorModelMain model;
 
     public void setController(ProfesorController controller) {
         this.controller = controller;
     }
 
-    public void setModel(ProfesorModel model) {
+    public void setModel(ProfesorModelMain model) {
         this.model = model;
         model.addObserver(this);
     }
 
-    public ProfesorModel getModel() {
+    public ProfesorModelMain getModel() {
         return model;
     }
 
@@ -259,7 +196,7 @@ public class ProfesorView extends JInternalFrame implements Observer {
             tituloLbl.setBorder(null);
             tituloLbl.setToolTipText("");
         }
-        
+
         emailFld.setText(CarreraCurrent.getEmail());
         if (model.getErrores().get("Email") != null) {
             tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
@@ -270,7 +207,7 @@ public class ProfesorView extends JInternalFrame implements Observer {
         }
 
         this.validate();
-        
+
         if (!model.getMensaje().equals("")) {
             JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
         }

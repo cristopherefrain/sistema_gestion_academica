@@ -2,7 +2,7 @@ package Controllers;
 
 import Application.ApplicationDesktop;
 import Entities.Usuario;
-import Models.InicioSesionModel;
+import Models.InicioSesionModels.InicioSesionModelMain;
 import Models.Model;
 import Views.InicioSesionView;
 
@@ -14,9 +14,9 @@ public class InicioSesionController {
 
     Model domainModel;
     InicioSesionView view;
-    InicioSesionModel model;
+    InicioSesionModelMain model;
 
-    public InicioSesionController(InicioSesionView view, InicioSesionModel model, Model domainModel) {
+    public InicioSesionController(InicioSesionView view, InicioSesionModelMain model, Model domainModel) {
         this.domainModel = domainModel;
         this.view = view;
         this.model = model;

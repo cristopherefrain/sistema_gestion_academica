@@ -1,11 +1,11 @@
 package Controllers;
 
 import Entities.Alumno;
-import Models.AlumnoModel;
 import Models.AlumnosModel;
 import Models.Model;
 import Views.AlumnosView;
 import Application.ApplicationDesktop;
+import Models.AlumnosModels.AlumnoModelMain;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,19 +43,19 @@ public class AlumnosController {
     }
 
     public void agregar() {
-        AlumnoModel alumnomodel = ApplicationDesktop.ALUMNO_VIEW.getModel();
-        alumnomodel.clearErrors();
-        alumnomodel.setModo(ApplicationDesktop.MODO_AGREGAR);
-        alumnomodel.setCurrent(new Alumno());
+        AlumnoModelMain alumnomodelMain = ApplicationDesktop.ALUMNO_VIEW.getModel();
+        alumnomodelMain.clearErrors();
+        alumnomodelMain.setModo(ApplicationDesktop.MODO_AGREGAR);
+        alumnomodelMain.setCurrent(new Alumno());
         ApplicationDesktop.ALUMNO_VIEW.setVisible(true);
     }
 
     public void editar(int row) {
-        AlumnoModel alumnomodel = ApplicationDesktop.ALUMNO_VIEW.getModel();
-        alumnomodel.clearErrors();
+        AlumnoModelMain alumnomodelMain = ApplicationDesktop.ALUMNO_VIEW.getModel();
+        alumnomodelMain.clearErrors();
         Alumno seleccionado = model.getAlumnos().getRowAt(row);
-        alumnomodel.setModo(ApplicationDesktop.MODO_EDITAR);
-        alumnomodel.setCurrent(seleccionado);
+        alumnomodelMain.setModo(ApplicationDesktop.MODO_EDITAR);
+        alumnomodelMain.setCurrent(seleccionado);
         ApplicationDesktop.ALUMNO_VIEW.setVisible(true);
     }
 

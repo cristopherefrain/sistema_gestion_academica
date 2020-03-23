@@ -1,18 +1,18 @@
 package Controllers;
 
 import Entities.Carrera;
-import Models.CarreraModel;
 import Models.Model;
 import Views.CarreraView;
 import Application.ApplicationDesktop;
+import Models.CarrerasModels.CarreraModelMain;
 
 public class CarreraController {
 
     Model domainModel;
     CarreraView view;
-    CarreraModel model;
+    CarreraModelMain model;
 
-    public CarreraController(CarreraView view, CarreraModel model, Model domainModel) {
+    public CarreraController(CarreraView view, CarreraModelMain model, Model domainModel) {
         this.domainModel = domainModel;
         this.view = view;
         this.model = model;

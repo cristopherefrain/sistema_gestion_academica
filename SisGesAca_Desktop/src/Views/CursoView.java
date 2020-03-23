@@ -1,10 +1,9 @@
 package Views;
 
-
 import Controllers.CursoController;
 import Entities.Curso;
-import Models.CursoModel;
 import Application.ApplicationDesktop;
+import Models.CursosModels.CursoModelMain;
 import javax.swing.*;
 import java.util.Observer;
 
@@ -171,68 +170,6 @@ public class CursoView extends JInternalFrame implements Observer {
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreFldActionPerformed
 
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CursoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CursoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CursoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CursoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
@@ -252,18 +189,18 @@ public class CursoView extends JInternalFrame implements Observer {
     // End of variables declaration//GEN-END:variables
 
     CursoController controller;
-    CursoModel model;
+    CursoModelMain model;
 
     public void setController(CursoController controller) {
         this.controller = controller;
     }
 
-    public void setModel(CursoModel model) {
+    public void setModel(CursoModelMain model) {
         this.model = model;
         model.addObserver(this);
     }
 
-    public CursoModel getModel() {
+    public CursoModelMain getModel() {
         return model;
     }
 
@@ -300,7 +237,7 @@ public class CursoView extends JInternalFrame implements Observer {
             tituloLbl.setBorder(null);
             tituloLbl.setToolTipText("");
         }
-        
+
         horasFld.setText(CursoCurrent.getHoras_semanales());
         if (model.getErrores().get("Horas") != null) {
             tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
@@ -311,17 +248,17 @@ public class CursoView extends JInternalFrame implements Observer {
         }
 
         carreraFld.setModel(model.getCarrera());
-        
+
         cicloFld.setModel(model.getCiclo());
-        
+
         this.controller.actualizar();
-        
+
         carreraFld.setSelectedItem(CursoCurrent.getCodigo_carrera());
-        
+
         cicloFld.setSelectedItem(CursoCurrent.getNo_ciclo());
-        
+
         this.validate();
-        
+
         if (!model.getMensaje().equals("")) {
             JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
         }

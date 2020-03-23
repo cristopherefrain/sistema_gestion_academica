@@ -2,10 +2,10 @@ package Controllers;
 
 import Entities.Profesor;
 import Models.Model;
-import Models.ProfesorModel;
 import Models.ProfesoresModel;
 import Views.ProfesoresView;
 import Application.ApplicationDesktop;
+import Models.ProfesoresModels.ProfesorModelMain;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -43,19 +43,19 @@ public class ProfesoresController {
     }
 
     public void agregar() {
-        ProfesorModel profesormodel = ApplicationDesktop.PROFESOR_VIEW.getModel();
-        profesormodel.clearErrors();
-        profesormodel.setModo(ApplicationDesktop.MODO_AGREGAR);
-        profesormodel.setCurrent(new Profesor());
+        ProfesorModelMain profesormodelMain = ApplicationDesktop.PROFESOR_VIEW.getModel();
+        profesormodelMain.clearErrors();
+        profesormodelMain.setModo(ApplicationDesktop.MODO_AGREGAR);
+        profesormodelMain.setCurrent(new Profesor());
         ApplicationDesktop.PROFESOR_VIEW.setVisible(true);
     }
 
     public void editar(int row) {
-        ProfesorModel profesormodel = ApplicationDesktop.PROFESOR_VIEW.getModel();
-        profesormodel.clearErrors();
+        ProfesorModelMain profesormodelMain = ApplicationDesktop.PROFESOR_VIEW.getModel();
+        profesormodelMain.clearErrors();
         Profesor seleccionado = model.getProfesores().getRowAt(row);
-        profesormodel.setModo(ApplicationDesktop.MODO_EDITAR);
-        profesormodel.setCurrent(seleccionado);
+        profesormodelMain.setModo(ApplicationDesktop.MODO_EDITAR);
+        profesormodelMain.setCurrent(seleccionado);
         ApplicationDesktop.PROFESOR_VIEW.setVisible(true);
     }
 

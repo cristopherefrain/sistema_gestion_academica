@@ -3,7 +3,7 @@ package Controllers;
 import Application.ApplicationDesktop;
 import Entities.Alumno;
 import Entities.Carrera;
-import Models.AlumnoModel;
+import Models.AlumnosModels.AlumnoModelMain;
 import Models.Model;
 import Views.AlumnoView;
 import java.util.List;
@@ -14,9 +14,9 @@ public class AlumnoController {
 
     Model domainModel;
     AlumnoView view;
-    AlumnoModel model;
+    AlumnoModelMain model;
 
-    public AlumnoController(AlumnoView view, AlumnoModel model, Model domainModel) {
+    public AlumnoController(AlumnoView view, AlumnoModelMain model, Model domainModel) {
         String[] inicializar = {};
         try {
             model.init(inicializar);

@@ -3,10 +3,10 @@ package Controllers;
 import Entities.Carrera;
 import Entities.Ciclo;
 import Entities.Curso;
-import Models.CursoModel;
 import Models.Model;
 import Views.CursoView;
 import Application.ApplicationDesktop;
+import Models.CursosModels.CursoModelMain;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -15,9 +15,9 @@ public class CursoController {
 
     Model domainModel;
     CursoView view;
-    CursoModel model;
+    CursoModelMain model;
 
-    public CursoController(CursoView view, CursoModel model, Model domainModel) {
+    public CursoController(CursoView view, CursoModelMain model, Model domainModel) {
         String[] inicializar1 = {}, inicializar2 = {};
         try {
             model.init(inicializar1, inicializar2);
@@ -76,9 +76,9 @@ public class CursoController {
         if (view.horasFld.getText().length() == 0) {
             model.getErrores().put("Horas", "Horas requeridas");
         }
-        
+
         nuevo_curso.setCodigo_carrera(view.carreraFld.getSelectedItem().toString());
-        
+
         nuevo_curso.setNo_ciclo(view.cicloFld.getSelectedItem().toString());
 
         if (model.getErrores().isEmpty()) {
