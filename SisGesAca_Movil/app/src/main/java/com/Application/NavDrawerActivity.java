@@ -20,6 +20,10 @@ import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
 
 public class NavDrawerActivity extends MainActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+    NavigationView navigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,13 +31,13 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 //        Mostrar Navigation
 //        drawer.openDrawer(GravityCompat.START);
@@ -67,6 +71,7 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            showToast("Creado por: Cristopher Aguilar Bastos.", CORTA_DURACION);
             return true;
         }
 
@@ -112,7 +117,7 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
                 finish();
                 intent = redirectActivityTo(destinationClass);
             }
-            if(!msj.isEmpty()){
+            if (!msj.isEmpty()) {
                 showToast(msj, CORTA_DURACION);
             }
             intent = redirectActivityTo(destinationClass);
