@@ -1,5 +1,6 @@
 package Models;
 
+import Entities.Usuario;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
@@ -38,6 +39,13 @@ public class InicioSesionModels extends Observable {
         public void clearErrors() {
             setErrores(new HashMap<>());
             setMensaje("");
+        }
+        
+        @Override
+        public void setCurrent(Usuario current) {
+            this.current = current;
+            setChanged();
+            notifyObservers();
         }
 
         public void addObserver(Observer o) {

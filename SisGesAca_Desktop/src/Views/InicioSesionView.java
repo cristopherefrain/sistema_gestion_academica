@@ -18,6 +18,7 @@ public class InicioSesionView extends javax.swing.JFrame implements Observer {
      * Creates new form InicioSesionView
      */
     public InicioSesionView() {
+        super();
         initComponents();
     }
 
