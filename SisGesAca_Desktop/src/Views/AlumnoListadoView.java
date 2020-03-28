@@ -1,54 +1,55 @@
 package Views;
 
-
-import Controllers.CarrerasController;
-import Models.CarrerasModel;
+import Controllers.AlumnoListadoController;
 import Application.ApplicationDesktop;
-import javax.swing.*;
+import Entities.Alumno;
+import Models.ObjetoListadoModel;
+import java.util.Observer;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
-public class CarrerasView extends JInternalFrame implements java.util.Observer {
+public final class AlumnoListadoView extends JInternalFrame implements Observer {
 
-    CarrerasController controller;
-    CarrerasModel model;
+    private AlumnoListadoController controller;
+    private ObjetoListadoModel<Alumno, String> model;
 
-    public void setController(CarrerasController controller) {
+    public void setController(AlumnoListadoController controller) {
         this.controller = controller;
     }
 
-    public void setModel(CarrerasModel model) {
+    public void setModel(ObjetoListadoModel model) {
         this.model = model;
         model.addObserver(this);
     }
 
-    public CarrerasModel getModel() {
+    public ObjetoListadoModel<Alumno, String> getModel() {
         return model;
     }
 
     @Override
     public void update(java.util.Observable updatedModel, Object parametros) {
-
-        codigo_carreraFld.setText(model.getFilter().getCodigo_carrera());
+        cedulaFld.setText(model.getFilter().getCedula_alumno());
         if (model.getErrores().get("nombreFld") != null) {
             codigo_carreraLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
             codigo_carreraLbl.setToolTipText(model.getErrores().get("nombreFld"));
-
         } else {
-
             codigo_carreraLbl.setBorder(null);
             codigo_carreraLbl.setToolTipText("");
         }
-
-        instrumentoTbl.setModel(model.getCarreras());
-        instrumentoTbl.getColumn("Codigo Carrera").setPreferredWidth(120);
-        instrumentoTbl.getColumn("Nombre").setPreferredWidth(250);
-        instrumentoTbl.getColumn("Titulo").setPreferredWidth(200);
+        instrumentoTbl.setModel(model.getTableModel());
+        instrumentoTbl.getColumn("Cedula Alumno").setPreferredWidth(100);
+        instrumentoTbl.getColumn("Nombre").setPreferredWidth(100);
+        instrumentoTbl.getColumn("Telefono").setPreferredWidth(100);
+        instrumentoTbl.getColumn("Email").setPreferredWidth(100);
+        instrumentoTbl.getColumn("Fecha Nacimiento").setPreferredWidth(100);
+        instrumentoTbl.getColumn("Carrera").setPreferredWidth(100);
         this.revalidate();
         if (!model.getMensaje().equals("")) {
             JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    public CarrerasView() {
+    public AlumnoListadoView() {
         initComponents();
     }
 
@@ -57,7 +58,7 @@ public class CarrerasView extends JInternalFrame implements java.util.Observer {
     private void initComponents() {
 
         codigo_carreraLbl = new javax.swing.JLabel();
-        codigo_carreraFld = new javax.swing.JTextField();
+        cedulaFld = new javax.swing.JTextField();
         buscarFld = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         instrumentoTbl = new javax.swing.JTable();
@@ -67,13 +68,13 @@ public class CarrerasView extends JInternalFrame implements java.util.Observer {
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setResizable(true);
-        setTitle("Informacion Carreras");
+        setTitle("Informacion Alumnos");
 
-        codigo_carreraLbl.setText("Código Carrera:");
+        codigo_carreraLbl.setText("Cédula Alumno:");
 
-        codigo_carreraFld.addActionListener(new java.awt.event.ActionListener() {
+        cedulaFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                codigo_carreraFldActionPerformed(evt);
+                cedulaFldActionPerformed(evt);
             }
         });
 
@@ -137,7 +138,7 @@ public class CarrerasView extends JInternalFrame implements java.util.Observer {
                         .addGap(18, 18, 18)
                         .addComponent(codigo_carreraLbl)
                         .addGap(18, 18, 18)
-                        .addComponent(codigo_carreraFld)
+                        .addComponent(cedulaFld)
                         .addGap(18, 18, 18)
                         .addComponent(buscarFld, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -154,7 +155,7 @@ public class CarrerasView extends JInternalFrame implements java.util.Observer {
                 .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(codigo_carreraLbl)
-                    .addComponent(codigo_carreraFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cedulaFld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buscarFld, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
@@ -171,20 +172,17 @@ public class CarrerasView extends JInternalFrame implements java.util.Observer {
     private void buscarFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarFldActionPerformed
         controller.buscar();
     }//GEN-LAST:event_buscarFldActionPerformed
-
     private void instrumentoTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instrumentoTblMouseClicked
         if (evt.getClickCount() == 2) {
             int row = this.instrumentoTbl.getSelectedRow();
-            ApplicationDesktop.CARRERA_VIEW.setLocation(evt.getLocationOnScreen());
+            ApplicationDesktop.ALUMNO_VIEW.setLocation(evt.getLocationOnScreen());
             controller.editar(row);
         }
     }//GEN-LAST:event_instrumentoTblMouseClicked
-
     private void agregarFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarFldActionPerformed
-        ApplicationDesktop.CARRERA_VIEW.setLocation(this.agregarFld.getLocationOnScreen());
+        ApplicationDesktop.ALUMNO_VIEW.setLocation(this.agregarFld.getLocationOnScreen());
         controller.agregar();
     }//GEN-LAST:event_agregarFldActionPerformed
-
     private void borrarFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarFldActionPerformed
         int row = this.instrumentoTbl.getSelectedRow();
         if (row != -1) {
@@ -194,117 +192,14 @@ public class CarrerasView extends JInternalFrame implements java.util.Observer {
             }
         }
     }//GEN-LAST:event_borrarFldActionPerformed
-
-    private void codigo_carreraFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigo_carreraFldActionPerformed
+    private void cedulaFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulaFldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_codigo_carreraFldActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            /*for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if("Windows".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    
-//                    break;
-//                }           
-//            }           */
-//            javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CarrerasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CarrerasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CarrerasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CarrerasView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new CarrerasView().setVisible(true);
-//            }
-//        });
-//
-//    }
-
+    }//GEN-LAST:event_cedulaFldActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarFld;
     private javax.swing.JButton borrarFld;
     private javax.swing.JButton buscarFld;
-    public javax.swing.JTextField codigo_carreraFld;
+    public javax.swing.JTextField cedulaFld;
     private javax.swing.JLabel codigo_carreraLbl;
     private javax.swing.JTable instrumentoTbl;
     private javax.swing.JScrollPane jScrollPane1;

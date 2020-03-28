@@ -1,7 +1,7 @@
 package Controllers;
 
 import Entities.Usuario;
-import Models.InicioSesionModel;
+import Models.ModelTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
@@ -22,13 +22,13 @@ public class InicioSesionController {
 
     @Context
     private HttpServletRequest request;
-    private InicioSesionModel model;
+    private ModelTemplate<Usuario, String> model;
 
     /**
      * Creates a new instance of InicioSesionController
      */
     public InicioSesionController() {
-        model = new InicioSesionModel();
+        model = new ModelTemplate<>(Usuario.class);
     }
 
     /**
@@ -39,7 +39,7 @@ public class InicioSesionController {
     @PUT
     @Path("/ingresar")
     public Boolean iniciarSesion(Usuario usuario) {
-        Boolean valor = model.iniciarSesion(usuario);
+        Boolean valor = model.iniciarSesion(usuario.getCedula(), usuario.getClave());
         if (valor) {
             request.getSession(true).setAttribute("USER", usuario);
         }

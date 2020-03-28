@@ -3,7 +3,7 @@ package Controllers;
 import Entities.Ciclo;
 import Exceptions.GlobalException;
 import Exceptions.NoDataException;
-import Models.CicloModel;
+import Models.ModelTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,13 +24,13 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CicloController {
 
-    private CicloModel model;
+    private ModelTemplate<Ciclo, String> model;
 
     /**
      * Creates a new instance of CicloResource
      */
     public CicloController() {
-        model = new CicloModel();
+        model = new ModelTemplate<>(Ciclo.class);
     }
 
     /**
@@ -42,7 +42,8 @@ public class CicloController {
     @Path("/listar")
     public List<Ciclo> listar_ciclo(@QueryParam("id") String id) {
         try {
-            return id.isBlank() ? model.listar_ciclo() : model.listar_ciclo().stream().filter(ciclo -> ciclo.getNo_ciclo().startsWith(id)).collect(Collectors.toList());
+            ArrayList<Ciclo> lista_objetos = new ArrayList(model.listar_objeto());
+            return id.isBlank() ? lista_objetos : lista_objetos.stream().filter(ciclo -> ciclo.getNo_ciclo().startsWith(id)).collect(Collectors.toList());
         } catch (GlobalException | NoDataException ex) {
         }
         return new ArrayList();

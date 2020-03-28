@@ -2,8 +2,7 @@ package Controllers;
 
 import Application.ApplicationDesktop;
 import Entities.Usuario;
-import Models.InicioSesionModels.InicioSesionModelMain;
-import Models.Model;
+import Models.ObjetoModel;
 import Views.InicioSesionView;
 
 /**
@@ -12,36 +11,25 @@ import Views.InicioSesionView;
  */
 public class InicioSesionController {
 
-    Model domainModel;
-    InicioSesionView view;
-    InicioSesionModelMain model;
+    private final InicioSesionView view;
+    private final ObjetoModel<Usuario, String> model;
 
-    public InicioSesionController(InicioSesionView view, InicioSesionModelMain model, Model domainModel) {
-        this.domainModel = domainModel;
+    public InicioSesionController(InicioSesionView view, ObjetoModel model) {
+        model.init(null, null);
+
         this.view = view;
         this.model = model;
-        this.model.setCurrent(new Usuario());
-        this.model.clearErrors();
+
         view.setController(this);
         view.setModel(model);
     }
 
     public Boolean iniciarSesion() {
-        Usuario usuario_ingreso = new Usuario();
         model.clearErrors();
-
-        usuario_ingreso.setCedula(view.getCedulaTxtFld());
-        if (view.getCedulaTxtFld().length() == 0) {
-            model.getErrores().put("Cedula", "Cedula Requerida");
-        }
-
-        usuario_ingreso.setClave(view.getClavetxtFld());
-        if (view.getClavetxtFld().length() == 0) {
-            model.getErrores().put("Clave", "Clave Requerida");
-        }
-
+        Usuario usuario_ingreso = createObject();
+        checkErrors();
         if (model.getErrores().isEmpty()) {
-            if (domainModel.iniciarSesion(usuario_ingreso)) {
+            if (model.getModelTemplate().iniciarSesion(usuario_ingreso.getCedula(), usuario_ingreso.getClave())) {
                 model.setMensaje("");
 //                model.setMensaje("Bienvenido a SisGesAca (:");
                 ApplicationDesktop.APP_VIEW.setVisible(true);
@@ -70,6 +58,22 @@ public class InicioSesionController {
 
     public void exit() {
         System.exit(0);
+    }
+
+    public Usuario createObject() {
+        Usuario usuario = new Usuario();
+        usuario.setCedula(view.cedulaTxtFld.getText());
+        usuario.setClave(view.clavetxtFld.getText());
+        return usuario;
+    }
+
+    public void checkErrors() {
+        if (view.cedulaTxtFld.getText().length() == 0) {
+            model.getErrores().put("Cedula", "Cedula Requerida");
+        }
+        if (view.clavetxtFld.getText().length() == 0) {
+            model.getErrores().put("Clave", "Clave Requerida");
+        }
     }
 
 }

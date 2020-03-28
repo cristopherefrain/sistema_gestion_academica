@@ -1,77 +1,75 @@
 package Controllers;
 
 import Entities.Profesor;
-import Models.Model;
 import Views.ProfesorView;
 import Application.ApplicationDesktop;
-import Models.ProfesoresModels.ProfesorModelMain;
+import static Application.ApplicationDesktop.PROFESOR_LISTADO_CONTROLLER;
+import Exceptions.GlobalException;
+import Exceptions.NoDataException;
+import Models.ObjetoModel;
 
-public class ProfesorController {
+public final class ProfesorController {
 
-    Model domainModel;
-    ProfesorView view;
-    ProfesorModelMain model;
+    private final ProfesorView view;
+    private final ObjetoModel<Profesor, String> model;
 
-    public ProfesorController(ProfesorView view, ProfesorModelMain model, Model domainModel) {
-        this.domainModel = domainModel;
+    public ProfesorController(ProfesorView view, ObjetoModel model) {
+        model.init(null, null);
+
         this.view = view;
         this.model = model;
-        this.model.setCurrent(new Profesor());
-        this.model.clearErrors();
+
         view.setController(this);
         view.setModel(model);
     }
 
     public void guardar() {
-
-        Profesor nuevo_profesor = new Profesor();
         model.clearErrors();
-
-        nuevo_profesor.setCedula_profesor(view.cedulaFld.getText());
-        if (view.cedulaFld.getText().length() == 0) {
-            model.getErrores().put("Cedula", "Cedula requerida");
-        }
-
-        nuevo_profesor.setNombre(view.nombreFld.getText());
-        if (view.nombreFld.getText().length() == 0) {
-            model.getErrores().put("Nombre", "Nombre requerido");
-        }
-
-        nuevo_profesor.setTelefono(view.telefonoFld.getText());
-        if (view.telefonoFld.getText().length() == 0) {
-            model.getErrores().put("Telefono", "Telefono requerido");
-        }
-        
-        nuevo_profesor.setEmail(view.emailFld.getText());
-        if (view.emailFld.getText().length() == 0) {
-            model.getErrores().put("Email", "Email requerido");
-        }
-
+        Profesor nuevo_profesor = createObject();
+        checkErrors();
         if (model.getErrores().isEmpty()) {
-
             try {
                 switch (model.getModo()) {
-
                     case ApplicationDesktop.MODO_AGREGAR:
-
-                        domainModel.insertar_profesor(nuevo_profesor);
+                        model.getModelTemplate().insertar_objeto(nuevo_profesor);
                         model.setMensaje("Nueva profesor agregado");
-
                         break;
-
                     case ApplicationDesktop.MODO_EDITAR:
-
-                        domainModel.modificar_profesor(nuevo_profesor);
+                        model.getModelTemplate().modificar_objeto(nuevo_profesor);
                         model.setMensaje("Profesor modificado");
-
                         break;
                 }
-            } catch (Exception e) {
+                PROFESOR_LISTADO_CONTROLLER.buscar();
+            } catch (GlobalException | NoDataException e) {
                 model.setCurrent(nuevo_profesor);
             }
         } else {
             model.setMensaje("Error!");
             model.setCurrent(nuevo_profesor);
+        }
+    }
+
+    public Profesor createObject() {
+        Profesor profesor = new Profesor();
+        profesor.setCedula_profesor(view.cedulaFld.getText());
+        profesor.setNombre(view.nombreFld.getText());
+        profesor.setTelefono(view.telefonoFld.getText());
+        profesor.setEmail(view.emailFld.getText());
+        return profesor;
+    }
+
+    public void checkErrors() {
+        if (view.cedulaFld.getText().length() == 0) {
+            model.getErrores().put("Cedula", "Cedula requerida");
+        }
+        if (view.nombreFld.getText().length() == 0) {
+            model.getErrores().put("Nombre", "Nombre requerido");
+        }
+        if (view.telefonoFld.getText().length() == 0) {
+            model.getErrores().put("Telefono", "Telefono requerido");
+        }
+        if (view.emailFld.getText().length() == 0) {
+            model.getErrores().put("Email", "Email requerido");
         }
     }
 

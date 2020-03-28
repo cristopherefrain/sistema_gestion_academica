@@ -1,12 +1,8 @@
 package Application;
 
 import Controllers.*;
+import Entities.*;
 import Models.*;
-import Models.AlumnosModels.AlumnoModelMain;
-import Models.CarrerasModels.CarreraModelMain;
-import Models.CursosModels.CursoModelMain;
-import Models.InicioSesionModels.InicioSesionModelMain;
-import Models.ProfesoresModels.ProfesorModelMain;
 import Views.*;
 import java.awt.Color;
 import javax.swing.BorderFactory;
@@ -22,89 +18,73 @@ public class ApplicationDesktop {
      * @param args the command line arguments
      */
     public static void main(String... args) {
-        Model domainModel = Model.instance();
-
         AppView appView = new AppView();
         APP_VIEW = appView;
-        /**
-         * ***************************************
-         */
-        InicioSesionModels mainInicioSesionModels = new InicioSesionModels();
-        InicioSesionModelMain inicioSesionmodel = mainInicioSesionModels.new InicioSesionModelMain();
-        InicioSesionView inicioSesionview = new InicioSesionView();
-        INICIO_SESION_VIEW = inicioSesionview;
-        InicioSesionController inicioSesioncontroller = new InicioSesionController(inicioSesionview, inicioSesionmodel, domainModel);
-        LOGIN_CONTROLLER = inicioSesioncontroller;
-        inicioSesionview.setVisible(true);
-        /**
-         * ***************************************
-         */
-        CarrerasModels mainCarrerasModels = new CarrerasModels();
-        CarreraModelMain carreramodel = mainCarrerasModels.new CarreraModelMain();
-        CarrerasModel carrerasmodel = new CarrerasModel();
-
-        CarreraView carreraview = new CarreraView();
-        CARRERA_VIEW = carreraview;
-        CarreraController carreracontroller = new CarreraController(carreraview, carreramodel, domainModel);
-        appView.addInternalFrame(carreraview);
-
-        CarrerasView carrerasview = new CarrerasView();
-        CARRERAS_VIEW = carrerasview;
-        CarrerasController carrerascontroller = new CarrerasController(carrerasview, carrerasmodel, domainModel);
-        appView.addInternalFrame(carrerasview);
 
         /**
          * ***************************************
          */
-        CursosModels mainCursosModels = new CursosModels();
-        CursoModelMain cursomodel = mainCursosModels.new CursoModelMain();
-        CursosModel cursosmodel = new CursosModel();
-
-        CursoView cursoview = new CursoView();
-        CURSO_VIEW = cursoview;
-        CursoController cursocontroller = new CursoController(cursoview, cursomodel, domainModel);
-        appView.addInternalFrame(cursoview);
-
-        CursosView cursosview = new CursosView();
-        CURSOS_VIEW = cursosview;
-        CursosController cursoscontroller = new CursosController(cursosview, cursosmodel, domainModel);
-        appView.addInternalFrame(cursosview);
+        ObjetoModel<Usuario, String> objetoModel_USUARIO = new ObjetoModel<>(Usuario.class);
+        InicioSesionView inicioSesionview = INICIO_SESION_VIEW = new InicioSesionView();
+        InicioSesionController inicioSesioncontroller = LOGIN_CONTROLLER = new InicioSesionController(inicioSesionview, objetoModel_USUARIO);
 
         /**
          * ***************************************
          */
-        ProfesoresModels mainProfesoresModels = new ProfesoresModels();
-        ProfesorModelMain profesormodel = mainProfesoresModels.new ProfesorModelMain();
-        ProfesoresModel profesoresmodel = new ProfesoresModel();
+        ObjetoModel<Alumno, String> alumnoModel = new ObjetoModel<>(Alumno.class);
+        AlumnoView alumnoView = ALUMNO_VIEW = new AlumnoView();
+        AlumnoController AlumnoController = new AlumnoController(alumnoView, alumnoModel);
+        appView.addInternalFrame(alumnoView);
 
-        ProfesorView profesorview = new ProfesorView();
-        PROFESOR_VIEW = profesorview;
-        ProfesorController profesorcontroller = new ProfesorController(profesorview, profesormodel, domainModel);
-        appView.addInternalFrame(profesorview);
-
-        ProfesoresView profesoresview = new ProfesoresView();
-        PROFESORES_VIEW = profesoresview;
-        ProfesoresController profesorescontroller = new ProfesoresController(profesoresview, profesoresmodel, domainModel);
-        appView.addInternalFrame(profesoresview);
+        ObjetoListadoModel<Alumno, String> alumnoListado = new ObjetoListadoModel<>(Alumno.class);
+        AlumnoListadoView alumnoListadoView = ALUMNO_LISTADO_VIEW = new AlumnoListadoView();
+        AlumnoListadoController alumnoListadoController = ALUMNO_LISTADO_CONTROLLER = new AlumnoListadoController(alumnoListadoView, alumnoListado);
+        appView.addInternalFrame(alumnoListadoView);
 
         /**
          * ***************************************
          */
-        AlumnosModels mainAlumnosModels = new AlumnosModels();
-        AlumnoModelMain alumnomodel = mainAlumnosModels.new AlumnoModelMain();
-        AlumnosModel alumnosmodel = new AlumnosModel();
+        ObjetoModel<Carrera, String> carreraModel = new ObjetoModel<>(Carrera.class);
+        CarreraView carreraModelView = CARRERA_VIEW = new CarreraView();
+        CARRERA_VIEW = carreraModelView;
+        CarreraController carreraController = new CarreraController(carreraModelView, carreraModel);
+        appView.addInternalFrame(carreraModelView);
 
-        AlumnoView alumnoview = new AlumnoView();
-        ALUMNO_VIEW = alumnoview;
-        AlumnoController alumnocontroller = new AlumnoController(alumnoview, alumnomodel, domainModel);
-        appView.addInternalFrame(alumnoview);
+        ObjetoListadoModel<Carrera, String> carreraListado = new ObjetoListadoModel<>(Carrera.class);
+        CarreraListadoView carreraListadoView = CARRERA_LISTADO_VIEW = new CarreraListadoView();
+        CarreraListadoController carrerasListadoController = CARRERA_LISTADO_CONTROLLER = new CarreraListadoController(carreraListadoView, carreraListado);
+        appView.addInternalFrame(carreraListadoView);
 
-        AlumnosView alumnosview = new AlumnosView();
-        ALUMNOS_VIEW = alumnosview;
-        AlumnosController alumnoscontroller = new AlumnosController(alumnosview, alumnosmodel, domainModel);
-        appView.addInternalFrame(alumnosview);
+        /**
+         * ***************************************
+         */
+        ObjetoModel<Curso, String> cursoModel = new ObjetoModel<>(Curso.class);
+        CursoView cursoView = CURSO_VIEW = new CursoView();
+        CursoController cursoController = new CursoController(cursoView, cursoModel);
+        appView.addInternalFrame(cursoView);
 
+        ObjetoListadoModel<Curso, String> CursoListado = new ObjetoListadoModel<>(Curso.class);
+        CursoListadoView cursoListadoView = CURSOS_VIEW = new CursoListadoView();
+        CursoListadoController cursoscontroller = CURSO_LISTADO_CONTROLLER = new CursoListadoController(cursoListadoView, CursoListado);
+        appView.addInternalFrame(cursoListadoView);
+
+        /**
+         * ***************************************
+         */
+        ObjetoModel<Profesor, String> profesorModel = new ObjetoModel<>(Profesor.class);
+        ProfesorView profesorView = PROFESOR_VIEW = new ProfesorView();
+        ProfesorController profesorController = new ProfesorController(profesorView, profesorModel);
+        appView.addInternalFrame(profesorView);
+
+        ObjetoListadoModel<Profesor, String> profesorListado = new ObjetoListadoModel<>(Profesor.class);
+        ProfesorListadoView profesorListadoView = PROFESOR_LISTADO_VIEW = new ProfesorListadoView();
+        ProfesorListadoController profesorListadoController = PROFESOR_LISTADO_CONTROLLER = new ProfesorListadoController(profesorListadoView, profesorListado);
+        appView.addInternalFrame(profesorListadoView);
+        /**
+         * ***************************************
+         */
 //        appView.setVisible(true);
+        INICIO_SESION_VIEW.setVisible(true);
     }
 
     public static AppView APP_VIEW;
@@ -112,17 +92,21 @@ public class ApplicationDesktop {
     public static InicioSesionView INICIO_SESION_VIEW;
     public static InicioSesionController LOGIN_CONTROLLER;
 
+    public static AlumnoView ALUMNO_VIEW;
+    public static AlumnoListadoView ALUMNO_LISTADO_VIEW;
+    public static AlumnoListadoController ALUMNO_LISTADO_CONTROLLER;
+
     public static CarreraView CARRERA_VIEW;
-    public static CarrerasView CARRERAS_VIEW;
+    public static CarreraListadoView CARRERA_LISTADO_VIEW;
+    public static CarreraListadoController CARRERA_LISTADO_CONTROLLER;
 
     public static CursoView CURSO_VIEW;
-    public static CursosView CURSOS_VIEW;
+    public static CursoListadoView CURSOS_VIEW;
+    public static CursoListadoController CURSO_LISTADO_CONTROLLER;
 
     public static ProfesorView PROFESOR_VIEW;
-    public static ProfesoresView PROFESORES_VIEW;
-
-    public static AlumnoView ALUMNO_VIEW;
-    public static AlumnosView ALUMNOS_VIEW;
+    public static ProfesorListadoView PROFESOR_LISTADO_VIEW;
+    public static ProfesorListadoController PROFESOR_LISTADO_CONTROLLER;
 
     public static final int MODO_AGREGAR = 0;
     public static final int MODO_EDITAR = 1;

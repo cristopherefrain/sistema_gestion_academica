@@ -1,57 +1,52 @@
 package Views;
 
-
-import Controllers.CursosController;
-import Models.CursosModel;
+import Controllers.CarreraListadoController;
 import Application.ApplicationDesktop;
-import javax.swing.*;
+import Entities.Carrera;
+import Models.ObjetoListadoModel;
+import java.util.Observer;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
-public class CursosView extends JInternalFrame implements java.util.Observer {
+public final class CarreraListadoView extends JInternalFrame implements Observer {
 
-    CursosController controller;
-    CursosModel model;
+    private CarreraListadoController controller;
+    private ObjetoListadoModel<Carrera, String> model;
 
-    public void setController(CursosController controller) {
+    public void setController(CarreraListadoController controller) {
         this.controller = controller;
     }
 
-    public void setModel(CursosModel model) {
+    public void setModel(ObjetoListadoModel model) {
         this.model = model;
         model.addObserver(this);
     }
 
-    public CursosModel getModel() {
+    public ObjetoListadoModel<Carrera, String> getModel() {
         return model;
     }
 
     @Override
     public void update(java.util.Observable updatedModel, Object parametros) {
-
         codigo_carreraFld.setText(model.getFilter().getCodigo_carrera());
         if (model.getErrores().get("nombreFld") != null) {
             codigo_carreraLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
             codigo_carreraLbl.setToolTipText(model.getErrores().get("nombreFld"));
-
         } else {
-
             codigo_carreraLbl.setBorder(null);
             codigo_carreraLbl.setToolTipText("");
         }
-
-        instrumentoTbl.setModel(model.getCursos());
-        instrumentoTbl.getColumn("Codigo Curso").setPreferredWidth(100);
-        instrumentoTbl.getColumn("Codigo Carrera").setPreferredWidth(100);
-        instrumentoTbl.getColumn("Numero Ciclo").setPreferredWidth(100);
-        instrumentoTbl.getColumn("Nombre").setPreferredWidth(100);
-        instrumentoTbl.getColumn("Creditos").setPreferredWidth(100);
-        instrumentoTbl.getColumn("Horas Semanales").setPreferredWidth(100);
+        instrumentoTbl.setModel(model.getTableModel());
+        instrumentoTbl.getColumn("Codigo Carrera").setPreferredWidth(120);
+        instrumentoTbl.getColumn("Nombre").setPreferredWidth(250);
+        instrumentoTbl.getColumn("Titulo").setPreferredWidth(200);
         this.revalidate();
         if (!model.getMensaje().equals("")) {
             JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    public CursosView() {
+    public CarreraListadoView() {
         initComponents();
     }
 
@@ -70,9 +65,9 @@ public class CursosView extends JInternalFrame implements java.util.Observer {
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setResizable(true);
-        setTitle("Informacion Cursos");
+        setTitle("Informacion Carreras");
 
-        codigo_carreraLbl.setText("Código Curso:");
+        codigo_carreraLbl.setText("Código Carrera:");
 
         codigo_carreraFld.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,20 +169,17 @@ public class CursosView extends JInternalFrame implements java.util.Observer {
     private void buscarFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarFldActionPerformed
         controller.buscar();
     }//GEN-LAST:event_buscarFldActionPerformed
-
     private void instrumentoTblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instrumentoTblMouseClicked
         if (evt.getClickCount() == 2) {
             int row = this.instrumentoTbl.getSelectedRow();
-            ApplicationDesktop.CURSO_VIEW.setLocation(evt.getLocationOnScreen());
+            ApplicationDesktop.CARRERA_VIEW.setLocation(evt.getLocationOnScreen());
             controller.editar(row);
         }
     }//GEN-LAST:event_instrumentoTblMouseClicked
-
     private void agregarFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarFldActionPerformed
-        ApplicationDesktop.CURSO_VIEW.setLocation(this.agregarFld.getLocationOnScreen());
+        ApplicationDesktop.CARRERA_VIEW.setLocation(this.agregarFld.getLocationOnScreen());
         controller.agregar();
     }//GEN-LAST:event_agregarFldActionPerformed
-
     private void borrarFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarFldActionPerformed
         int row = this.instrumentoTbl.getSelectedRow();
         if (row != -1) {
@@ -197,176 +189,9 @@ public class CursosView extends JInternalFrame implements java.util.Observer {
             }
         }
     }//GEN-LAST:event_borrarFldActionPerformed
-
     private void codigo_carreraFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigo_carreraFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_codigo_carreraFldActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            /*for(javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if("Windows".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    
-//                    break;
-//                }           
-//            }           */
-//            javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CursosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CursosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CursosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CursosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new CursosView().setVisible(true);
-//            }
-//        });
-//
-//    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agregarFld;
     private javax.swing.JButton borrarFld;

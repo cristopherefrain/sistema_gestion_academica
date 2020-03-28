@@ -1,6 +1,7 @@
 package Models;
 
 import Entities.*;
+import static Services.UtilitiesSQL.validateCredentials;
 import Exceptions.*;
 import Services.*;
 import java.util.Collection;
@@ -12,20 +13,20 @@ import java.util.Collection;
 public class Model {
 
     private static Model uniqueInstance;
-    private final AlumnoService daoAlumno;
-    private final CarreraService daoCarrera;
-    private final CicloService daoCiclo;
-    private final CursoService daoCurso;
-    private final ProfesorService daoProfesor;
-    private final InicioSesionService daoInicioSesion;
+    private final ServiceTemplate<Alumno, String> daoAlumno;
+    private final ServiceTemplate<Carrera, String> daoCarrera;
+    private final ServiceTemplate<Ciclo, String> daoCiclo;
+    private final ServiceTemplate<Curso, String> daoCurso;
+    private final ServiceTemplate<Profesor, String> daoProfesor;
+    private final ServiceTemplate<Usuario, String> daoInicioSesion;
 
     public Model() {
-        daoAlumno = new AlumnoService();
-        daoCarrera = new CarreraService();
-        daoCiclo = new CicloService();
-        daoCurso = new CursoService();
-        daoProfesor = new ProfesorService();
-        daoInicioSesion = new InicioSesionService();
+        daoAlumno = new ServiceTemplate<>(Alumno.class);
+        daoCarrera = new ServiceTemplate<>(Carrera.class);
+        daoCiclo = new ServiceTemplate<>(Ciclo.class);
+        daoCurso = new ServiceTemplate<>(Curso.class);
+        daoProfesor = new ServiceTemplate<>(Profesor.class);
+        daoInicioSesion = new ServiceTemplate<>(Usuario.class);
     }
 
     public static Model instance() {
@@ -35,98 +36,114 @@ public class Model {
         return uniqueInstance;
     }
 
-//    Service Alumno
-    public void insertar_alumno(final Alumno elAlumno) throws GlobalException, NoDataException {
-        daoAlumno.insertar_alumno(elAlumno);
+    /*Buscar Objeto*/
+    public Object buscar_objeto(Class<?> entityClass, Object id) throws GlobalException, NoDataException {
+        switch (entityClass.getSimpleName()) {
+            case "Alumno":
+                return daoAlumno.buscar_objeto((String) id);
+            case "Carrera":
+                return daoCarrera.buscar_objeto((String) id);
+            case "Ciclo":
+                return daoCiclo.buscar_objeto((String) id);
+            case "Curso":
+                return daoCurso.buscar_objeto((String) id);
+            case "Profesor":
+                return daoProfesor.buscar_objeto((String) id);
+            default:
+                return null;
+        }
     }
 
-    public void modificar_alumno(final Alumno elAlumno) throws GlobalException, NoDataException {
-        daoAlumno.modificar_alumno(elAlumno);
+    /*Listar Objeto*/
+    public Collection listar_objeto(Class<?> entityClass) throws GlobalException, NoDataException {
+        switch (entityClass.getSimpleName()) {
+            case "Alumno":
+                return daoAlumno.listar_objeto();
+            case "Carrera":
+                return daoCarrera.listar_objeto();
+            case "Ciclo":
+                return daoCiclo.listar_objeto();
+            case "Curso":
+                return daoCurso.listar_objeto();
+            case "Profesor":
+                return daoProfesor.listar_objeto();
+            default:
+                return null;
+        }
     }
 
-    public Alumno buscar_alumno(final String id) throws GlobalException, NoDataException {
-        return daoAlumno.buscar_alumno(id);
+    /*Insertar Objeto*/
+    public void insertar_objeto(Class<?> entityClass, Object objeto) throws GlobalException, NoDataException {
+        switch (entityClass.getSimpleName()) {
+            case "Alumno":
+                daoAlumno.insertar_objeto((Alumno) objeto);
+                break;
+            case "Carrera":
+                daoCarrera.insertar_objeto((Carrera) objeto);
+                break;
+            case "Ciclo":
+                daoCiclo.insertar_objeto((Ciclo) objeto);
+                break;
+            case "Curso":
+                daoCurso.insertar_objeto((Curso) objeto);
+                break;
+            case "Profesor":
+                daoProfesor.insertar_objeto((Profesor) objeto);
+                break;
+            default:
+                break;
+        }
     }
 
-    public Collection listar_alumno() throws GlobalException, NoDataException {
-        return daoAlumno.listar_alumno();
+    /*Modificar Objeto*/
+    public void modificar_objeto(Class<?> entityClass, Object objeto) throws GlobalException, NoDataException {
+        switch (entityClass.getSimpleName()) {
+            case "Alumno":
+                daoAlumno.modificar_objeto((Alumno) objeto);
+                break;
+            case "Carrera":
+                daoCarrera.modificar_objeto((Carrera) objeto);
+                break;
+            case "Ciclo":
+                daoCiclo.modificar_objeto((Ciclo) objeto);
+                break;
+            case "Curso":
+                daoCurso.modificar_objeto((Curso) objeto);
+                break;
+            case "Profesor":
+                daoProfesor.modificar_objeto((Profesor) objeto);
+                break;
+            default:
+                break;
+        }
     }
 
-    public void eliminar_alumno(final String id) throws GlobalException, NoDataException {
-        daoAlumno.eliminar_alumno(id);
+    /*Eliminar Objeto*/
+    public void eliminar_objeto(Class<?> entityClass, Object id) throws GlobalException, NoDataException {
+        switch (entityClass.getSimpleName()) {
+            case "Alumno":
+                daoAlumno.eliminar_objeto((String) id);
+                break;
+            case "Carrera":
+                daoCarrera.eliminar_objeto((String) id);
+                break;
+            case "Ciclo":
+                daoCiclo.eliminar_objeto((String) id);
+                break;
+            case "Curso":
+                daoCurso.eliminar_objeto((String) id);
+                break;
+            case "Profesor":
+                daoProfesor.eliminar_objeto((String) id);
+                break;
+            default:
+                break;
+        }
     }
 
-    //    Service Carrera
-    public void insertar_carrera(final Carrera laCarrera) throws GlobalException, NoDataException {
-        daoCarrera.insertar_carrera(laCarrera);
-    }
-
-    public void modificar_carrera(final Carrera laCarrera) throws GlobalException, NoDataException {
-        daoCarrera.modificar_carrera(laCarrera);
-    }
-
-    public Carrera buscar_carrera(final String id) throws GlobalException, NoDataException {
-        return daoCarrera.buscar_carrera(id);
-    }
-
-    public Collection listar_carrera() throws GlobalException, NoDataException {
-        return daoCarrera.listar_carrera();
-    }
-
-    public void eliminar_carrera(final String id) throws GlobalException, NoDataException {
-        daoCarrera.eliminar_carrera(id);
-    }
-
-    //    Service Ciclo
-    public Collection listar_ciclo() throws GlobalException, NoDataException {
-        return daoCiclo.listar_ciclo();
-    }
-
-    //    Service Curso
-    public void insertar_curso(final Curso elCurso) throws GlobalException, NoDataException {
-        daoCurso.insertar_curso(elCurso);
-    }
-
-    public void modificar_curso(final Curso elCurso) throws GlobalException, NoDataException {
-        daoCurso.modificar_curso(elCurso);
-    }
-
-    public Curso buscar_curso(final String id) throws GlobalException, NoDataException {
-        return daoCurso.buscar_curso(id);
-    }
-
-    public Collection listar_curso() throws GlobalException, NoDataException {
-        return daoCurso.listar_curso();
-    }
-
-    public void eliminar_curso(final String id) throws GlobalException, NoDataException {
-        daoCurso.eliminar_curso(id);
-    }
-
-    //    Service Profesor
-    public void insertar_profesor(final Profesor elProfesor) throws GlobalException, NoDataException {
-        daoProfesor.insertar_profesor(elProfesor);
-    }
-
-    public void modificar_profesor(final Profesor elProfesor) throws GlobalException, NoDataException {
-        daoProfesor.modificar_profesor(elProfesor);
-    }
-
-    public Profesor buscar_profesor(final String id) throws GlobalException, NoDataException {
-        return daoProfesor.buscar_profesor(id);
-    }
-
-    public Collection listar_profesor() throws GlobalException, NoDataException {
-        return daoProfesor.listar_profesor();
-    }
-
-    public void eliminar_profesor(final String id) throws GlobalException, NoDataException {
-        daoProfesor.listar_profesor();
-    }
-
-    //    Service Inicio Sesion
-    public Boolean iniciarSesion(final Usuario usuario) {
-        return daoInicioSesion.iniciarSesion(usuario);
+    //Service Inicio Sesion
+    public Boolean iniciarSesion(final String cedula, final String clave) {
+        return validateCredentials(cedula, clave);
     }
 
 }

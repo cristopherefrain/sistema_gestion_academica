@@ -3,7 +3,7 @@ package Controllers;
 import Entities.Carrera;
 import Exceptions.GlobalException;
 import Exceptions.NoDataException;
-import Models.CarreraModel;
+import Models.ModelTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,13 +27,13 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CarreraController {
 
-    private CarreraModel model;
+    private ModelTemplate<Carrera, String> model;
 
     /**
      * Creates a new instance of CarreraResource
      */
     public CarreraController() {
-        model = new CarreraModel();
+        model = new ModelTemplate<>(Carrera.class);
     }
 
     /**
@@ -45,7 +45,7 @@ public class CarreraController {
     @Path("/insertar")
     public void insertar_carrera(Carrera carrera) {
         try {
-            model.insertar_carrera(carrera);
+            model.insertar_objeto(carrera);
         } catch (GlobalException | NoDataException ex) {
         }
     }
@@ -54,7 +54,7 @@ public class CarreraController {
     @Path("/modificar")
     public void modificar_carrera(Carrera carrera) {
         try {
-            model.modificar_carrera(carrera);
+            model.modificar_objeto(carrera);
         } catch (GlobalException | NoDataException ex) {
         }
     }
@@ -63,7 +63,7 @@ public class CarreraController {
     @Path("/buscar")
     public Carrera buscar_carrera(@QueryParam("id") String id) {
         try {
-            return model.buscar_carrera(id);
+            return model.buscar_objeto(id);
         } catch (GlobalException | NoDataException ex) {
         }
         return new Carrera();
@@ -73,7 +73,8 @@ public class CarreraController {
     @Path("/listar")
     public List<Carrera> listar_carrera(@QueryParam("id") String id) {
         try {
-            return id.isBlank()? model.listar_carrera() : model.listar_carrera().stream().filter(carrera -> carrera.getCodigo_carrera().startsWith(id)).collect(Collectors.toList());
+             ArrayList<Carrera> lista_objetos = new ArrayList(model.listar_objeto());
+            return id.isBlank() ? lista_objetos :lista_objetos.stream().filter(carrera -> carrera.getCodigo_carrera().startsWith(id)).collect(Collectors.toList());
         } catch (GlobalException | NoDataException ex) {
         }
         return new ArrayList();
@@ -83,7 +84,7 @@ public class CarreraController {
     @Path("/eliminar")
     public void eliminar_carrera(@QueryParam("id") String id) {
         try {
-            model.eliminar_carrera(id);
+            model.eliminar_objeto(id);
         } catch (GlobalException | NoDataException ex) {
         }
     }

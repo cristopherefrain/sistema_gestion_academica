@@ -3,7 +3,7 @@ package Controllers;
 import Entities.Profesor;
 import Exceptions.GlobalException;
 import Exceptions.NoDataException;
-import Models.ProfesorModel;
+import Models.ModelTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,13 +27,13 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProfesorController {
 
-    private ProfesorModel model;
+    private ModelTemplate<Profesor, String> model;
 
     /**
      * Creates a new instance of ProfesorResource
      */
     public ProfesorController() {
-        model = new ProfesorModel();
+        model = new ModelTemplate<>(Profesor.class);
     }
 
     /**
@@ -45,7 +45,7 @@ public class ProfesorController {
     @Path("/insertar")
     public void insertar_profesor(Profesor profesor) {
         try {
-            model.insertar_profesor(profesor);
+            model.insertar_objeto(profesor);
         } catch (GlobalException | NoDataException ex) {
         }
     }
@@ -54,7 +54,7 @@ public class ProfesorController {
     @Path("/modificar")
     public void modificar_profesor(Profesor profesor) {
         try {
-            model.modificar_profesor(profesor);
+            model.modificar_objeto(profesor);
         } catch (GlobalException | NoDataException ex) {
         }
     }
@@ -63,17 +63,18 @@ public class ProfesorController {
     @Path("/buscar")
     public Profesor buscar_profesor(@QueryParam("id") String id) {
         try {
-            return model.buscar_profesor(id);
+            return model.buscar_objeto(id);
         } catch (GlobalException | NoDataException ex) {
         }
-        return null;
+        return new Profesor();
     }
 
     @GET
     @Path("/listar")
     public List<Profesor> listar_profesor(@QueryParam("id") String id) {
         try {
-            return id.isBlank() ? model.listar_profesor() : model.listar_profesor().stream().filter(profesor -> profesor.getCedula_profesor().startsWith(id)).collect(Collectors.toList());
+            ArrayList<Profesor> lista_objetos = new ArrayList(model.listar_objeto());
+            return id.isBlank() ? lista_objetos : lista_objetos.stream().filter(profesor -> profesor.getCedula_profesor().startsWith(id)).collect(Collectors.toList());
         } catch (GlobalException | NoDataException ex) {
         }
         return new ArrayList();
@@ -83,7 +84,7 @@ public class ProfesorController {
     @Path("/eliminar")
     public void eliminar_profesor(@QueryParam("id") String id) {
         try {
-            model.eliminar_profesor(id);
+            model.eliminar_objeto(id);
         } catch (GlobalException | NoDataException ex) {
         }
     }

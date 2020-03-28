@@ -3,16 +3,85 @@ package Views;
 import Controllers.AlumnoController;
 import Entities.Alumno;
 import Application.ApplicationDesktop;
-import Models.AlumnosModels.AlumnoModelMain;
+import Models.ObjetoModel;
 import java.util.Observer;
 import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 
-public class AlumnoView extends JInternalFrame implements Observer {
+public final class AlumnoView extends JInternalFrame implements Observer {
+
+    private AlumnoController controller;
+    private ObjetoModel<Alumno, String> model;
 
     public AlumnoView() {
         super();
         initComponents();
+    }
+
+    public void setController(AlumnoController controller) {
+        this.controller = controller;
+    }
+
+    public void setModel(ObjetoModel model) {
+        this.model = model;
+        model.addObserver(this);
+    }
+
+    public ObjetoModel<Alumno, String> getModel() {
+        return model;
+    }
+
+    @Override
+    public void update(java.util.Observable updatedModel, Object parametros) {
+        Alumno AlumnoCurrent = model.getCurrent();
+        this.cedulaFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
+        cedulaFld.setText(AlumnoCurrent.getCedula_alumno());
+        if (model.getErrores().get("Cedula") != null) {
+            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            codigoLbl.setToolTipText(model.getErrores().get("Cedula"));
+        } else {
+            codigoLbl.setBorder(null);
+            codigoLbl.setToolTipText("");
+        }
+        nombreFld.setText(AlumnoCurrent.getNombre());
+        if (model.getErrores().get("Nombre") != null) {
+            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
+        } else {
+            nombreLbl.setBorder(null);
+            nombreLbl.setToolTipText("");
+        }
+        telefonoFld.setText(AlumnoCurrent.getTelefono());
+        if (model.getErrores().get("Nombre") != null) {
+            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
+        } else {
+            nombreLbl.setBorder(null);
+            nombreLbl.setToolTipText("");
+        }
+        emailFld.setText(AlumnoCurrent.getEmail());
+        if (model.getErrores().get("Creditos") != null) {
+            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            tituloLbl.setToolTipText(model.getErrores().get("Creditos"));
+        } else {
+            tituloLbl.setBorder(null);
+            tituloLbl.setToolTipText("");
+        }
+        fechaFld.setText(AlumnoCurrent.getFecha_nacimiento());
+        if (model.getErrores().get("Horas") != null) {
+            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            tituloLbl.setToolTipText(model.getErrores().get("Horas"));
+        } else {
+            tituloLbl.setBorder(null);
+            tituloLbl.setToolTipText("");
+        }
+        carreraFld.setModel(model.getComboBox1());
+        this.controller.actualizar();
+        carreraFld.setSelectedItem(AlumnoCurrent.getCarrera());
+        this.validate();
+        if (!model.getMensaje().equals("")) {
+            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -150,29 +219,22 @@ public class AlumnoView extends JInternalFrame implements Observer {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_atrasBtnActionPerformed
-
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
         this.controller.guardar();
         this.setVisible(false);
     }//GEN-LAST:event_guardarBtnActionPerformed
-
     private void cedulaFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulaFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cedulaFldActionPerformed
-
     private void telefonoFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefonoFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_telefonoFldActionPerformed
-
     private void nombreFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreFldActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
     public javax.swing.JComboBox<String> carreraFld;
@@ -189,85 +251,4 @@ public class AlumnoView extends JInternalFrame implements Observer {
     private javax.swing.JLabel tituloLbl;
     private javax.swing.JLabel tituloLbl1;
     // End of variables declaration//GEN-END:variables
-
-    AlumnoController controller;
-    AlumnoModelMain model;
-
-    public void setController(AlumnoController controller) {
-        this.controller = controller;
-    }
-
-    public void setModel(AlumnoModelMain model) {
-        this.model = model;
-        model.addObserver(this);
-    }
-
-    public AlumnoModelMain getModel() {
-        return model;
-    }
-
-    @Override
-    public void update(java.util.Observable updatedModel, Object parametros) {
-
-        Alumno AlumnoCurrent = model.getCurrent();
-
-        this.cedulaFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
-
-        cedulaFld.setText(AlumnoCurrent.getCedula_alumno());
-        if (model.getErrores().get("Cedula") != null) {
-            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            codigoLbl.setToolTipText(model.getErrores().get("Cedula"));
-        } else {
-            codigoLbl.setBorder(null);
-            codigoLbl.setToolTipText("");
-        }
-
-        nombreFld.setText(AlumnoCurrent.getNombre());
-        if (model.getErrores().get("Nombre") != null) {
-            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
-        } else {
-            nombreLbl.setBorder(null);
-            nombreLbl.setToolTipText("");
-        }
-
-        telefonoFld.setText(AlumnoCurrent.getTelefono());
-        if (model.getErrores().get("Nombre") != null) {
-            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
-        } else {
-            nombreLbl.setBorder(null);
-            nombreLbl.setToolTipText("");
-        }
-
-        emailFld.setText(AlumnoCurrent.getEmail());
-        if (model.getErrores().get("Creditos") != null) {
-            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            tituloLbl.setToolTipText(model.getErrores().get("Creditos"));
-        } else {
-            tituloLbl.setBorder(null);
-            tituloLbl.setToolTipText("");
-        }
-
-        fechaFld.setText(AlumnoCurrent.getFecha_nacimiento());
-        if (model.getErrores().get("Horas") != null) {
-            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            tituloLbl.setToolTipText(model.getErrores().get("Horas"));
-        } else {
-            tituloLbl.setBorder(null);
-            tituloLbl.setToolTipText("");
-        }
-
-        carreraFld.setModel(model.getCarrera());
-
-        this.controller.actualizar();
-
-        carreraFld.setSelectedItem(AlumnoCurrent.getCarrera());
-
-        this.validate();
-
-        if (!model.getMensaje().equals("")) {
-            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
 }

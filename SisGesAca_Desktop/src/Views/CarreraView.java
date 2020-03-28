@@ -3,15 +3,66 @@ package Views;
 import Controllers.CarreraController;
 import Entities.Carrera;
 import Application.ApplicationDesktop;
-import Models.CarrerasModels.CarreraModelMain;
-import javax.swing.*;
+import Models.ObjetoModel;
 import java.util.Observer;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
-public class CarreraView extends JInternalFrame implements Observer {
+public final class CarreraView extends JInternalFrame implements Observer {
+
+    private CarreraController controller;
+    private ObjetoModel<Carrera, String> model;
 
     public CarreraView() {
         super();
         initComponents();
+    }
+
+    public void setController(CarreraController controller) {
+        this.controller = controller;
+    }
+
+    public void setModel(ObjetoModel model) {
+        this.model = model;
+        model.addObserver(this);
+    }
+
+    public ObjetoModel<Carrera, String> getModel() {
+        return model;
+    }
+
+    @Override
+    public void update(java.util.Observable updatedModel, Object parametros) {
+        Carrera CarreraCurrent = model.getCurrent();
+        this.codigoFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
+        codigoFld.setText(CarreraCurrent.getCodigo_carrera());
+        if (model.getErrores().get("Carrera") != null) {
+            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            codigoLbl.setToolTipText(model.getErrores().get("Carrera"));
+        } else {
+            codigoLbl.setBorder(null);
+            codigoLbl.setToolTipText("");
+        }
+        nombreFld.setText(CarreraCurrent.getNombre());
+        if (model.getErrores().get("Nombre") != null) {
+            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
+        } else {
+            nombreLbl.setBorder(null);
+            nombreLbl.setToolTipText("");
+        }
+        tituloFld.setText(CarreraCurrent.getTitulo());
+        if (model.getErrores().get("Titulo") != null) {
+            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            tituloLbl.setToolTipText(model.getErrores().get("Titulo"));
+        } else {
+            tituloLbl.setBorder(null);
+            tituloLbl.setToolTipText("");
+        }
+        this.validate();
+        if (!model.getMensaje().equals("")) {
+            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -111,17 +162,13 @@ public class CarreraView extends JInternalFrame implements Observer {
     private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_atrasBtnActionPerformed
-
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
         this.controller.guardar();
         this.setVisible(false);
     }//GEN-LAST:event_guardarBtnActionPerformed
-
     private void codigoFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_codigoFldActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
     public javax.swing.JTextField codigoFld;
@@ -132,61 +179,4 @@ public class CarreraView extends JInternalFrame implements Observer {
     public javax.swing.JTextField tituloFld;
     private javax.swing.JLabel tituloLbl;
     // End of variables declaration//GEN-END:variables
-
-    CarreraController controller;
-    CarreraModelMain model;
-
-    public void setController(CarreraController controller) {
-        this.controller = controller;
-    }
-
-    public void setModel(CarreraModelMain model) {
-        this.model = model;
-        model.addObserver(this);
-    }
-
-    public CarreraModelMain getModel() {
-        return model;
-    }
-
-    @Override
-    public void update(java.util.Observable updatedModel, Object parametros) {
-
-        Carrera CarreraCurrent = model.getCurrent();
-
-        this.codigoFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
-
-        codigoFld.setText(CarreraCurrent.getCodigo_carrera());
-        if (model.getErrores().get("Carrera") != null) {
-            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            codigoLbl.setToolTipText(model.getErrores().get("Carrera"));
-        } else {
-            codigoLbl.setBorder(null);
-            codigoLbl.setToolTipText("");
-        }
-
-        nombreFld.setText(CarreraCurrent.getNombre());
-        if (model.getErrores().get("Nombre") != null) {
-            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
-        } else {
-            nombreLbl.setBorder(null);
-            nombreLbl.setToolTipText("");
-        }
-
-        tituloFld.setText(CarreraCurrent.getTitulo());
-        if (model.getErrores().get("Titulo") != null) {
-            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            tituloLbl.setToolTipText(model.getErrores().get("Titulo"));
-        } else {
-            tituloLbl.setBorder(null);
-            tituloLbl.setToolTipText("");
-        }
-
-        this.validate();
-
-        if (!model.getMensaje().equals("")) {
-            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
 }

@@ -3,15 +3,79 @@ package Views;
 import Controllers.CursoController;
 import Entities.Curso;
 import Application.ApplicationDesktop;
-import Models.CursosModels.CursoModelMain;
-import javax.swing.*;
+import Models.ObjetoModel;
 import java.util.Observer;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
-public class CursoView extends JInternalFrame implements Observer {
+public final class CursoView extends JInternalFrame implements Observer {
+
+    private CursoController controller;
+    private ObjetoModel<Curso, String> model;
 
     public CursoView() {
         super();
         initComponents();
+    }
+
+    public void setController(CursoController controller) {
+        this.controller = controller;
+    }
+
+    public void setModel(ObjetoModel model) {
+        this.model = model;
+        model.addObserver(this);
+    }
+
+    public ObjetoModel<Curso, String> getModel() {
+        return model;
+    }
+
+    @Override
+    public void update(java.util.Observable updatedModel, Object parametros) {
+        Curso CursoCurrent = model.getCurrent();
+        this.cursoFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
+        cursoFld.setText(CursoCurrent.getCodigo_curso());
+        if (model.getErrores().get("Curso") != null) {
+            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            codigoLbl.setToolTipText(model.getErrores().get("Curso"));
+        } else {
+            codigoLbl.setBorder(null);
+            codigoLbl.setToolTipText("");
+        }
+        nombreFld.setText(CursoCurrent.getNombre());
+        if (model.getErrores().get("Nombre") != null) {
+            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
+        } else {
+            nombreLbl.setBorder(null);
+            nombreLbl.setToolTipText("");
+        }
+        creditosFld.setText(CursoCurrent.getCreditos());
+        if (model.getErrores().get("Creditos") != null) {
+            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            tituloLbl.setToolTipText(model.getErrores().get("Creditos"));
+        } else {
+            tituloLbl.setBorder(null);
+            tituloLbl.setToolTipText("");
+        }
+        horasFld.setText(CursoCurrent.getHoras_semanales());
+        if (model.getErrores().get("Horas") != null) {
+            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            tituloLbl.setToolTipText(model.getErrores().get("Horas"));
+        } else {
+            tituloLbl.setBorder(null);
+            tituloLbl.setToolTipText("");
+        }
+        carreraFld.setModel(model.getComboBox1());
+        cicloFld.setModel(model.getComboBox2());
+        this.controller.actualizar();
+        carreraFld.setSelectedItem(CursoCurrent.getCodigo_carrera());
+        cicloFld.setSelectedItem(CursoCurrent.getNo_ciclo());
+        this.validate();
+        if (!model.getMensaje().equals("")) {
+            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -156,21 +220,16 @@ public class CursoView extends JInternalFrame implements Observer {
     private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_atrasBtnActionPerformed
-
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
         this.controller.guardar();
         this.setVisible(false);
     }//GEN-LAST:event_guardarBtnActionPerformed
-
     private void cursoFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cursoFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cursoFldActionPerformed
-
     private void nombreFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreFldActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
     public javax.swing.JComboBox<String> carreraFld;
@@ -187,80 +246,4 @@ public class CursoView extends JInternalFrame implements Observer {
     private javax.swing.JLabel tituloLbl;
     private javax.swing.JLabel tituloLbl1;
     // End of variables declaration//GEN-END:variables
-
-    CursoController controller;
-    CursoModelMain model;
-
-    public void setController(CursoController controller) {
-        this.controller = controller;
-    }
-
-    public void setModel(CursoModelMain model) {
-        this.model = model;
-        model.addObserver(this);
-    }
-
-    public CursoModelMain getModel() {
-        return model;
-    }
-
-    @Override
-    public void update(java.util.Observable updatedModel, Object parametros) {
-
-        Curso CursoCurrent = model.getCurrent();
-
-        this.cursoFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
-
-        cursoFld.setText(CursoCurrent.getCodigo_curso());
-        if (model.getErrores().get("Curso") != null) {
-            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            codigoLbl.setToolTipText(model.getErrores().get("Curso"));
-        } else {
-            codigoLbl.setBorder(null);
-            codigoLbl.setToolTipText("");
-        }
-
-        nombreFld.setText(CursoCurrent.getNombre());
-        if (model.getErrores().get("Nombre") != null) {
-            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
-        } else {
-            nombreLbl.setBorder(null);
-            nombreLbl.setToolTipText("");
-        }
-
-        creditosFld.setText(CursoCurrent.getCreditos());
-        if (model.getErrores().get("Creditos") != null) {
-            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            tituloLbl.setToolTipText(model.getErrores().get("Creditos"));
-        } else {
-            tituloLbl.setBorder(null);
-            tituloLbl.setToolTipText("");
-        }
-
-        horasFld.setText(CursoCurrent.getHoras_semanales());
-        if (model.getErrores().get("Horas") != null) {
-            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            tituloLbl.setToolTipText(model.getErrores().get("Horas"));
-        } else {
-            tituloLbl.setBorder(null);
-            tituloLbl.setToolTipText("");
-        }
-
-        carreraFld.setModel(model.getCarrera());
-
-        cicloFld.setModel(model.getCiclo());
-
-        this.controller.actualizar();
-
-        carreraFld.setSelectedItem(CursoCurrent.getCodigo_carrera());
-
-        cicloFld.setSelectedItem(CursoCurrent.getNo_ciclo());
-
-        this.validate();
-
-        if (!model.getMensaje().equals("")) {
-            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
 }

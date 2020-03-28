@@ -1,9 +1,10 @@
 package Views;
 
 import Application.ApplicationDesktop;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 
-public class AppView extends javax.swing.JFrame {
+public final class AppView extends JFrame {
 
     public AppView() {
         initComponents();
@@ -109,73 +110,25 @@ public class AppView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void profesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profesoresMouseClicked
-        ApplicationDesktop.PROFESORES_VIEW.setVisible(true);
-        ApplicationDesktop.PROFESORES_VIEW.toFront();
+        ApplicationDesktop.PROFESOR_LISTADO_VIEW.setVisible(true);
+        ApplicationDesktop.PROFESOR_LISTADO_VIEW.toFront();
     }//GEN-LAST:event_profesoresMouseClicked
-
     private void alumnosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_alumnosMouseClicked
-        ApplicationDesktop.ALUMNOS_VIEW.setVisible(true);
-        ApplicationDesktop.ALUMNOS_VIEW.toFront();
-
+        ApplicationDesktop.ALUMNO_LISTADO_VIEW.setVisible(true);
+        ApplicationDesktop.ALUMNO_LISTADO_VIEW.toFront();
     }//GEN-LAST:event_alumnosMouseClicked
-
     private void carrerasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carrerasMouseClicked
-        ApplicationDesktop.CARRERAS_VIEW.setVisible(true);
-        ApplicationDesktop.CARRERAS_VIEW.toFront();
+        ApplicationDesktop.CARRERA_LISTADO_VIEW.setVisible(true);
+        ApplicationDesktop.CARRERA_LISTADO_VIEW.toFront();
     }//GEN-LAST:event_carrerasMouseClicked
-
     private void cursosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cursosMouseClicked
         ApplicationDesktop.CURSOS_VIEW.setVisible(true);
         ApplicationDesktop.CURSOS_VIEW.toFront();
     }//GEN-LAST:event_cursosMouseClicked
-
     private void cerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionMouseClicked
         this.setVisible(false);
         ApplicationDesktop.LOGIN_CONTROLLER.cerrarSesion();
     }//GEN-LAST:event_cerrarSesionMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(AppView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(AppView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(AppView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(AppView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new AppView().setVisible(true);
-//            }
-//        });
-//    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu alumnos;
     private javax.swing.JMenu carreras;

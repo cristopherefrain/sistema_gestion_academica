@@ -3,7 +3,7 @@ package Controllers;
 import Entities.Alumno;
 import Exceptions.GlobalException;
 import Exceptions.NoDataException;
-import Models.AlumnoModel;
+import Models.ModelTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,13 +27,13 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AlumnoController {
 
-    private AlumnoModel model;
+    private ModelTemplate<Alumno, String> model;
 
     /**
      * Creates a new instance of AlumnoController
      */
     public AlumnoController() {
-        model = new AlumnoModel();
+        model = new ModelTemplate<>(Alumno.class);
     }
 
     /**
@@ -45,7 +45,7 @@ public class AlumnoController {
     @Path("/insertar")
     public void insertar_alumno(Alumno alumno) {
         try {
-            model.insertar_alumno(alumno);
+            model.insertar_objeto(alumno);
         } catch (GlobalException | NoDataException ex) {
         }
     }
@@ -54,7 +54,7 @@ public class AlumnoController {
     @Path("/modificar")
     public void modificar_alumno(Alumno alumno) {
         try {
-            model.modificar_alumno(alumno);
+            model.modificar_objeto(alumno);
         } catch (GlobalException | NoDataException ex) {
         }
     }
@@ -63,17 +63,18 @@ public class AlumnoController {
     @Path("/buscar")
     public Alumno buscar_alumno(@QueryParam("id") String id) {
         try {
-            return model.buscar_alumno(id);
+            return model.buscar_objeto(id);
         } catch (GlobalException | NoDataException ex) {
         }
-        return null;
+        return new Alumno();
     }
 
     @GET
     @Path("/listar")
     public List<Alumno> listar_alumno(@QueryParam("id") String id) {
         try {
-            return id.isBlank() ? model.listar_alumno() : model.listar_alumno().stream().filter(alumno -> alumno.getCedula_alumno().startsWith(id)).collect(Collectors.toList());
+            ArrayList<Alumno> lista_objetos = new ArrayList(model.listar_objeto());
+            return id.isBlank() ? lista_objetos : lista_objetos.stream().filter(alumno -> alumno.getCedula_alumno().startsWith(id)).collect(Collectors.toList());
         } catch (GlobalException | NoDataException ex) {
         }
         return new ArrayList();
@@ -83,7 +84,7 @@ public class AlumnoController {
     @Path("/eliminar")
     public void eliminar_alumno(@QueryParam("id") String id) {
         try {
-            model.eliminar_alumno(id);
+            model.eliminar_objeto(id);
         } catch (GlobalException | NoDataException ex) {
         }
     }

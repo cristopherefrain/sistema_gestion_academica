@@ -3,15 +3,74 @@ package Views;
 import Controllers.ProfesorController;
 import Entities.Profesor;
 import Application.ApplicationDesktop;
-import Models.ProfesoresModels.ProfesorModelMain;
-import javax.swing.*;
+import Models.ObjetoModel;
 import java.util.Observer;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
 
-public class ProfesorView extends JInternalFrame implements Observer {
+public final class ProfesorView extends JInternalFrame implements Observer {
+
+    private ProfesorController controller;
+    private ObjetoModel<Profesor, String> model;
 
     public ProfesorView() {
         super();
         initComponents();
+    }
+
+    public void setController(ProfesorController controller) {
+        this.controller = controller;
+    }
+
+    public void setModel(ObjetoModel model) {
+        this.model = model;
+        model.addObserver(this);
+    }
+
+    public ObjetoModel<Profesor, String> getModel() {
+        return model;
+    }
+
+    @Override
+    public void update(java.util.Observable updatedModel, Object parametros) {
+        Profesor CarreraCurrent = model.getCurrent();
+        this.cedulaFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
+        cedulaFld.setText(CarreraCurrent.getCedula_profesor());
+        if (model.getErrores().get("Cedula") != null) {
+            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            codigoLbl.setToolTipText(model.getErrores().get("Cedula"));
+        } else {
+            codigoLbl.setBorder(null);
+            codigoLbl.setToolTipText("");
+        }
+        nombreFld.setText(CarreraCurrent.getNombre());
+        if (model.getErrores().get("Nombre") != null) {
+            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
+        } else {
+            nombreLbl.setBorder(null);
+            nombreLbl.setToolTipText("");
+        }
+        telefonoFld.setText(CarreraCurrent.getTelefono());
+        if (model.getErrores().get("Telefono") != null) {
+            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            tituloLbl.setToolTipText(model.getErrores().get("Telefono"));
+        } else {
+            tituloLbl.setBorder(null);
+            tituloLbl.setToolTipText("");
+        }
+        emailFld.setText(CarreraCurrent.getEmail());
+        if (model.getErrores().get("Email") != null) {
+            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
+            tituloLbl.setToolTipText(model.getErrores().get("Email"));
+        } else {
+            tituloLbl.setBorder(null);
+            tituloLbl.setToolTipText("");
+        }
+        this.validate();
+        if (!model.getMensaje().equals("")) {
+            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -123,17 +182,13 @@ public class ProfesorView extends JInternalFrame implements Observer {
     private void atrasBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atrasBtnActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_atrasBtnActionPerformed
-
     private void guardarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarBtnActionPerformed
         this.controller.guardar();
         this.setVisible(false);
     }//GEN-LAST:event_guardarBtnActionPerformed
-
     private void cedulaFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulaFldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cedulaFldActionPerformed
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton atrasBtn;
     public javax.swing.JTextField cedulaFld;
@@ -146,70 +201,4 @@ public class ProfesorView extends JInternalFrame implements Observer {
     private javax.swing.JLabel tituloLbl;
     private javax.swing.JLabel tituloLbl1;
     // End of variables declaration//GEN-END:variables
-
-    ProfesorController controller;
-    ProfesorModelMain model;
-
-    public void setController(ProfesorController controller) {
-        this.controller = controller;
-    }
-
-    public void setModel(ProfesorModelMain model) {
-        this.model = model;
-        model.addObserver(this);
-    }
-
-    public ProfesorModelMain getModel() {
-        return model;
-    }
-
-    @Override
-    public void update(java.util.Observable updatedModel, Object parametros) {
-
-        Profesor CarreraCurrent = model.getCurrent();
-
-        this.cedulaFld.setEnabled(model.getModo() == ApplicationDesktop.MODO_AGREGAR);
-
-        cedulaFld.setText(CarreraCurrent.getCedula_profesor());
-        if (model.getErrores().get("Cedula") != null) {
-            codigoLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            codigoLbl.setToolTipText(model.getErrores().get("Cedula"));
-        } else {
-            codigoLbl.setBorder(null);
-            codigoLbl.setToolTipText("");
-        }
-
-        nombreFld.setText(CarreraCurrent.getNombre());
-        if (model.getErrores().get("Nombre") != null) {
-            nombreLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            nombreLbl.setToolTipText(model.getErrores().get("Nombre"));
-        } else {
-            nombreLbl.setBorder(null);
-            nombreLbl.setToolTipText("");
-        }
-
-        telefonoFld.setText(CarreraCurrent.getTelefono());
-        if (model.getErrores().get("Telefono") != null) {
-            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            tituloLbl.setToolTipText(model.getErrores().get("Telefono"));
-        } else {
-            tituloLbl.setBorder(null);
-            tituloLbl.setToolTipText("");
-        }
-
-        emailFld.setText(CarreraCurrent.getEmail());
-        if (model.getErrores().get("Email") != null) {
-            tituloLbl.setBorder(ApplicationDesktop.BORDER_ERROR);
-            tituloLbl.setToolTipText(model.getErrores().get("Email"));
-        } else {
-            tituloLbl.setBorder(null);
-            tituloLbl.setToolTipText("");
-        }
-
-        this.validate();
-
-        if (!model.getMensaje().equals("")) {
-            JOptionPane.showMessageDialog(this, model.getMensaje(), "", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
 }
