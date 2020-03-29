@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -21,9 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Application.Adapters.CursoAdapter;
-import com.Application.Entities.Curso;
+import com.Application.Data.ModelDummy;
 import com.Application.Helper.RecyclerItemTouchHelper;
-import com.Application.Models.CursoModel;
 import com.Application.NavDrawerActivity;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,8 +30,10 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
-import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
+import Entities.Curso;
+
+import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
+import static com.Application.Data.ConstantesGlobales.LARGA_DURACION;
 
 public class PrincipalCursosActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CursoAdapter.CursoAdapterListener {
 
@@ -43,14 +43,14 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     private CoordinatorLayout coordinatorLayout;
     private SearchView searchView;
     private FloatingActionButton fab;
-    private CursoModel model;
+    private ModelDummy model;
 
     private void inicializarActividad() {
         mRecyclerView = findViewById(R.id.recycler_cursosFld);
         cursoList = new ArrayList<>();
-        model = new CursoModel();
+        model = new ModelDummy();
         try {
-            cursoList = model.listar_curso();
+            cursoList = model.getCursosList();
         } catch (Exception e) {
         }
         mAdapter = new CursoAdapter(cursoList, this);
@@ -235,6 +235,6 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
 
     @Override
     public void onContactSelected(Curso curso) { //TODO get the select item of recycleView
-        showToast("Seleccion: " + curso.getCodigo_curso() + ", " + curso.getNombre(),CORTA_DURACION);
+        showToast("Seleccion: " + curso.getCodigo_curso() + ", " + curso.getNombre(), CORTA_DURACION);
     }
 }

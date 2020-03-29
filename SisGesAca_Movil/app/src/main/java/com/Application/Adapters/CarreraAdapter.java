@@ -10,13 +10,14 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.Application.Entities.Carrera;
 import com.Application.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import Entities.Carrera;
 
 public class CarreraAdapter extends RecyclerView.Adapter<CarreraAdapter.MyViewHolder> implements Filterable {
     private List<Carrera> carreraList;
@@ -28,6 +29,7 @@ public class CarreraAdapter extends RecyclerView.Adapter<CarreraAdapter.MyViewHo
         public TextView title1, title2, description;
         //two layers
         public RelativeLayout viewForeground, viewBackgroundDelete, viewBackgroundEdit;
+
         public MyViewHolder(View view) {
             super(view);
             title1 = view.findViewById(R.id.titleFirstLbl);

@@ -20,9 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.Application.Adapters.CarreraAdapter;
-import com.Application.Entities.Carrera;
+import com.Application.Data.ModelDummy;
 import com.Application.Helper.RecyclerItemTouchHelper;
-import com.Application.Models.CarreraModel;
 import com.Application.NavDrawerActivity;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,8 +30,10 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
-import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
+import Entities.Carrera;
+
+import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
+import static com.Application.Data.ConstantesGlobales.LARGA_DURACION;
 
 public class PrincipalCarrerasActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CarreraAdapter.CarreraAdapterListener {
 
@@ -42,14 +43,14 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
     private CoordinatorLayout coordinatorLayout;
     private SearchView searchView;
     private FloatingActionButton fab;
-    private CarreraModel model;
+    private ModelDummy model;
 
     private void inicializarActividad() {
         mRecyclerView = findViewById(R.id.recycler_carrerasFld);
         carreraList = new ArrayList<>();
-        model = new CarreraModel();
+        model = new ModelDummy();
         try {
-            carreraList = model.listar_carrera();
+            carreraList = model.getCarrerasList();
         } catch (Exception e) {
         }
         mAdapter = new CarreraAdapter(carreraList, this);

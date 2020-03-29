@@ -10,21 +10,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.Application.Controllers.MainActivity;
-import com.Application.Entities.Usuario;
-import com.Application.Models.InicioSesionModel;
+import com.Application.Data.ModelDummy;
 import com.Application.NavDrawerActivity;
 import com.Application.R;
 
 public class InicioSesionActivity extends MainActivity {
 
-    private InicioSesionModel model;
+    private ModelDummy model;
     private EditText usuario_txtFld, clave_txtFld;
     private Button iniciar_sesion_btn;
     private ProgressBar loadingProgressBar;
 
     private void inicializarActividad() {
-        model = new InicioSesionModel();
+        model = new ModelDummy();
         usuario_txtFld = findViewById(R.id.usuario_txtFld);
         clave_txtFld = findViewById(R.id.clave_pwdFld);
         iniciar_sesion_btn = findViewById(R.id.iniciar_sesion_btn);
@@ -119,7 +117,7 @@ public class InicioSesionActivity extends MainActivity {
     }
 
     public void iniciarSesion(String usuario, String clave) {
-        if (model.iniciarSesion(new Usuario(usuario, clave, "SYS-DBA"))) {
+        if (model.validateCredentials(usuario, clave)) {
             finish();
             intent = redirectActivityTo(NavDrawerActivity.class);
             startActivity(intent);

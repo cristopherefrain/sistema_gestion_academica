@@ -5,8 +5,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
-import static com.Application.Models.ConstantesGlobales.LARGA_DURACION;
+import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
+import static com.Application.Data.ConstantesGlobales.LARGA_DURACION;
 
 public class MainActivity extends AppCompatActivity {
 

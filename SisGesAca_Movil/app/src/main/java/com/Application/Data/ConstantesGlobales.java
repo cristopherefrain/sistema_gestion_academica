@@ -1,4 +1,4 @@
-package com.Application.Models;
+package com.Application.Data;
 
 public class ConstantesGlobales {
 

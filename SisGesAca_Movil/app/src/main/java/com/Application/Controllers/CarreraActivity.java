@@ -10,12 +10,13 @@ import android.widget.EditText;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import com.Application.Entities.Carrera;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import static com.Application.Models.ConstantesGlobales.MODO_AGREGAR;
-import static com.Application.Models.ConstantesGlobales.MODO_EDITAR;
+import Entities.Carrera;
+
+import static com.Application.Data.ConstantesGlobales.MODO_AGREGAR;
+import static com.Application.Data.ConstantesGlobales.MODO_EDITAR;
 
 public class CarreraActivity extends MainActivity {
 
@@ -30,7 +31,7 @@ public class CarreraActivity extends MainActivity {
         codigo_carrera_txtFld = findViewById(R.id.codigo_carrera_txtFld);
         nombre_txtFld = findViewById(R.id.nombre_txtFld);
         titulo_txtFld = findViewById(R.id.titulo_txtFld);
-        coordinatorLayout= findViewById(R.id.coordinator_layout);
+        coordinatorLayout = findViewById(R.id.coordinator_layout);
         whiteNotificationBar(coordinatorLayout);
     }
 

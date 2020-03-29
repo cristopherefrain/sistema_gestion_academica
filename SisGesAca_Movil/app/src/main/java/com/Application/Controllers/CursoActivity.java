@@ -10,12 +10,13 @@ import android.widget.EditText;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
-import com.Application.Entities.Curso;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import static com.Application.Models.ConstantesGlobales.MODO_AGREGAR;
-import static com.Application.Models.ConstantesGlobales.MODO_EDITAR;
+import Entities.Curso;
+
+import static com.Application.Data.ConstantesGlobales.MODO_AGREGAR;
+import static com.Application.Data.ConstantesGlobales.MODO_EDITAR;
 
 public class CursoActivity extends MainActivity {
 
@@ -33,7 +34,7 @@ public class CursoActivity extends MainActivity {
         nombre_txtFld = findViewById(R.id.nombre_txtFld);
         creditos_txtFld = findViewById(R.id.creditos_txtFld);
         horas_semanales_txtFld = findViewById(R.id.horas_semanales_txtFld);
-        coordinatorLayout= findViewById(R.id.coordinator_layout);
+        coordinatorLayout = findViewById(R.id.coordinator_layout);
         whiteNotificationBar(coordinatorLayout);
     }
 

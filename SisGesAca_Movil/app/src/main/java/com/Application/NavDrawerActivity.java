@@ -16,7 +16,8 @@ import com.Application.Controllers.PrincipalCarrerasActivity;
 import com.Application.Controllers.PrincipalCursosActivity;
 import com.google.android.material.navigation.NavigationView;
 
-import static com.Application.Models.ConstantesGlobales.CORTA_DURACION;
+import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
+
 
 public class NavDrawerActivity extends MainActivity implements NavigationView.OnNavigationItemSelectedListener {
 
