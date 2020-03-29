@@ -1,10 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author wizard
  */
-public final class Ciclo {
+public final class Ciclo implements Serializable {
 
     private String no_ciclo;
     private String anio;
@@ -72,4 +75,46 @@ public final class Ciclo {
     public String toString() {
         return "Ciclo{" + "no_ciclo=" + no_ciclo + ", anio=" + anio + ", numero=" + numero + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.no_ciclo);
+        hash = 29 * hash + Objects.hashCode(this.anio);
+        hash = 29 * hash + Objects.hashCode(this.numero);
+        hash = 29 * hash + Objects.hashCode(this.fecha_inicio);
+        hash = 29 * hash + Objects.hashCode(this.fecha_fin);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ciclo other = (Ciclo) obj;
+        if (!Objects.equals(this.no_ciclo, other.no_ciclo)) {
+            return false;
+        }
+        if (!Objects.equals(this.anio, other.anio)) {
+            return false;
+        }
+        if (!Objects.equals(this.numero, other.numero)) {
+            return false;
+        }
+        if (!Objects.equals(this.fecha_inicio, other.fecha_inicio)) {
+            return false;
+        }
+        if (!Objects.equals(this.fecha_fin, other.fecha_fin)) {
+            return false;
+        }
+        return true;
+    }
+
 }

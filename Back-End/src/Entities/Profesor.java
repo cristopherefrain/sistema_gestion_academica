@@ -1,10 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author wizard
  */
-public final class Profesor {
+public final class Profesor implements Serializable {
 
     private String cedula_profesor;
     private String nombre;
@@ -61,4 +64,42 @@ public final class Profesor {
     public String toString() {
         return "Profesor{" + "cedula_profesor=" + cedula_profesor + ", nombre=" + nombre + ", telefono=" + telefono + ", email=" + email + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + Objects.hashCode(this.cedula_profesor);
+        hash = 23 * hash + Objects.hashCode(this.nombre);
+        hash = 23 * hash + Objects.hashCode(this.telefono);
+        hash = 23 * hash + Objects.hashCode(this.email);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Profesor other = (Profesor) obj;
+        if (!Objects.equals(this.cedula_profesor, other.cedula_profesor)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono, other.telefono)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return true;
+    }
+
 }

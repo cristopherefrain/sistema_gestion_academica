@@ -1,10 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author wizard
  */
-public final class Carrera {
+public final class Carrera implements Serializable {
 
     private String codigo_carrera;
     private String nombre;
@@ -50,4 +53,38 @@ public final class Carrera {
     public String toString() {
         return "Carrera{" + "codigo_carrera=" + codigo_carrera + ", nombre=" + nombre + ", titulo=" + titulo + '}';
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.codigo_carrera);
+        hash = 47 * hash + Objects.hashCode(this.nombre);
+        hash = 47 * hash + Objects.hashCode(this.titulo);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Carrera other = (Carrera) obj;
+        if (!Objects.equals(this.codigo_carrera, other.codigo_carrera)) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        return true;
+    }
+
 }

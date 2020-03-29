@@ -1,10 +1,13 @@
 package Entities;
 
+import java.io.Serializable;
+import java.util.Objects;
+
 /**
  *
  * @author wizard
  */
-public final class Usuario {
+public final class Usuario implements Serializable {
 
     private String cedula;
     private String clave;
@@ -49,6 +52,39 @@ public final class Usuario {
     @Override
     public String toString() {
         return "Usuario{" + "cedula=" + cedula + ", clave=" + clave + ", tipo_usuario=" + tipo_usuario + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 79 * hash + Objects.hashCode(this.cedula);
+        hash = 79 * hash + Objects.hashCode(this.clave);
+        hash = 79 * hash + Objects.hashCode(this.tipo_usuario);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Usuario other = (Usuario) obj;
+        if (!Objects.equals(this.cedula, other.cedula)) {
+            return false;
+        }
+        if (!Objects.equals(this.clave, other.clave)) {
+            return false;
+        }
+        if (!Objects.equals(this.tipo_usuario, other.tipo_usuario)) {
+            return false;
+        }
+        return true;
     }
 
 }
