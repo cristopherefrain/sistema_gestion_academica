@@ -124,7 +124,7 @@ public class InicioSesionActivity extends MainActivity {
         } else {
             loadingProgressBar.setVisibility(View.INVISIBLE);
             usuario_txtFld.setError(null);
-            usuario_txtFld.setError(null);
+            clave_txtFld.setError(null);
             usuario_txtFld.setError(getString(R.string.error_incorrect_usuario));
             clave_txtFld.setError(getString(R.string.error_incorrect_clave));
         }
