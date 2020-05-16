@@ -1,11 +1,14 @@
 package com.Application.Controllers;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +30,15 @@ import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +46,9 @@ import Entities.Curso;
 
 import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Data.ConstantesGlobales.LARGA_DURACION;
+import static com.Application.Data.ConstantesGlobales.apiURL_getCarreras;
+import static com.Application.Data.ConstantesGlobales.apiURL_getCiclos;
+import static com.Application.Data.ConstantesGlobales.apiURL_getCursos;
 
 public class PrincipalCursosActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CursoAdapter.CursoAdapterListener {
 
@@ -44,15 +59,31 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     private SearchView searchView;
     private FloatingActionButton fab;
     private ModelDummy model;
+    private List<String> codigosCarreras;
+    private List<String> no_ciclos;
+
+    private void initCursosList() {
+        // create object of MyAsyncTasks class and execute it
+        LoadCursosTasks myAsyncTasks = new LoadCursosTasks();
+        myAsyncTasks.execute();
+    }
+
+    private void initSpinners() {
+        LoadCodigosCarrerasTasks myAsyncTasks1 = new LoadCodigosCarrerasTasks();
+        myAsyncTasks1.execute();
+        LoadNumeroCiclosTasks myAsyncTasks2 = new LoadNumeroCiclosTasks();
+        myAsyncTasks2.execute();
+    }
 
     private void inicializarActividad() {
         mRecyclerView = findViewById(R.id.recycler_cursosFld);
         cursoList = new ArrayList<>();
         model = new ModelDummy();
-        try {
-            cursoList = model.getCursosList();
-        } catch (Exception e) {
-        }
+        codigosCarreras = new ArrayList<>();
+        no_ciclos = new ArrayList<>();
+        initCursosList();
+        initSpinners();
+
         mAdapter = new CursoAdapter(cursoList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
         fab = findViewById(R.id.fab);
@@ -85,6 +116,12 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
         inicializarActividad();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter.notifyDataSetChanged();
+    }
+
     private void whiteNotificationBar(View view) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int flags = view.getSystemUiVisibility();
@@ -97,6 +134,8 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     private void goToCursoActivity() {
         intent = redirectActivityTo(CursoActivity.class);
         intent.putExtra("editable", false);
+        intent.putStringArrayListExtra("spinnerCarreras", (ArrayList<String>) codigosCarreras);
+        intent.putStringArrayListExtra("spinnerCiclos", (ArrayList<String>) no_ciclos);
         startActivity(intent);
     }
 
@@ -236,5 +275,213 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     @Override
     public void onContactSelected(Curso curso) { //TODO get the select item of recycleView
         showToast("Seleccion: " + curso.getCodigo_curso() + ", " + curso.getNombre(), CORTA_DURACION);
+    }
+
+    public class LoadCursosTasks extends AsyncTask<String, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCursosActivity.this);
+            progressDialog.setMessage("Cargando todos las Cursos (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                String response = "";
+                try {
+                    url = new URL(apiURL_getCursos);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    int data = isr.read();
+
+                    while (data != -1) {
+                        response += (char) data;
+                        data = isr.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return response;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            try {
+                JSONArray arrayList = new JSONArray(response);
+                JSONObject object;
+                for (int i = 0; i < arrayList.length(); i++) {
+                    object = arrayList.getJSONObject(i);
+                    cursoList.add(new Curso(object.getString("codigo_curso"), object.getString("codigo_carrera"), object.getString("no_ciclo"),
+                            object.getString("nombre"), object.getString("creditos"), object.getString("horas_semanales")));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                try {
+                    cursoList = model.getCursosList();
+                } catch (Exception ex) {
+                }
+            }
+        }
+    }
+
+    public class LoadCodigosCarrerasTasks extends AsyncTask<String, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCursosActivity.this);
+            progressDialog.setMessage("Cargando todas las Carreras (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                String response = "";
+                try {
+                    url = new URL(apiURL_getCarreras);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    int data = isr.read();
+
+                    while (data != -1) {
+                        response += (char) data;
+                        data = isr.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return response;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            try {
+                JSONArray arrayList = new JSONArray(response);
+                JSONObject object;
+                for (int i = 0; i < arrayList.length(); i++) {
+                    object = arrayList.getJSONObject(i);
+                    codigosCarreras.add(object.getString("codigo_carrera"));
+                }
+            } catch (JSONException e) {
+            }
+        }
+    }
+
+
+    public class LoadNumeroCiclosTasks extends AsyncTask<String, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCursosActivity.this);
+            progressDialog.setMessage("Cargando todos los Ciclos (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                String response = "";
+                try {
+                    url = new URL(apiURL_getCiclos);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    int data = isr.read();
+
+                    while (data != -1) {
+                        response += (char) data;
+                        data = isr.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return response;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            try {
+                JSONArray arrayList = new JSONArray(response);
+                JSONObject object;
+                for (int i = 0; i < arrayList.length(); i++) {
+                    object = arrayList.getJSONObject(i);
+                    no_ciclos.add(object.getString("no_ciclo"));
+                }
+            } catch (JSONException e) {
+            }
+        }
     }
 }

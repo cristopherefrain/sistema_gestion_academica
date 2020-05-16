@@ -85,8 +85,8 @@ public class CarreraActivity extends MainActivity {
             Carrera obj = new Carrera(codigo_carrera_txtFld.getText().toString(), nombre_txtFld.getText().toString(), titulo_txtFld.getText().toString());
             intent = redirectActivityTo(PrincipalCarrerasActivity.class);
             intent.putExtra((mode == MODO_AGREGAR) ? "addCarrera" : (mode == MODO_EDITAR) ? "editCarrera" : "default", obj);
-            finish();
             startActivity(intent);
+            finish();
         }
     }
 

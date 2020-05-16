@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
@@ -22,48 +22,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_curso_codigo_curso" />
+            android:hint="@string/props_curso_codigo_curso"
+            android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/codigo_carrera_txtFld"
+        <Spinner
+            android:id="@+id/codigo_carrera_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_curso_codigo_carrera" />
+            android:layout_height="40dp"
+            android:ems="10" />
 
-        <EditText
-            android:id="@+id/no_ciclo_txtFld"
+        <Spinner
+            android:id="@+id/no_ciclo_spinner"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_curso_no_ciclo" />
+            android:layout_height="40dp"
+            android:ems="10" />
 
         <EditText
             android:id="@+id/nombre_txtFld"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_curso_nombre" />
+            android:hint="@string/props_curso_nombre"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/creditos_txtFld"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_curso_creditos" />
+            android:hint="@string/props_curso_creditos"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/horas_semanales_txtFld"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_curso_horas_semanales" />
+            android:hint="@string/props_curso_horas_semanales"
+            android:inputType="textPersonName" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

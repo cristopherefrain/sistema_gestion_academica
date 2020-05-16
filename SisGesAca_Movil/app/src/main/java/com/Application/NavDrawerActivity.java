@@ -114,15 +114,14 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
 
     public void redirectTo(String msj, Class<?> destinationClass) {
         if (msj != null && destinationClass != NavDrawerActivity.class) {
-            if (destinationClass == InicioSesionActivity.class) {
-                finish();
-                intent = redirectActivityTo(destinationClass);
-            }
+            intent = redirectActivityTo(destinationClass);
+            startActivity(intent);
             if (!msj.isEmpty()) {
                 showToast(msj, CORTA_DURACION);
             }
-            intent = redirectActivityTo(destinationClass);
-            startActivity(intent);
+            if (destinationClass == InicioSesionActivity.class) {
+                finish();
+            }
         }
     }
 }

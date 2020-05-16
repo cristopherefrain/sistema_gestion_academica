@@ -1,11 +1,14 @@
 package com.Application.Controllers;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +30,14 @@ import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +45,7 @@ import Entities.Carrera;
 
 import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Data.ConstantesGlobales.LARGA_DURACION;
+import static com.Application.Data.ConstantesGlobales.apiURL_getCarreras;
 
 public class PrincipalCarrerasActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CarreraAdapter.CarreraAdapterListener {
 
@@ -45,14 +57,18 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
     private FloatingActionButton fab;
     private ModelDummy model;
 
+    private void initCarrerasList() {
+        // create object of MyAsyncTasks class and execute it
+        LoadCarrerasTasks myAsyncTasks = new LoadCarrerasTasks();
+        myAsyncTasks.execute();
+    }
+
     private void inicializarActividad() {
         mRecyclerView = findViewById(R.id.recycler_carrerasFld);
         carreraList = new ArrayList<>();
         model = new ModelDummy();
-        try {
-            carreraList = model.getCarrerasList();
-        } catch (Exception e) {
-        }
+        initCarrerasList();
+
         mAdapter = new CarreraAdapter(carreraList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
         fab = findViewById(R.id.fab);
@@ -83,6 +99,12 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
         setSupportActionBar(toolbar);
 
         inicializarActividad();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mAdapter.notifyDataSetChanged();
     }
 
     private void whiteNotificationBar(View view) {
@@ -232,8 +254,78 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
 
     @Override
     public void onContactSelected(Carrera carrera) { //TODO get the select item of recycleView
-
         showToast("Seleccion: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), CORTA_DURACION);
     }
 
+    public class LoadCarrerasTasks extends AsyncTask<String, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCarrerasActivity.this);
+            progressDialog.setMessage("Cargando todas las Carreras (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                String response = "";
+                try {
+                    url = new URL(apiURL_getCarreras);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    InputStream in = urlConnection.getInputStream();
+                    InputStreamReader isr = new InputStreamReader(in);
+                    int data = isr.read();
+
+                    while (data != -1) {
+                        response += (char) data;
+                        data = isr.read();
+                    }
+
+                    // return the data to onPostExecute method
+                    return response;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+            try {
+                JSONArray arrayList = new JSONArray(response);
+                JSONObject object;
+                for (int i = 0; i < arrayList.length(); i++) {
+                    object = arrayList.getJSONObject(i);
+                    carreraList.add(new Carrera(object.getString("codigo_carrera"), object.getString("nombre"), object.getString("titulo")));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                try {
+                    carreraList = model.getCarrerasList();
+                } catch (Exception ex) {
+                }
+            }
+        }
+    }
 }

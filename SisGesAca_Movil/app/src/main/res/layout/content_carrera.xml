@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
@@ -22,24 +22,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_carrera_codigo_carrera" />
+            android:hint="@string/props_carrera_codigo_carrera"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/nombre_txtFld"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_carrera_nombre" />
+            android:hint="@string/props_carrera_nombre"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/titulo_txtFld"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/props_carrera_titulo" />
+            android:hint="@string/props_carrera_titulo"
+            android:inputType="textPersonName" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

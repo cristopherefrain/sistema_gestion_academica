@@ -118,9 +118,9 @@ public class InicioSesionActivity extends MainActivity {
 
     public void iniciarSesion(String usuario, String clave) {
         if (model.validateCredentials(usuario, clave)) {
-            finish();
             intent = redirectActivityTo(NavDrawerActivity.class);
             startActivity(intent);
+            finish();
         } else {
             loadingProgressBar.setVisibility(View.INVISIBLE);
             usuario_txtFld.setError(null);
