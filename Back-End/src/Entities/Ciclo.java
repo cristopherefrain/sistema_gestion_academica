@@ -73,7 +73,7 @@ public final class Ciclo implements Serializable {
 
     @Override
     public String toString() {
-        return "Ciclo{" + "no_ciclo=" + no_ciclo + ", anio=" + anio + ", numero=" + numero + ", fecha_inicio=" + fecha_inicio + ", fecha_fin=" + fecha_fin + '}';
+        return "{" + "\"no_ciclo\":\"" + no_ciclo + "\", \"anio\":\"" + anio + "\", \"numero\":\"" + numero + "\", \"fecha_inicio\":\"" + fecha_inicio + "\", \"fecha_fin\":\"" + fecha_fin + "\"}";
     }
 
     @Override

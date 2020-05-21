@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,11 +33,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.Principal;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +47,12 @@ import Entities.Curso;
 
 import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Data.ConstantesGlobales.LARGA_DURACION;
+import static com.Application.Data.ConstantesGlobales.apiURL_deleteCurso;
 import static com.Application.Data.ConstantesGlobales.apiURL_getCarreras;
 import static com.Application.Data.ConstantesGlobales.apiURL_getCiclos;
 import static com.Application.Data.ConstantesGlobales.apiURL_getCursos;
+import static com.Application.Data.ConstantesGlobales.apiURL_postCurso;
+import static com.Application.Data.ConstantesGlobales.apiURL_putCurso;
 
 public class PrincipalCursosActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CursoAdapter.CursoAdapterListener {
 
@@ -64,7 +68,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
 
     private void initCursosList() {
         // create object of MyAsyncTasks class and execute it
-        LoadCursosTasks myAsyncTasks = new LoadCursosTasks();
+        getCursosTasks myAsyncTasks = new getCursosTasks();
         myAsyncTasks.execute();
     }
 
@@ -75,12 +79,27 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
         myAsyncTasks2.execute();
     }
 
+    private void addCurso(Curso curso) {
+        insertCursoTasks myAsyncTasks = new insertCursoTasks();
+        myAsyncTasks.execute(curso);
+    }
+
+    private void editCurso(Curso curso) {
+        updateCursoTasks myAsyncTasks = new updateCursoTasks();
+        myAsyncTasks.execute(curso);
+    }
+
+    private void deleteCurso(Curso curso) {
+        deleteCursoTasks myAsyncTasks = new deleteCursoTasks();
+        myAsyncTasks.execute(curso);
+    }
+
     private void inicializarActividad() {
         mRecyclerView = findViewById(R.id.recycler_cursosFld);
         cursoList = new ArrayList<>();
-        model = new ModelDummy();
         codigosCarreras = new ArrayList<>();
         no_ciclos = new ArrayList<>();
+        model = ModelDummy.getInstance();
         initCursosList();
         initSpinners();
 
@@ -119,7 +138,21 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
     @Override
     protected void onStart() {
         super.onStart();
-        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void whiteNotificationBar(View view) {
@@ -149,8 +182,9 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                 if (aux != null) {
                     //found an item that can be updated
                     boolean founded = false;
-                    for (Curso curso : cursoList) {
+                    for (Curso curso : model.getCursosList()) {
                         if (curso.getCodigo_curso().equals(aux.getCodigo_curso())) {
+                            editCurso(curso);
                             curso.setCodigo_carrera(aux.getCodigo_carrera());
                             curso.setNo_ciclo(aux.getNo_ciclo());
                             curso.setNombre(aux.getNombre());
@@ -162,14 +196,16 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                     }
                     //check if exist
                     if (founded) {
+                        initCursosList();
                         showToast(aux.getNombre() + " editado correctamente!", LARGA_DURACION);
                     } else {
                         showToast(aux.getNombre() + " no encontrado :(", LARGA_DURACION);
                     }
                 }
             } else {
+                addCurso(aux);
                 //found a new Curso Object
-                cursoList.add(aux);
+                initCursosList();
                 showToast(aux.getNombre() + " agregado correctamente!", LARGA_DURACION);
             }
         }
@@ -182,6 +218,8 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                 // get the removed item name to display it in snack bar
                 String name = cursoList.get(viewHolder.getAdapterPosition()).getNombre();
 
+                Curso aux = cursoList.get(viewHolder.getAdapterPosition());
+                deleteCurso(aux);
                 // save the index deleted
                 final int deletedIndex = viewHolder.getAdapterPosition();
                 // remove the item from recyclerView
@@ -190,6 +228,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                 // showing snack bar with Undo option
                 Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " removido!", Snackbar.LENGTH_LONG);
                 snackbar.setAction("UNDO", view -> {
+                    addCurso(aux);
                     // undo is selected, restore the deleted item from adapter
                     mAdapter.restoreItem(deletedIndex);
                 });
@@ -202,6 +241,8 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
             //send data to Edit Activity
             intent = redirectActivityTo(CursoActivity.class);
             intent.putExtra("editable", true);
+            intent.putStringArrayListExtra("spinnerCarreras", (ArrayList<String>) codigosCarreras);
+            intent.putStringArrayListExtra("spinnerCiclos", (ArrayList<String>) no_ciclos);
             intent.putExtra("curso", aux);
             mAdapter.notifyDataSetChanged(); //restart left swipe view
             startActivity(intent);
@@ -277,7 +318,195 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
         showToast("Seleccion: " + curso.getCodigo_curso() + ", " + curso.getNombre(), CORTA_DURACION);
     }
 
-    public class LoadCursosTasks extends AsyncTask<String, String, String> {
+
+    public class insertCursoTasks extends AsyncTask<Curso, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCursosActivity.this);
+            progressDialog.setMessage("Agregando Curso (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Curso... cursos) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(apiURL_postCurso);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Accept", "application/json");
+                    urlConnection.setDoOutput(true);
+
+                    Bundle extras = getIntent().getExtras();
+                    try (OutputStream os = urlConnection.getOutputStream()) {
+                        byte[] input = cursos[0].toString().getBytes(StandardCharsets.UTF_8);
+                        os.write(input, 0, input.length);
+                    }
+
+                    int code = urlConnection.getResponseCode();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return code + response.toString();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    public class updateCursoTasks extends AsyncTask<Curso, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCursosActivity.this);
+            progressDialog.setMessage("Actualizando Carrera (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Curso... cursos) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(apiURL_putCurso);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    urlConnection.setRequestMethod("PUT");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Accept", "application/json");
+                    urlConnection.setDoOutput(true);
+
+                    try (OutputStream os = urlConnection.getOutputStream()) {
+                        byte[] input = cursos[0].toString().getBytes(StandardCharsets.UTF_8);
+                        os.write(input, 0, input.length);
+                    }
+
+                    int code = urlConnection.getResponseCode();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return code + response.toString();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    public class deleteCursoTasks extends AsyncTask<Curso, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCursosActivity.this);
+            progressDialog.setMessage("Eliminando Carrera (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Curso... cursos) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(apiURL_deleteCurso + cursos[0].getCodigo_curso());
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("DELETE");
+
+                    int code = urlConnection.getResponseCode();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return code + response.toString();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    public class getCursosTasks extends AsyncTask<String, String, String> {
         private ProgressDialog progressDialog;
 
         @Override
@@ -296,22 +525,18 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
             try {
                 URL url;
                 HttpURLConnection urlConnection = null;
-                String response = "";
                 try {
                     url = new URL(apiURL_getCursos);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
-                    InputStream in = urlConnection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(in);
-                    int data = isr.read();
-
-                    while (data != -1) {
-                        response += (char) data;
-                        data = isr.read();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return response.toString();
                     }
-
-                    // return the data to onPostExecute method
-                    return response;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -335,17 +560,15 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
             try {
                 JSONArray arrayList = new JSONArray(response);
                 JSONObject object;
+                cursoList.clear();
                 for (int i = 0; i < arrayList.length(); i++) {
                     object = arrayList.getJSONObject(i);
                     cursoList.add(new Curso(object.getString("codigo_curso"), object.getString("codigo_carrera"), object.getString("no_ciclo"),
                             object.getString("nombre"), object.getString("creditos"), object.getString("horas_semanales")));
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                try {
-                    cursoList = model.getCursosList();
-                } catch (Exception ex) {
-                }
+                model.setCursosList(new ArrayList<>(cursoList));
+                mAdapter.notifyDataSetChanged();
+            } catch (JSONException ignored) {
             }
         }
     }
@@ -369,22 +592,18 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
             try {
                 URL url;
                 HttpURLConnection urlConnection = null;
-                String response = "";
                 try {
                     url = new URL(apiURL_getCarreras);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
-                    InputStream in = urlConnection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(in);
-                    int data = isr.read();
-
-                    while (data != -1) {
-                        response += (char) data;
-                        data = isr.read();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return response.toString();
                     }
-
-                    // return the data to onPostExecute method
-                    return response;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -412,7 +631,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                     object = arrayList.getJSONObject(i);
                     codigosCarreras.add(object.getString("codigo_carrera"));
                 }
-            } catch (JSONException e) {
+            } catch (JSONException ignored) {
             }
         }
     }
@@ -437,22 +656,18 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
             try {
                 URL url;
                 HttpURLConnection urlConnection = null;
-                String response = "";
                 try {
                     url = new URL(apiURL_getCiclos);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
-                    InputStream in = urlConnection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(in);
-                    int data = isr.read();
-
-                    while (data != -1) {
-                        response += (char) data;
-                        data = isr.read();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return response.toString();
                     }
-
-                    // return the data to onPostExecute method
-                    return response;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -480,7 +695,7 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                     object = arrayList.getJSONObject(i);
                     no_ciclos.add(object.getString("no_ciclo"));
                 }
-            } catch (JSONException e) {
+            } catch (JSONException ignored) {
             }
         }
     }

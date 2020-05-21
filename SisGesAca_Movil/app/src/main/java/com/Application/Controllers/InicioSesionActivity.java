@@ -22,9 +22,9 @@ public class InicioSesionActivity extends MainActivity {
     private ProgressBar loadingProgressBar;
 
     private void inicializarActividad() {
-        model = new ModelDummy();
-        usuario_txtFld = findViewById(R.id.usuario_txtFld);
-        clave_txtFld = findViewById(R.id.clave_pwdFld);
+        model = ModelDummy.getInstance();
+        usuario_txtFld = findViewById(R.id.usuario_txtFld1);
+        clave_txtFld = findViewById(R.id.clave_pwdFld1);
         iniciar_sesion_btn = findViewById(R.id.iniciar_sesion_btn);
         loadingProgressBar = findViewById(R.id.loading);
 

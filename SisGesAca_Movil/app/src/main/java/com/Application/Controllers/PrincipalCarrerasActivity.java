@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,10 +33,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +47,10 @@ import Entities.Carrera;
 
 import static com.Application.Data.ConstantesGlobales.CORTA_DURACION;
 import static com.Application.Data.ConstantesGlobales.LARGA_DURACION;
+import static com.Application.Data.ConstantesGlobales.apiURL_deleteCarrera;
 import static com.Application.Data.ConstantesGlobales.apiURL_getCarreras;
+import static com.Application.Data.ConstantesGlobales.apiURL_postCarrera;
+import static com.Application.Data.ConstantesGlobales.apiURL_putCarrera;
 
 public class PrincipalCarrerasActivity extends MainActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener, CarreraAdapter.CarreraAdapterListener {
 
@@ -59,14 +64,29 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
 
     private void initCarrerasList() {
         // create object of MyAsyncTasks class and execute it
-        LoadCarrerasTasks myAsyncTasks = new LoadCarrerasTasks();
+        GetCarrerasTasks myAsyncTasks = new GetCarrerasTasks();
         myAsyncTasks.execute();
+    }
+
+    private void addCarrera(Carrera carrera) {
+        insertCarreraTasks myAsyncTasks = new insertCarreraTasks();
+        myAsyncTasks.execute(carrera);
+    }
+
+    private void editCarrera(Carrera carrera) {
+        updateCarreraTasks myAsyncTasks = new updateCarreraTasks();
+        myAsyncTasks.execute(carrera);
+    }
+
+    private void deleteCarrera(Carrera carrera) {
+        deleteCarreraTasks myAsyncTasks = new deleteCarreraTasks();
+        myAsyncTasks.execute(carrera);
     }
 
     private void inicializarActividad() {
         mRecyclerView = findViewById(R.id.recycler_carrerasFld);
         carreraList = new ArrayList<>();
-        model = new ModelDummy();
+        model = ModelDummy.getInstance();
         initCarrerasList();
 
         mAdapter = new CarreraAdapter(carreraList, this);
@@ -104,7 +124,21 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
     @Override
     protected void onStart() {
         super.onStart();
-        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void whiteNotificationBar(View view) {
@@ -132,8 +166,9 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
                 if (aux != null) {
                     //found an item that can be updated
                     boolean founded = false;
-                    for (Carrera carrera : carreraList) {
+                    for (Carrera carrera : model.getCarrerasList()) {
                         if (carrera.getCodigo_carrera().equals(aux.getCodigo_carrera())) {
+                            editCarrera(carrera);
                             carrera.setNombre(aux.getNombre());
                             carrera.setTitulo(aux.getTitulo());
                             founded = true;
@@ -142,14 +177,16 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
                     }
                     //check if exist
                     if (founded) {
+                        initCarrerasList();
                         showToast(aux.getNombre() + " editado correctamente!", LARGA_DURACION);
                     } else {
                         showToast(aux.getNombre() + " no encontrado :(", LARGA_DURACION);
                     }
                 }
             } else {
+                addCarrera(aux);
                 //found a new Carrera Object
-                carreraList.add(aux);
+                initCarrerasList();
                 showToast(aux.getNombre() + " agregado correctamente!", LARGA_DURACION);
             }
         }
@@ -162,14 +199,16 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
                 // get the removed item name to display it in snack bar
                 String name = carreraList.get(viewHolder.getAdapterPosition()).getNombre();
 
+                Carrera aux = carreraList.get(viewHolder.getAdapterPosition());
+                deleteCarrera(aux);
                 // save the index deleted
                 final int deletedIndex = viewHolder.getAdapterPosition();
                 // remove the item from recyclerView
                 mAdapter.removeItem(viewHolder.getAdapterPosition());
-
                 // showing snack bar with Undo option
                 Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " removido!", Snackbar.LENGTH_LONG);
                 snackbar.setAction("UNDO", view -> {
+                    addCarrera(aux);
                     // undo is selected, restore the deleted item from adapter
                     mAdapter.restoreItem(deletedIndex);
                 });
@@ -257,7 +296,194 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
         showToast("Seleccion: " + carrera.getCodigo_carrera() + ", " + carrera.getNombre(), CORTA_DURACION);
     }
 
-    public class LoadCarrerasTasks extends AsyncTask<String, String, String> {
+    public class insertCarreraTasks extends AsyncTask<Carrera, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCarrerasActivity.this);
+            progressDialog.setMessage("Agregando Carrera (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Carrera... carreras) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(apiURL_postCarrera);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Accept", "application/json");
+                    urlConnection.setDoOutput(true);
+
+                    Bundle extras = getIntent().getExtras();
+                    try (OutputStream os = urlConnection.getOutputStream()) {
+                        byte[] input = carreras[0].toString().getBytes(StandardCharsets.UTF_8);
+                        os.write(input, 0, input.length);
+                    }
+
+                    int code = urlConnection.getResponseCode();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return code + response.toString();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    public class updateCarreraTasks extends AsyncTask<Carrera, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCarrerasActivity.this);
+            progressDialog.setMessage("Actualizando Carrera (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Carrera... carreras) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(apiURL_putCarrera);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+
+                    urlConnection.setRequestMethod("PUT");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Accept", "application/json");
+                    urlConnection.setDoOutput(true);
+
+                    try (OutputStream os = urlConnection.getOutputStream()) {
+                        byte[] input = carreras[0].toString().getBytes(StandardCharsets.UTF_8);
+                        os.write(input, 0, input.length);
+                    }
+
+                    int code = urlConnection.getResponseCode();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return code + response.toString();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    public class deleteCarreraTasks extends AsyncTask<Carrera, String, String> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // display a progress dialog for good user experiance
+            progressDialog = new ProgressDialog(PrincipalCarrerasActivity.this);
+            progressDialog.setMessage("Eliminando Carrera (:");
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(Carrera... carreras) {
+            // implement API in background and store the response in response variable
+            try {
+                URL url;
+                HttpURLConnection urlConnection = null;
+                try {
+                    url = new URL(apiURL_deleteCarrera + carreras[0].getCodigo_carrera());
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    urlConnection.setRequestMethod("DELETE");
+
+                    int code = urlConnection.getResponseCode();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return code + response.toString();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    if (urlConnection != null) {
+                        urlConnection.disconnect();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Exception: " + e.getMessage();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            // dismiss the progress dialog after receiving data from API
+            if (progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+    public class GetCarrerasTasks extends AsyncTask<String, String, String> {
         private ProgressDialog progressDialog;
 
         @Override
@@ -276,22 +502,18 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
             try {
                 URL url;
                 HttpURLConnection urlConnection = null;
-                String response = "";
                 try {
                     url = new URL(apiURL_getCarreras);
                     urlConnection = (HttpURLConnection) url.openConnection();
 
-                    InputStream in = urlConnection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(in);
-                    int data = isr.read();
-
-                    while (data != -1) {
-                        response += (char) data;
-                        data = isr.read();
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
+                        StringBuilder response = new StringBuilder();
+                        String responseLine;
+                        while ((responseLine = br.readLine()) != null) {
+                            response.append(responseLine.trim());
+                        }
+                        return response.toString();
                     }
-
-                    // return the data to onPostExecute method
-                    return response;
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -315,17 +537,16 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
             try {
                 JSONArray arrayList = new JSONArray(response);
                 JSONObject object;
+                carreraList.clear();
                 for (int i = 0; i < arrayList.length(); i++) {
                     object = arrayList.getJSONObject(i);
                     carreraList.add(new Carrera(object.getString("codigo_carrera"), object.getString("nombre"), object.getString("titulo")));
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                try {
-                    carreraList = model.getCarrerasList();
-                } catch (Exception ex) {
-                }
+                model.setCarrerasList(new ArrayList<>(carreraList));
+                mAdapter.notifyDataSetChanged();
+            } catch (JSONException ignored) {
             }
         }
     }
+
 }

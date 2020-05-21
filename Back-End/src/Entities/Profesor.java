@@ -62,7 +62,7 @@ public final class Profesor implements Serializable {
 
     @Override
     public String toString() {
-        return "Profesor{" + "cedula_profesor=" + cedula_profesor + ", nombre=" + nombre + ", telefono=" + telefono + ", email=" + email + '}';
+        return "{" + "\"cedula_profesor\":\"" + cedula_profesor + "\", \"nombre\":\"" + nombre + "\", \"telefono\":\"" + telefono + "\", \"email\":\"" + email + "\"}";
     }
 
     @Override

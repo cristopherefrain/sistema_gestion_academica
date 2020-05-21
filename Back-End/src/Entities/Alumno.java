@@ -84,7 +84,7 @@ public final class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return "Alumno{" + "cedula_alumno=" + cedula_alumno + ", nombre=" + nombre + ", telefono=" + telefono + ", email=" + email + ", fecha_nacimiento=" + fecha_nacimiento + ", carrera=" + carrera + '}';
+        return "{" + "\"cedula_alumno\":\"" + cedula_alumno + "\", \"nombre\":\"" + nombre + "\", \"telefono\":\"" + telefono + "\", \"email\":\"" + email + "\", \"fecha_nacimiento\":\"" + fecha_nacimiento + "\", \"carrera\":\"" + carrera + "\"}";
     }
 
     @Override

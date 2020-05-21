@@ -51,7 +51,7 @@ public final class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "cedula=" + cedula + ", clave=" + clave + ", tipo_usuario=" + tipo_usuario + '}';
+        return "{" + "\"cedula\":\"" + cedula + "\", \"clave\":\"" + clave + "\", \"tipo_usuario\":\"" + tipo_usuario + "\"}";
     }
 
     @Override

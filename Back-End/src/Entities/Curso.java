@@ -84,7 +84,7 @@ public final class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "Curso{" + "codigo_curso=" + codigo_curso + ", codigo_carrera=" + codigo_carrera + ", no_ciclo=" + no_ciclo + ", nombre=" + nombre + ", creditos=" + creditos + ", horas_semanales=" + horas_semanales + '}';
+        return "{" + "\"codigo_curso\":\"" + codigo_curso + "\", \"codigo_carrera\":\"" + codigo_carrera + "\", \"no_ciclo\":\"" + no_ciclo + "\", \"nombre\":\"" + nombre + "\", \"creditos\":\"" + creditos + "\", \"horas_semanales\":\"" + horas_semanales + "\"}";
     }
 
     @Override

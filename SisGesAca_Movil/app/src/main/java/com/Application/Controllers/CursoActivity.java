@@ -47,6 +47,13 @@ public class CursoActivity extends MainActivity {
     private List<String> no_ciclos;
 
     private void initSpinners() {
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            editable = extras.getBoolean("editable");
+            codigosCarreras = extras.getStringArrayList("spinnerCarreras");
+            no_ciclos = extras.getStringArrayList("spinnerCiclos");
+        }
+
         ArrayAdapter<String> vcodCarAdapter = new ArrayAdapter(this, R.layout.item_list_spiner, codigosCarreras.toArray());
         codigo_carrera_spinner.setAdapter(vcodCarAdapter);
 
@@ -67,7 +74,10 @@ public class CursoActivity extends MainActivity {
         codigosCarreras = new ArrayList<>();
         no_ciclos = new ArrayList<>();
 
+        initSpinners();
         whiteNotificationBar(coordinatorLayout);
+        resetTextFields();
+        checkDataFromPrincipal();
     }
 
     @Override
@@ -78,9 +88,6 @@ public class CursoActivity extends MainActivity {
         setSupportActionBar(toolbar);
 
         inicializarActividad();
-        resetTextFields();
-        checkDataFromPrincipal();
-        initSpinners();
     }
 
     @Override
@@ -108,8 +115,6 @@ public class CursoActivity extends MainActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             editable = extras.getBoolean("editable");
-            codigosCarreras = extras.getStringArrayList("spinnerCarreras");
-            no_ciclos = extras.getStringArrayList("spinnerCiclos");
             if (editable) {
                 setTextFields((Curso) getIntent().getSerializableExtra("curso"));
             }
@@ -126,18 +131,19 @@ public class CursoActivity extends MainActivity {
 
         int vIndexcodCar = 0;
         for (String codigo : codigosCarreras) {
-            vIndexcodCar++;
             if (codigo.equals(obj.getCodigo_carrera())) {
                 break;
             }
+            vIndexcodCar++;
         }
         int vIndexNoCic = 0;
         for (String ciclo : no_ciclos) {
-            vIndexNoCic++;
             if (ciclo.equals(obj.getNo_ciclo())) {
                 break;
             }
+            vIndexNoCic++;
         }
+
         codigo_carrera_spinner.setSelection(vIndexcodCar);
         no_ciclo_spinner.setSelection(vIndexNoCic);
     }

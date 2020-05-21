@@ -33,6 +33,8 @@ public class CarreraActivity extends MainActivity {
         titulo_txtFld = findViewById(R.id.titulo_txtFld);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
         whiteNotificationBar(coordinatorLayout);
+        resetTextFields();
+        checkDataFromPrincipal();
     }
 
     @Override
@@ -43,8 +45,6 @@ public class CarreraActivity extends MainActivity {
         setSupportActionBar(toolbar);
 
         inicializarActividad();
-        resetTextFields();
-        checkDataFromPrincipal();
     }
 
     private void whiteNotificationBar(View view) {
