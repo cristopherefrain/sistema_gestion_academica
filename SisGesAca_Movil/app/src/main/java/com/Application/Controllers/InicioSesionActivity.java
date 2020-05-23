@@ -18,7 +18,7 @@ public class InicioSesionActivity extends MainActivity {
 
     private ModelDummy model;
     private EditText usuario_txtFld, clave_txtFld;
-    private Button iniciar_sesion_btn;
+    private Button iniciar_sesion_btn, salir_btn;
     private ProgressBar loadingProgressBar;
 
     private void inicializarActividad() {
@@ -26,6 +26,7 @@ public class InicioSesionActivity extends MainActivity {
         usuario_txtFld = findViewById(R.id.usuario_txtFld1);
         clave_txtFld = findViewById(R.id.clave_pwdFld1);
         iniciar_sesion_btn = findViewById(R.id.iniciar_sesion_btn);
+        salir_btn = findViewById(R.id.salir_btn);
         loadingProgressBar = findViewById(R.id.loading);
 
         getSupportActionBar().setTitle(getString(R.string.title_activity_inicio_sesion));
@@ -57,6 +58,10 @@ public class InicioSesionActivity extends MainActivity {
         iniciar_sesion_btn.setOnClickListener(view -> {
             loadingProgressBar.setVisibility(View.VISIBLE);
             attemptLogin();
+        });
+
+        salir_btn.setOnClickListener(view -> {
+            finish();
         });
     }
 

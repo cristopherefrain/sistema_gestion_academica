@@ -17,13 +17,16 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
-        <EditText
-            android:id="@+id/codigo_curso_txtFld"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/props_curso_codigo_curso"
-            android:inputType="textPersonName" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/codigo_curso_txtFld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/props_curso_codigo_curso" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
             android:id="@+id/codigo_carrera_spinner"
@@ -37,29 +40,38 @@
             android:layout_height="40dp"
             android:ems="10" />
 
-        <EditText
-            android:id="@+id/nombre_txtFld"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/props_curso_nombre"
-            android:inputType="textPersonName" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/creditos_txtFld"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/props_curso_creditos"
-            android:inputType="textPersonName" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nombre_txtFld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/props_curso_nombre" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/horas_semanales_txtFld"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/props_curso_horas_semanales"
-            android:inputType="textPersonName" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/creditos_txtFld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/props_curso_creditos" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/horas_semanales_txtFld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/props_curso_horas_semanales" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

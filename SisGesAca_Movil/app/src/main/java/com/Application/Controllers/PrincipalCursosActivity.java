@@ -473,6 +473,8 @@ public class PrincipalCursosActivity extends MainActivity implements RecyclerIte
                     url = new URL(apiURL_deleteCurso + cursos[0].getCodigo_curso());
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("DELETE");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Accept", "application/json");
 
                     int code = urlConnection.getResponseCode();
                     try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {

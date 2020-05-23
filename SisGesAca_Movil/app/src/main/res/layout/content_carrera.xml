@@ -17,29 +17,38 @@
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp">
 
-        <EditText
-            android:id="@+id/codigo_carrera_txtFld"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/props_carrera_codigo_carrera"
-            android:inputType="textPersonName" />
+            android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/nombre_txtFld"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/props_carrera_nombre"
-            android:inputType="textPersonName" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/codigo_carrera_txtFld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/props_carrera_codigo_carrera" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/titulo_txtFld"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/props_carrera_titulo"
-            android:inputType="textPersonName" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nombre_txtFld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/props_carrera_nombre" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titulo_txtFld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/props_carrera_titulo" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

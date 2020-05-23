@@ -23,6 +23,7 @@
     <string name="prompt_usuario">Cedula</string>
     <string name="prompt_clave">Clave</string>
     <string name="action_iniciar_sesion">Ingresar</string>
+    <string name="action_salir">Salir</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_usuario">Nombre de usuario invalido</string>
     <string name="error_invalid_clave">La contraseña es muy corta</string>
@@ -51,7 +52,7 @@
     <string name="title_activity_principal_carrera">Informacion Carreras</string>
     <string name="title_activity_carrera">Carrera</string>
 
-    <string name="props_carrera_codigo_carrera">Codigo Carrera</string>
+    <string name="props_carrera_codigo_carrera">Codigo</string>
     <string name="props_carrera_nombre">Nombre</string>
     <string name="props_carrera_titulo">Titulo</string>
 

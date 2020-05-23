@@ -450,6 +450,8 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
                     url = new URL(apiURL_deleteCarrera + carreras[0].getCodigo_carrera());
                     urlConnection = (HttpURLConnection) url.openConnection();
                     urlConnection.setRequestMethod("DELETE");
+                    urlConnection.setRequestProperty("Content-Type", "application/json");
+                    urlConnection.setRequestProperty("Accept", "application/json");
 
                     int code = urlConnection.getResponseCode();
                     try (BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), StandardCharsets.UTF_8))) {
