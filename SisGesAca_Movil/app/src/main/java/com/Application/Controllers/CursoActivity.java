@@ -1,8 +1,6 @@
 package com.Application.Controllers;
 
-import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,31 +12,21 @@ import android.widget.Spinner;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.Application.NavDrawerActivity;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import Entities.Carrera;
 import Entities.Curso;
 
 import static com.Application.Data.ConstantesGlobales.MODO_AGREGAR;
 import static com.Application.Data.ConstantesGlobales.MODO_EDITAR;
-import static com.Application.Data.ConstantesGlobales.apiURL_getCarreras;
-import static com.Application.Data.ConstantesGlobales.apiURL_getCiclos;
 
 public class CursoActivity extends MainActivity {
 
-    private FloatingActionButton fab;
+    private FloatingActionButton add, go_back;
     private boolean editable;
     private EditText codigo_curso_txtFld, nombre_txtFld, creditos_txtFld, horas_semanales_txtFld;
     private CoordinatorLayout coordinatorLayout;
@@ -62,7 +50,8 @@ public class CursoActivity extends MainActivity {
     }
 
     private void inicializarActividad() {
-        fab = findViewById(R.id.fab);
+        add = findViewById(R.id.add);
+        go_back = findViewById(R.id.go_back);
         editable = false;
         codigo_curso_txtFld = findViewById(R.id.codigo_curso_txtFld);
         nombre_txtFld = findViewById(R.id.nombre_txtFld);
@@ -118,8 +107,12 @@ public class CursoActivity extends MainActivity {
             if (editable) {
                 setTextFields((Curso) getIntent().getSerializableExtra("curso"));
             }
-            fab.setOnClickListener(view -> actionMode(editable ? MODO_EDITAR : MODO_AGREGAR));
+            add.setOnClickListener(view -> actionMode(editable ? MODO_EDITAR : MODO_AGREGAR));
         }
+        go_back.setOnClickListener(view -> {
+            intent = redirectActivityTo(PrincipalCursosActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setTextFields(Curso obj) {
@@ -180,11 +173,11 @@ public class CursoActivity extends MainActivity {
             errorCheck = true;
         }
         if (TextUtils.isEmpty(creditos)) {
-            creditos_txtFld.setError(getString(R.string.empty_carrera_titulo));
+            creditos_txtFld.setError(getString(R.string.empty_curso_creditos));
             errorCheck = true;
         }
         if (TextUtils.isEmpty(horas_semanales)) {
-            horas_semanales_txtFld.setError(getString(R.string.empty_carrera_titulo));
+            horas_semanales_txtFld.setError(getString(R.string.empty_curso_horas_semanales));
             errorCheck = true;
         }
 

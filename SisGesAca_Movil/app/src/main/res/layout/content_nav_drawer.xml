@@ -10,13 +10,15 @@
 
     <TextView
         android:id="@+id/sisgesaca_descripcion"
-        android:layout_width="350dp"
-        android:layout_height="380dp"
-        android:layout_marginTop="48dp"
+        android:textSize="20dp"
+        android:layout_height="645dp"
+        android:layout_width="370dp"
+        android:layout_marginTop="15dp"
         android:text="@string/app_descripcion"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

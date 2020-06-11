@@ -10,6 +10,7 @@ import android.widget.EditText;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.Application.NavDrawerActivity;
 import com.Application.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -20,13 +21,14 @@ import static com.Application.Data.ConstantesGlobales.MODO_EDITAR;
 
 public class CarreraActivity extends MainActivity {
 
-    private FloatingActionButton fab;
+    private FloatingActionButton add, go_back;
     private boolean editable;
     private EditText codigo_carrera_txtFld, nombre_txtFld, titulo_txtFld;
     private CoordinatorLayout coordinatorLayout;
 
     private void inicializarActividad() {
-        fab = findViewById(R.id.fab);
+        add = findViewById(R.id.add);
+        go_back = findViewById(R.id.go_back);
         editable = false;
         codigo_carrera_txtFld = findViewById(R.id.codigo_carrera_txtFld);
         nombre_txtFld = findViewById(R.id.nombre_txtFld);
@@ -69,8 +71,12 @@ public class CarreraActivity extends MainActivity {
             if (editable) {
                 setTextFields((Carrera) getIntent().getSerializableExtra("carrera"));
             }
-            fab.setOnClickListener(view -> actionMode(editable ? MODO_EDITAR : MODO_AGREGAR));
+            add.setOnClickListener(view -> actionMode(editable ? MODO_EDITAR : MODO_AGREGAR));
         }
+        go_back.setOnClickListener(view -> {
+            intent = redirectActivityTo(PrincipalCarrerasActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setTextFields(Carrera obj) {

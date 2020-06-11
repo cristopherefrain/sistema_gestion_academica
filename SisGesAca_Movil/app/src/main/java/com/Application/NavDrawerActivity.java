@@ -87,11 +87,11 @@ public class NavDrawerActivity extends MainActivity implements NavigationView.On
         Class<?> destinationClass = NavDrawerActivity.class;
         switch (item_id) {
             case R.id.nav_carrera:
-                msj = "Carreras";
+                msj = "";
                 destinationClass = PrincipalCarrerasActivity.class;
                 break;
             case R.id.nav_curso:
-                msj = "Cursos";
+                msj = "";
                 destinationClass = PrincipalCursosActivity.class;
                 break;
             case R.id.nav_profesor:

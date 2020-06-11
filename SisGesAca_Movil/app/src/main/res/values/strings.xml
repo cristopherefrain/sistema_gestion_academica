@@ -2,21 +2,12 @@
     <string name="app_name">App Movil :v</string>
     <string name="app_name_label">SisGesAca</string>
 
-    <string name="app_descripcion">\t\t\t\t Bienvenido al Sistema de Gestion Academica.\n\n
-        \t El Sistema de Gestion Academica (SisGesAca) brinda\n
-        los servicios de informacion que permiten procesar la\n
-        información de las carreras que ofrece, los cursos que\n
-        las forman, los profesores que los imparten y los alum-\n
-        nos inscritos.\n\n
-        \t\t\t\t\t\t Tambien ofrece la siguiente funcionalidad:
-        \n\n\t Gestionar cada ciclo lectivo, para lo cual debe abrir el ciclo como tal,
-        registrar la oferta académica, es decir los cursos y grupos que se van a abrir y
-        los profesores que los van a impartir.
-        \n\n\t Ejecutar el proceso de matrícula, en el cual se regis-\n
-        tran los cursos y grupos específicos, que matricula ca-\n
-        da estudiante.
-        \n\n\t Realizar proceso final del ciclo, en el cual el profesor registra las
-        notas que obtuvieron los estudiantes de sus grupos.
+    <string name="app_descripcion">\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t Bienvenido al\n\t\t\t\t\t\t Sistema de Gestion Academica.\n\n
+        \t El Sistema de Gestion Academica (SisGesAca) brinda los servicios de infor-\nmacion que permiten procesar la infor-\nmación de las carreras que ofrece, los cursos que las forman, los profesores que los imparten y los alumnos inscritos.\n\n
+        Tambien ofrece la siguiente funcionali-\ndad:
+        \n\n\t Gestionar cada ciclo lectivo, para lo cu-\nal debe abrir el ciclo como tal, registrar la oferta académica, es decir los cursos y \ngrupos que se van a abrir y los profeso-\nres que los van a impartir.
+        \n\n\t Ejecutar el proceso de matrícula, en el cual se registran los cursos y grupos específicos, que matricula cada estudi-\nante.
+        \n\n\t Realizar proceso final del ciclo, en el cu-\nal el profesor registra las notas que obtu-\nvieron los estudiantes de sus grupos.
     </string>
     <!-- Strings related to login -->
     <string name="title_activity_inicio_sesion">Inicio de Sesion</string>

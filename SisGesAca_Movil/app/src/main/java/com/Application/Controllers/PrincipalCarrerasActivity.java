@@ -34,7 +34,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -59,7 +58,7 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
     private List<Carrera> carreraList;
     private CoordinatorLayout coordinatorLayout;
     private SearchView searchView;
-    private FloatingActionButton fab;
+    private FloatingActionButton add, refresh, go_back;
     private ModelDummy model;
 
     private void initCarrerasList() {
@@ -87,11 +86,13 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
         mRecyclerView = findViewById(R.id.recycler_carrerasFld);
         carreraList = new ArrayList<>();
         model = ModelDummy.getInstance();
-        initCarrerasList();
+        //initCarrerasList();
 
         mAdapter = new CarreraAdapter(carreraList, this);
         coordinatorLayout = findViewById(R.id.coordinator_layout);
-        fab = findViewById(R.id.fab);
+        add = findViewById(R.id.add);
+        refresh = findViewById(R.id.refresh);
+        go_back = findViewById(R.id.go_back);
 
         whiteNotificationBar(mRecyclerView);
 
@@ -101,7 +102,12 @@ public class PrincipalCarrerasActivity extends MainActivity implements RecyclerI
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         mRecyclerView.setAdapter(mAdapter);
 
-        fab.setOnClickListener(view -> goToCarreraActivity());
+        add.setOnClickListener(view -> goToCarreraActivity());
+        refresh.setOnClickListener(view -> initCarrerasList());
+        go_back.setOnClickListener(view -> {
+            intent = redirectActivityTo(NavDrawerActivity.class);
+            startActivity(intent);
+        });
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(mRecyclerView);

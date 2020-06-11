@@ -1,6 +1,7 @@
 package Controllers;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Moviles
  */
-@WebServlet(name = "MainController", urlPatterns = {"/InicioSesion","/Alumno", "/Alumnos", "/Carrera", "/Carreras", "/Curso", "/Cursos", "/Profesor", "/Profesores"})
+@WebServlet(name = "MainController", urlPatterns = {"/", "/InicioSesion", "/Alumno", "/Alumnos", "/Carrera", "/Carreras", "/Curso", "/Cursos", "/Profesor", "/Profesores"})
 public class MainController extends HttpServlet {
 
     /**
@@ -23,10 +24,17 @@ public class MainController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    //Socket Server port on which it will listen
+    private static final int PORT = 9876;
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         switch (request.getServletPath()) {
+            case "/": {
+                request.getRequestDispatcher("/index.jsp").forward(request, response);
+            }
+            break;
             case "/InicioSesion": {
                 request.getRequestDispatcher("/Views/InicioSesionView.jsp").forward(request, response);
             }
@@ -63,7 +71,7 @@ public class MainController extends HttpServlet {
             }
             break;
             default:
-            break;
+                break;
         }
     }
 
